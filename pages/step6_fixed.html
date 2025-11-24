@@ -50,7 +50,7 @@
         padding: 15px 0;
       }
       
-      .fecredit-header .container {
+      .fecredit-header .container-header {
         max-width: 1200px;
         margin: 0 auto;
         padding: 0 15px;
@@ -90,7 +90,7 @@
       .header-icons i:hover {
           color: var(--primary-light);
       }
-      .container {
+      .container-main {
           max-width: 90%;
           width: 100%;
           margin: 0 auto;
@@ -101,16 +101,10 @@
           position: relative;
       }
       @media (min-width: 768px) {
-          .container {
+          .container-main {
               max-width: 700px;
               margin: 20px auto;
           }
-      }
-      .progress-percentage {
-          text-align: center;
-          font-size: 1rem;
-          color: var(--primary-color);
-          margin-bottom: 10px;
       }
       .nav-tabs {
           display: flex;
@@ -145,34 +139,12 @@
           background-color: var(--primary-light);
           color: var(--primary-dark);
       }
-      .dropdown-menu {
-          min-width: 200px;
-          overflow-x: auto;
-          white-space: nowrap;
-      }
-      .dropdown-menu a {
-          color: var(--primary-color);
-          text-transform: uppercase;
-          font-size: 14px;
-          padding: 8px 12px;
-      }
-      .dropdown-menu a:hover {
-          background-color: var(--secondary-color);
-          color: var(--primary-color);
-      }
       @media (max-width: 767px) {
           .nav-tabs .nav-link {
               font-size: 10px;
               padding: 6px 8px;
           }
-          .dropdown-menu a {
-              font-size: 12px;
-              padding: 6px 10px;
-          }
-          .progress-percentage {
-              font-size: 0.9rem;
-          }
-          .container {
+          .container-main {
               max-width: 100% !important;
               width: 100% !important;
               padding: 12px !important;
@@ -329,7 +301,7 @@
   <body>
     <!-- FE Credit Header -->
     <header class="fecredit-header">
-      <div class="container">
+      <div class="container-header">
         <div style="flex: 0 0 auto;">
           <a href="../index.html" title="FE CREDIT - VAY TIÊU DÙNG TÍN CHẤP" style="display: flex; align-items: center; text-decoration: none;">
             <img src="https://www-cdn.fecredit.com.vn/media/20ymppzv/fec-logo.svg" alt="FE CREDIT Logo" 
@@ -362,44 +334,19 @@
       </div>
     </header>
     
-    <div class="header" style="display: none;">
-      <img
-        src="https://www-cdn.fecredit.com.vn/media/20ymppzv/fec-logo.svg"
-        alt="FE Credit Logo"
-      />
-    </div>
     <hr class="divider-blue" style="margin: 0" />
 
-    <div class="container">
+    <div class="container-main">
+      <!-- Tabs: chỉ còn 1 lần -->
       <ul class="nav nav-tabs">
         <li class="nav-item">
           <a class="nav-link" href="step1.html">1. Nhập thông tin</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="step4.html"
-            >2. Xác thực và xử lý</a
-          >
+          <a class="nav-link" href="step4.html">2. Xác thực và xử lý</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="step6.html"
-            >3. Hoàn thành</a
-          >
-        </li>
-      </ul>
-
-      <ul class="nav nav-tabs">
-        <li class="nav-item">
-          <a class="nav-link" href="step1.html">1. Nhập thông tin</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="step4.html"
-            >2. Xác thực và xử lý</a
-          >
-        </li>
-        <li class="nav-item">
-          <a class="nav-link active" href="step6.html"
-            >3. Hoàn thành</a
-          >
+          <a class="nav-link active" href="step6.html">3. Hoàn thành</a>
         </li>
       </ul>
 
@@ -407,8 +354,7 @@
         <h5 class="step-title">Xem Hợp Đồng</h5>
         <div class="error-message" id="formError"></div>
         <p class="step-description">
-          Dưới đây là hợp đồng vay tín chấp của bạn. Vui lòng kiểm tra kỹ thông
-          tin.
+          Dưới đây là hợp đồng vay tín chấp của bạn. Vui lòng kiểm tra kỹ thông tin.
         </p>
         <div class="image-section">
           <div class="canvas-container">
@@ -450,22 +396,24 @@
     <script src="https://cdn.jsdelivr.net/npm/crypto-js@4.1.1/crypto-js.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script>
-        let userData = {};
-        let canProceedToStep7 = false;
-        const ACTION_BUTTONS_SELECTOR = "#downloadContractBtn, #proceedToStep7Btn";
+      const CONTRACT_IMAGE_URL = "https://vay-fecredit.github.io/vaytieudung/assets/img/anhhopdongvay.png";
 
-        function setActionButtonsEnabled(enabled) {
-          $(ACTION_BUTTONS_SELECTOR).prop("disabled", !enabled);
-        }
+      let userData = {};
+      let canProceedToStep7 = false;
+      const ACTION_BUTTONS_SELECTOR = "#downloadContractBtn, #proceedToStep7Btn";
 
-        function showFormMessage(message) {
-          const $formError = $("#formError");
-          if (!message) {
-            $formError.text("").hide();
-            return;
-          }
-          $formError.text(message).show();
+      function setActionButtonsEnabled(enabled) {
+        $(ACTION_BUTTONS_SELECTOR).prop("disabled", !enabled);
+      }
+
+      function showFormMessage(message) {
+        const $formError = $("#formError");
+        if (!message) {
+          $formError.text("").hide();
+          return;
         }
+        $formError.text(message).show();
+      }
 
       function formatNumber(number) {
         if (!number || number === "N/A" || number === 0) return "";
@@ -518,230 +466,197 @@
             "fecredit-secret-key"
           ).toString();
           localStorage.setItem("userData", encryptedData);
-          // Data saved successfully
         } catch (error) {
-          // Error saving userData
           $("#formError").text("Lỗi lưu dữ liệu. Vui lòng thử lại.").show();
         }
       }
 
-        function loadUserData() {
-          canProceedToStep7 = false;
-          setActionButtonsEnabled(false);
-          try {
-            const storedData = localStorage.getItem("userData");
-            if (!storedData) {
-              showFormMessage("Không tìm thấy dữ liệu hồ sơ. Vui lòng quay lại.");
-              return;
-            }
-
-            userData = JSON.parse(
-              CryptoJS.AES.decrypt(storedData, "fecredit-secret-key").toString(
-                CryptoJS.enc.Utf8
-              )
-            );
-            // Loaded userData for Step 6
-
-            for (let key in userData) {
-              if (userData[key] === "N/A" || userData[key] === 0) {
-                userData[key] = "";
-              }
-            }
-
-            if (
-              userData.disbursementDate &&
-              !/^\d{4}-\d{2}-\d{2}$/.test(userData.disbursementDate)
-            ) {
-              // Invalid disbursementDate format - resetting
-              userData.disbursementDate = "";
-            }
-
-            if (!userData.isRegistered || !userData.fullName) {
-              showFormMessage(
-                "Không tìm thấy hồ sơ đã đăng ký. Vui lòng quay lại."
-              );
-              return;
-            }
-
-            canProceedToStep7 = true;
-            showFormMessage("");
-          } catch (error) {
-            // Error parsing userData
-            if (window.Logger) {
-              window.Logger.error("Không thể giải mã dữ liệu cũ:", error);
-            }
-            showFormMessage("Lỗi tải dữ liệu. Vui lòng quay lại.");
-          }
-        }
-
-        function renderCanvas(canvasId, imageUrl, fallbackUrl) {
-          const canvas = document.getElementById(canvasId);
-          if (!canvas) {
-            showFormMessage("Không tìm thấy khu vực hiển thị hợp đồng.");
-            setActionButtonsEnabled(false);
+      function loadUserData() {
+        canProceedToStep7 = false;
+        setActionButtonsEnabled(false);
+        try {
+          const storedData = localStorage.getItem("userData");
+          if (!storedData) {
+            showFormMessage("Không tìm thấy dữ liệu hồ sơ. Vui lòng quay lại.");
             return;
           }
 
-          const ctx = canvas.getContext("2d");
-          const primaryImage = new Image();
-          primaryImage.crossOrigin = "Anonymous";
-
-          const drawContract = (imageElement) => {
-            canvas.classList.remove("loading");
-            canvas.width = 2480;
-            canvas.height = 3508;
-            ctx.drawImage(imageElement, 0, 0, canvas.width, canvas.height);
-
-            canvasFields.forEach((field) => {
-              const value = field.value || "";
-              if (value && field.x >= 0 && field.y >= 0) {
-                ctx.font = field.font;
-                ctx.fillStyle = field.color;
-                ctx.fillText(value, field.x, field.y);
-              }
-            });
-
-            tickFields.forEach((tick) => {
-              if (tick.condition) {
-                ctx.font = tick.font;
-                ctx.fillStyle = tick.color;
-                ctx.fillText(tick.symbol, tick.x, tick.y);
-              }
-            });
-
-            if (canProceedToStep7) {
-              setActionButtonsEnabled(true);
-            }
-          };
-
-          const handleImageFailure = (message) => {
-            canvas.classList.remove("loading");
-            ctx.fillStyle = "#000000";
-            ctx.font = "32px Arial";
-            ctx.fillText("Không thể tải hình ảnh hợp đồng.", 10, 50);
-            setActionButtonsEnabled(false);
-            showFormMessage(message);
-          };
-
-          primaryImage.onload = () => {
-            drawContract(primaryImage);
-            showFormMessage("");
-          };
-
-          primaryImage.onerror = () => {
-            showFormMessage(
-              "Không thể tải hình ảnh hợp đồng từ nguồn chính. Đang thử nguồn dự phòng..."
-            );
-
-            const fallbackImage = new Image();
-            fallbackImage.crossOrigin = "Anonymous";
-
-            fallbackImage.onload = () => {
-              drawContract(fallbackImage);
-              showFormMessage(
-                "Đã sử dụng hình ảnh mặc định do lỗi tải nguồn chính."
-              );
-            };
-
-            fallbackImage.onerror = () => {
-              handleImageFailure(
-                "Lỗi: Không thể tải hình ảnh từ cả nguồn chính và dự phòng. Vui lòng thử lại sau."
-              );
-            };
-
-            fallbackImage.src = fallbackUrl;
-          };
-
-          canvas.classList.add("loading");
-          showFormMessage("");
-          primaryImage.src = imageUrl;
-        }
-
-        let canvasFields = [];
-        let tickFields = [];
-
-        function downloadAsPDF(canvas, filename) {
-          const { jsPDF } = window.jspdf;
-          const pdf = new jsPDF({
-            orientation: "p",
-            unit: "px",
-            format: [canvas.width, canvas.height],
-          });
-          pdf.addImage(
-            canvas.toDataURL("image/png", 1.0),
-            "PNG",
-            0,
-            0,
-            canvas.width,
-            canvas.height
+          userData = JSON.parse(
+            CryptoJS.AES.decrypt(storedData, "fecredit-secret-key").toString(
+              CryptoJS.enc.Utf8
+            )
           );
-          pdf.save(filename);
+
+          for (let key in userData) {
+            if (userData[key] === "N/A" || userData[key] === 0) {
+              userData[key] = "";
+            }
+          }
+
+          if (
+            userData.disbursementDate &&
+            !/^\d{4}-\d{2}-\d{2}$/.test(userData.disbursementDate)
+          ) {
+            userData.disbursementDate = "";
+          }
+
+          if (!userData.isRegistered || !userData.fullName) {
+            showFormMessage(
+              "Không tìm thấy hồ sơ đã đăng ký. Vui lòng quay lại."
+            );
+            return;
+          }
+
+          canProceedToStep7 = true;
+          showFormMessage("");
+        } catch (error) {
+          if (window.Logger) {
+            window.Logger.error("Không thể giải mã dữ liệu cũ:", error);
+          }
+          showFormMessage("Lỗi tải dữ liệu. Vui lòng quay lại.");
+        }
+      }
+
+      function renderCanvas(canvasId, imageUrl) {
+        const canvas = document.getElementById(canvasId);
+        if (!canvas) {
+          showFormMessage("Không tìm thấy khu vực hiển thị hợp đồng.");
+          setActionButtonsEnabled(false);
+          return;
         }
 
-        $(function () {
-          const $downloadBtn = $("#downloadContractBtn");
-          const $proceedBtn = $("#proceedToStep7Btn");
+        const ctx = canvas.getContext("2d");
+        const image = new Image();
 
+        image.onload = () => {
+          canvas.classList.remove("loading");
+          canvas.width = 2480;
+          canvas.height = 3508;
+          ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+
+          canvasFields.forEach((field) => {
+            const value = field.value || "";
+            if (value && field.x >= 0 && field.y >= 0) {
+              ctx.font = field.font;
+              ctx.fillStyle = field.color;
+              ctx.fillText(value, field.x, field.y);
+            }
+          });
+
+          tickFields.forEach((tick) => {
+            if (tick.condition) {
+              ctx.font = tick.font;
+              ctx.fillStyle = tick.color;
+              ctx.fillText(tick.symbol, tick.x, tick.y);
+            }
+          });
+
+          if (canProceedToStep7) {
+            setActionButtonsEnabled(true);
+          }
+        };
+
+        image.onerror = () => {
+          canvas.classList.remove("loading");
+          ctx.fillStyle = "#000000";
+          ctx.font = "32px Arial";
+          ctx.fillText("Không thể tải hình ảnh hợp đồng.", 10, 50);
           setActionButtonsEnabled(false);
+          showFormMessage(
+            "Lỗi: Không thể tải hình ảnh hợp đồng. Vui lòng thử lại sau."
+          );
+        };
 
-          $downloadBtn.on("click", function () {
-            if ($downloadBtn.prop("disabled")) {
-              return;
-            }
+        canvas.classList.add("loading");
+        showFormMessage("");
+        image.src = imageUrl;
+      }
 
-            const canvas = document.getElementById("contractCanvas");
-            if (!canvas || !canvas.width || !canvas.height) {
-              showFormMessage("Hợp đồng chưa sẵn sàng để tải xuống. Vui lòng thử lại.");
-              return;
-            }
+      let canvasFields = [];
+      let tickFields = [];
 
-            try {
-              if (!window.jspdf || typeof window.jspdf.jsPDF !== "function") {
-                throw new Error("jsPDF library is unavailable");
-              }
-              const sanitizedLoanCode = (userData.loanCode || "khach-hang").replace(
-                /[^a-zA-Z0-9_-]/g,
-                ""
-              );
-              const fileName = `HopDongVay_${sanitizedLoanCode || "khach-hang"}.pdf`;
-              downloadAsPDF(canvas, fileName);
-              userData.contractDownloadedAt = new Date().toISOString();
-              saveToLocalStorage();
-              showFormMessage("Hợp đồng đã được tải xuống thành công.");
-            } catch (error) {
-              if (window.Logger) {
-                window.Logger.error("Không thể xuất hợp đồng:", error);
-              }
-              showFormMessage("Không thể tải hợp đồng. Vui lòng thử lại.");
-            }
-          });
-
-          $proceedBtn.on("click", function () {
-            if ($proceedBtn.prop("disabled")) {
-              return;
-            }
-
-            if (!canProceedToStep7) {
-              showFormMessage("Hồ sơ của bạn chưa sẵn sàng. Vui lòng kiểm tra lại.");
-              return;
-            }
-
-            if (!userData.contractDownloadedAt) {
-              showFormMessage("Vui lòng tải hợp đồng vay trước khi tiếp tục.");
-              return;
-            }
-
-            showFormMessage("");
-            userData.currentStep = 7;
-            userData.lastStep6CompletedAt = new Date().toISOString();
-            saveToLocalStorage();
-
-            const nextUrl =
-              $proceedBtn.data("next-url") ||
-              "step7.html";
-            window.location.href = nextUrl;
-          });
+      function downloadAsPDF(canvas, filename) {
+        const { jsPDF } = window.jspdf;
+        const pdf = new jsPDF({
+          orientation: "p",
+          unit: "px",
+          format: [canvas.width, canvas.height],
         });
+        pdf.addImage(
+          canvas.toDataURL("image/png", 1.0),
+          "PNG",
+          0,
+          0,
+          canvas.width,
+          canvas.height
+        );
+        pdf.save(filename);
+      }
+
+      $(function () {
+        const $downloadBtn = $("#downloadContractBtn");
+        const $proceedBtn = $("#proceedToStep7Btn");
+
+        setActionButtonsEnabled(false);
+
+        $downloadBtn.on("click", function () {
+          if ($downloadBtn.prop("disabled")) {
+            return;
+          }
+
+          const canvas = document.getElementById("contractCanvas");
+          if (!canvas || !canvas.width || !canvas.height) {
+            showFormMessage("Hợp đồng chưa sẵn sàng để tải xuống. Vui lòng thử lại.");
+            return;
+          }
+
+          try {
+            if (!window.jspdf || typeof window.jspdf.jsPDF !== "function") {
+              throw new Error("jsPDF library is unavailable");
+            }
+            const sanitizedLoanCode = (userData.loanCode || "khach-hang").replace(
+              /[^a-zA-Z0-9_-]/g,
+              ""
+            );
+            const fileName = `HopDongVay_${sanitizedLoanCode || "khach-hang"}.pdf`;
+            downloadAsPDF(canvas, fileName);
+            userData.contractDownloadedAt = new Date().toISOString();
+            saveToLocalStorage();
+            showFormMessage("Hợp đồng đã được tải xuống thành công.");
+          } catch (error) {
+            if (window.Logger) {
+              window.Logger.error("Không thể xuất hợp đồng:", error);
+            }
+            showFormMessage("Không thể tải hợp đồng. Vui lòng thử lại.");
+          }
+        });
+
+        $proceedBtn.on("click", function () {
+          if ($proceedBtn.prop("disabled")) {
+            return;
+          }
+
+          if (!canProceedToStep7) {
+            showFormMessage("Hồ sơ của bạn chưa sẵn sàng. Vui lòng kiểm tra lại.");
+            return;
+          }
+
+          if (!userData.contractDownloadedAt) {
+            showFormMessage("Vui lòng tải hợp đồng vay trước khi tiếp tục.");
+            return;
+          }
+
+          showFormMessage("");
+          userData.currentStep = 7;
+          userData.lastStep6CompletedAt = new Date().toISOString();
+          saveToLocalStorage();
+
+          const nextUrl =
+            $proceedBtn.data("next-url") ||
+            "step7.html";
+          window.location.href = nextUrl;
+        });
+      });
 
       window.onload = function () {
         loadUserData();
@@ -909,102 +824,11 @@
           },
         ];
 
-        tickFields = [
-          {
-            condition: userData.loanPurpose === "Mua nhà",
-            x: 183,
-            y: 1123,
-            symbol: "✓",
-            font: "36px Arial",
-            color: "#FF0000",
-          },
-          {
-            condition: userData.loanPurpose === "Mua xe",
-            x: 511,
-            y: 1161,
-            symbol: "✓",
-            font: "36px Arial",
-            color: "#FF0000",
-          },
-          {
-            condition: userData.loanPurpose === "Kinh doanh",
-            x: 767,
-            y: 1159,
-            symbol: "✓",
-            font: "36px Arial",
-            color: "#FF0000",
-          },
-          {
-            condition: userData.loanPurpose === "Học tập",
-            x: 183,
-            y: 1157,
-            symbol: "✓",
-            font: "36px Arial",
-            color: "#FF0000",
-          },
-          {
-            condition: userData.loanPurpose === "Du lịch",
-            x: 511,
-            y: 1123,
-            symbol: "✓",
-            font: "36px Arial",
-            color: "#FF0000",
-          },
-          {
-            condition: userData.loanPurpose === "Tiêu dùng",
-            x: 767,
-            y: 1123,
-            symbol: "✓",
-            font: "36px Arial",
-            color: "#FF0000",
-          },
-          {
-            condition: userData.loanPurpose === "Khác",
-            x: 183,
-            y: 1180,
-            symbol: "✓",
-            font: "36px Arial",
-            color: "#FF0000",
-          },
-          {
-            condition: userData.loanTerm === "6",
-            x: 431,
-            y: 1479,
-            symbol: "✓",
-            font: "36px Arial",
-            color: "#FF0000",
-          },
-          {
-            condition: userData.loanTerm === "12",
-            x: 575,
-            y: 1479,
-            symbol: "✓",
-            font: "36px Arial",
-            color: "#FF0000",
-          },
-          {
-            condition: userData.loanTerm === "18",
-            x: 647,
-            y: 1479,
-            symbol: "✓",
-            font: "36px Arial",
-            color: "#FF0000",
-          },
-          {
-            condition: userData.loanTerm === "24",
-            x: 719,
-            y: 1483,
-            symbol: "✓",
-            font: "36px Arial",
-            color: "#FF0000",
-          },
-          // ... (các tick khác nếu có, giữ nguyên như trong repo gốc)
-        ];
+        tickFields = []; // nếu bạn cần các tick như bản gốc, có thể thêm lại ở đây
 
         renderCanvas(
           "contractCanvas",
-          "https://fecredit.github.io/assets/img/anhhopdongvay.png",
-          "https://fecredit.github.io/assets/img/anhhopdongvay.png"
+          CONTRACT_IMAGE_URL
         );
       };
     </script>
