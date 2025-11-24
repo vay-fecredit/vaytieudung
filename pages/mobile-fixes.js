@@ -226,8 +226,10 @@
                     version: '1.0.0'
                 };
                 
-                // Simple encryption (base64 encoding)
-                // Note: For production, use a proper encryption library like CryptoJS
+                // Simple obfuscation using base64 encoding
+                // WARNING: This is NOT secure encryption, just basic obfuscation
+                // For production, use a proper encryption library like CryptoJS:
+                // const encrypted = CryptoJS.AES.encrypt(JSON.stringify(dataWithMeta), secretKey).toString();
                 const encrypted = btoa(JSON.stringify(dataWithMeta));
                 localStorage.setItem(`${this.storageKey}_${formId}`, encrypted);
                 

@@ -1287,11 +1287,9 @@
   <script src="mobile-fixes.js"></script>
   <script>
       // Initialize mobile form validator for step8
-      if (document.querySelector('form')) {
-          const form = document.querySelector('form');
-          if (form.id) {
-              new MobileFormValidator(form.id);
-          }
+      const form = document.querySelector('form');
+      if (form && form.id) {
+          new MobileFormValidator(form.id);
       }
   </script>
 </body>
