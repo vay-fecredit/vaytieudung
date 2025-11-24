@@ -1,0 +1,107 @@
+{
+  "folders": [
+    {
+      "name": "Shinhan Bank eKYC",
+      "path": "."
+    }
+  ],
+  "settings": {
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll": "explicit",
+      "source.organizeImports": "explicit"
+    },
+    "files.associations": {
+      "*.html": "html",
+      "*.js": "javascript",
+      "*.css": "css"
+    },
+    "emmet.includeLanguages": {
+      "html": "html"
+    },
+    "html.format.indentInnerHtml": true,
+    "html.format.wrapLineLength": 120,
+    "javascript.preferences.quoteStyle": "single",
+    "typescript.preferences.quoteStyle": "single",
+    "css.validate": true,
+    "html.validate.scripts": true,
+    "html.validate.styles": true,
+    "files.exclude": {
+      "**/node_modules": true,
+      "**/.git": true,
+      "**/dist": false,
+      "**/lib": false
+    },
+    "search.exclude": {
+      "**/node_modules": true,
+      "**/dist": true,
+      "**/lib": true
+    },
+    "files.watcherExclude": {
+      "**/node_modules/**": true,
+      "**/dist/**": true
+    }
+  },
+  "extensions": {
+    "recommendations": [
+      "ms-vscode.vscode-json",
+      "bradlc.vscode-tailwindcss",
+      "esbenp.prettier-vscode",
+      "ms-vscode.vscode-typescript-next",
+      "formulahendry.auto-rename-tag",
+      "ritwickdey.liveserver",
+      "ms-vscode.live-server"
+    ]
+  },
+  "launch": {
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "name": "Launch Chrome",
+        "type": "chrome",
+        "request": "launch",
+        "url": "http://localhost:3000",
+        "webRoot": "${workspaceFolder}",
+        "sourceMaps": true
+      },
+      {
+        "name": "Launch Firefox",
+        "type": "firefox",
+        "request": "launch",
+        "url": "http://localhost:3000",
+        "webRoot": "${workspaceFolder}"
+      }
+    ]
+  },
+  "tasks": {
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "label": "Start Live Server",
+        "type": "shell",
+        "command": "npx live-server --port=3000 --open=/index.html",
+        "group": "build",
+        "presentation": {
+          "echo": true,
+          "reveal": "always",
+          "focus": false,
+          "panel": "shared"
+        },
+        "problemMatcher": []
+      },
+      {
+        "label": "Format All Files",
+        "type": "shell",
+        "command": "npx prettier --write .",
+        "group": "build",
+        "presentation": {
+          "echo": true,
+          "reveal": "always",
+          "focus": false,
+          "panel": "shared"
+        },
+        "problemMatcher": []
+      }
+    ]
+  }
+}

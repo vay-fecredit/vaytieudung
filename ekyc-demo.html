@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>eKYC Face Detection Demo - Relaxed Tilt Threshold</title>
+    
+    <!-- eKYC Overlay CSS -->
+    <link rel="stylesheet" href="/assets/css/ekyc-overlay.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 800px;
+            width: 100%;
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 24px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+        
+        .header p {
+            opacity: 0.9;
+            font-size: 14px;
+        }
+        
+        .video-container {
+            position: relative;
+            background: #000;
+            aspect-ratio: 4/3;
+            max-height: 500px;
+        }
+        
+        #video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .controls {
+            padding: 24px;
+        }
+        
+        .status {
+            background: #f5f5f5;
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 16px;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-size: 16px;
+            font-weight: 500;
+        }
+        
+        .status.success {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+        
+        .status.error {
+            background: #ffebee;
+            color: #c62828;
+        }
+        
+        .status.warning {
+            background: #fff3e0;
+            color: #ef6c00;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+        
+        button {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .btn-primary:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn-secondary {
+            background: #f5f5f5;
+            color: #333;
+        }
+        
+        .btn-secondary:hover:not(:disabled) {
+            background: #e0e0e0;
+        }
+        
+        .info-panel {
+            padding: 24px;
+            background: #f9f9f9;
+            border-top: 1px solid #e0e0e0;
+        }
+        
+        .info-panel h3 {
+            margin-bottom: 12px;
+            font-size: 18px;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+            margin-top: 16px;
+        }
+        
+        .info-item {
+            background: white;
+            padding: 12px;
+            border-radius: 6px;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .info-item label {
+            display: block;
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 4px;
+        }
+        
+        .info-item value {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        @media (max-width: 600px) {
+            .header h1 {
+                font-size: 20px;
+            }
+            
+            .button-group {
+                flex-direction: column;
+            }
+            
+            button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔍 eKYC Face Detection - Cải Tiến</h1>
+            <p>Hệ thống xác thực khuôn mặt với ngưỡng nghiêng mềm hơn (±10-15°)</p>
+        </div>
+        
+        <div class="video-container">
+            <video id="video" autoplay muted playsinline></video>
+            <div id="face-overlay-container"></div>
+        </div>
+        
+        <div class="controls">
+            <div id="status" class="status">
+                Nhấn "Bắt đầu" để khởi động camera
+            </div>
+            
+            <div class="button-group">
+                <button id="btn-start" class="btn-primary">🎥 Bắt đầu</button>
+                <button id="btn-retry" class="btn-secondary" style="display: none;">🔄 Thử lại</button>
+                <button id="btn-report" class="btn-secondary" style="display: none;">📝 Gửi báo cáo</button>
+            </div>
+        </div>
+        
+        <div class="info-panel">
+            <h3>📊 Thông tin phát hiện</h3>
+            <div class="info-grid">
+                <div class="info-item">
+                    <label>Góc nghiêng (Roll)</label>
+                    <value id="info-roll">--°</value>
+                </div>
+                <div class="info-item">
+                    <label>Góc gật đầu (Pitch)</label>
+                    <value id="info-pitch">--°</value>
+                </div>
+                <div class="info-item">
+                    <label>Góc quay đầu (Yaw)</label>
+                    <value id="info-yaw">--°</value>
+                </div>
+                <div class="info-item">
+                    <label>Độ tin cậy</label>
+                    <value id="info-confidence">--%</value>
+                </div>
+                <div class="info-item">
+                    <label>Số lần thử</label>
+                    <value id="info-attempts">0</value>
+                </div>
+                <div class="info-item">
+                    <label>Trạng thái</label>
+                    <value id="info-status">Chưa bắt đầu</value>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dependencies -->
+    <script src="https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/dist/face-api.min.js"></script>
+    
+    <!-- eKYC modules -->
+    <script src="/lib/face-angle-utils.js"></script>
+    <script src="/assets/js/ekyc-overlay.js"></script>
+    
+    <script>
+        // Load config
+        let ekycConfig = null;
+        
+        fetch('/lib/ekyc-config.json')
+            .then(res => res.json())
+            .then(config => {
+                ekycConfig = config.ekyc;
+                console.log('[Demo] Config loaded:', ekycConfig);
+            })
+            .catch(err => {
+                console.error('[Demo] Failed to load config:', err);
+            });
+        
+        // Elements
+        const video = document.getElementById('video');
+        const statusEl = document.getElementById('status');
+        const btnStart = document.getElementById('btn-start');
+        const btnRetry = document.getElementById('btn-retry');
+        const btnReport = document.getElementById('btn-report');
+        
+        const infoRoll = document.getElementById('info-roll');
+        const infoPitch = document.getElementById('info-pitch');
+        const infoYaw = document.getElementById('info-yaw');
+        const infoConfidence = document.getElementById('info-confidence');
+        const infoAttempts = document.getElementById('info-attempts');
+        const infoStatus = document.getElementById('info-status');
+        
+        // State
+        let stream = null;
+        let overlay = null;
+        let rollSmoother = null;
+        let detectionActive = false;
+        let attemptCount = 0;
+        let lastDetectionData = null;
+        
+        // Event listeners
+        btnStart.addEventListener('click', startDetection);
+        btnRetry.addEventListener('click', () => location.reload());
+        btnReport.addEventListener('click', submitErrorReport);
+        
+        // Load face-api models
+        async function loadModels() {
+            const MODEL_URL = '/models';
+            await Promise.all([
+                faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL),
+                faceapi.nets.faceLandmark68Net.loadFromUri(MODEL_URL)
+            ]);
+            console.log('[Demo] Models loaded');
+        }
+        
+        // Start detection
+        async function startDetection() {
+            try {
+                btnStart.disabled = true;
+                statusEl.textContent = 'Đang khởi động camera...';
+                statusEl.className = 'status';
+                
+                // Load models
+                await loadModels();
+                
+                // Start camera
+                stream = await navigator.mediaDevices.getUserMedia({ 
+                    video: { facingMode: 'user', width: { ideal: 1280 }, height: { ideal: 720 } } 
+                });
+                video.srcObject = stream;
+                
+                await video.play();
+                
+                // Initialize overlay
+                if (window.EKYCOverlay && ekycConfig) {
+                    overlay = new window.EKYCOverlay('face-overlay-container', ekycConfig.face_detection);
+                    overlay.setCanvasSize(video.videoWidth, video.videoHeight);
+                }
+                
+                // Initialize smoother
+                if (window.FaceAngleUtils) {
+                    rollSmoother = new window.FaceAngleUtils.RollSmoother(5);
+                }
+                
+                // Start detection
+                detectionActive = true;
+                attemptCount = 0;
+                runDetectionLoop();
+                
+                statusEl.textContent = 'Camera đã sẵn sàng. Đang phát hiện khuôn mặt...';
+                statusEl.className = 'status success';
+                
+            } catch (error) {
+                console.error('[Demo] Error:', error);
+                statusEl.textContent = `❌ Lỗi: ${error.message}`;
+                statusEl.className = 'status error';
+                btnStart.disabled = false;
+            }
+        }
+        
+        // Detection loop
+        async function runDetectionLoop() {
+            if (!detectionActive) return;
+            
+            try {
+                const detection = await faceapi
+                    .detectSingleFace(video, new faceapi.TinyFaceDetectorOptions())
+                    .withFaceLandmarks();
+                
+                if (detection) {
+                    processDetection(detection);
+                } else {
+                    handleNoFace();
+                }
+                
+            } catch (error) {
+                console.error('[Demo] Detection error:', error);
+            }
+            
+            setTimeout(() => runDetectionLoop(), 300);
+        }
+        
+        // Process detection
+        function processDetection(detection) {
+            const config = ekycConfig?.face_detection || {
+                roll_soft_threshold: 10,
+                roll_hard_threshold: 15,
+                pitch_threshold: 20,
+                yaw_threshold: 20,
+                confidence_threshold: 0.7
+            };
+            
+            const landmarks = detection.landmarks;
+            const confidence = detection.detection._score;
+            
+            // Compute angles
+            const leftEye = landmarks.getLeftEye()[0];
+            const rightEye = landmarks.getRightEye()[0];
+            
+            const rawRoll = window.FaceAngleUtils.computeRollDegrees(leftEye, rightEye);
+            const roll = rollSmoother ? rollSmoother.push(rawRoll) : rawRoll;
+            const pitch = window.FaceAngleUtils.computePitchDegrees(landmarks);
+            const yaw = window.FaceAngleUtils.computeYawDegrees(landmarks);
+            
+            // Update overlay
+            if (overlay) {
+                overlay.updateTiltMeter(roll);
+                overlay.updateAngleIndicators(roll, pitch, yaw);
+                overlay.drawFaceBox(detection);
+            }
+            
+            // Validate
+            const validation = window.FaceAngleUtils.validateFacePose(roll, pitch, yaw, confidence, config);
+            
+            // Update UI
+            updateInfo(roll, pitch, yaw, confidence, validation.passed);
+            
+            if (validation.passed) {
+                statusEl.textContent = '✅ Rất tốt! Khuôn mặt đạt yêu cầu.';
+                statusEl.className = 'status success';
+                infoStatus.textContent = 'Đạt yêu cầu';
+                
+                if (overlay) {
+                    const message = window.FaceAngleUtils.getTiltGuidanceMessage(roll, pitch, yaw, config);
+                    overlay.updateHint(message, 'success');
+                }
+            } else {
+                const message = window.FaceAngleUtils.getTiltGuidanceMessage(roll, pitch, yaw, config);
+                statusEl.textContent = message;
+                statusEl.className = 'status warning';
+                infoStatus.textContent = validation.reason;
+                
+                if (overlay) {
+                    overlay.updateHint(message, 'warning');
+                }
+            }
+            
+            // Save last detection for error report
+            lastDetectionData = { roll, pitch, yaw, confidence, validation };
+        }
+        
+        // Handle no face
+        function handleNoFace() {
+            if (overlay) {
+                overlay.clearCanvas();
+                overlay.updateHint('Đang tìm khuôn mặt...', 'info');
+            }
+            
+            statusEl.textContent = 'Đưa khuôn mặt vào trong khung';
+            statusEl.className = 'status';
+            infoStatus.textContent = 'Không phát hiện';
+        }
+        
+        // Update info panel
+        function updateInfo(roll, pitch, yaw, confidence, passed) {
+            infoRoll.textContent = `${roll.toFixed(1)}°`;
+            infoPitch.textContent = `${pitch.toFixed(1)}°`;
+            infoYaw.textContent = `${yaw.toFixed(1)}°`;
+            infoConfidence.textContent = `${(confidence * 100).toFixed(1)}%`;
+            
+            if (!passed) {
+                attemptCount++;
+                infoAttempts.textContent = attemptCount;
+                
+                // Show report button after 3 attempts
+                if (attemptCount >= 3) {
+                    btnReport.style.display = 'inline-block';
+                }
+            }
+            
+            btnRetry.style.display = 'inline-block';
+        }
+        
+        // Submit error report
+        async function submitErrorReport() {
+            if (!lastDetectionData) return;
+            
+            const consent = confirm('Bạn có muốn gửi ảnh và thông tin để chúng tôi cải thiện hệ thống không?');
+            
+            try {
+                // Capture current frame
+                const canvas = document.createElement('canvas');
+                canvas.width = video.videoWidth;
+                canvas.height = video.videoHeight;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(video, 0, 0);
+                const imageBase64 = consent ? canvas.toDataURL('image/jpeg', 0.7) : null;
+                
+                const response = await fetch('/api/ekyc/error-report', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        sessionId: 'demo_' + Date.now(),
+                        timestamp: new Date().toISOString(),
+                        roll: lastDetectionData.roll,
+                        pitch: lastDetectionData.pitch,
+                        yaw: lastDetectionData.yaw,
+                        confidence: lastDetectionData.confidence,
+                        message: lastDetectionData.validation.reason,
+                        imageBase64: imageBase64,
+                        deviceInfo: {
+                            userAgent: navigator.userAgent,
+                            screenWidth: window.screen.width,
+                            screenHeight: window.screen.height
+                        },
+                        attemptCount: attemptCount,
+                        userConsent: consent
+                    })
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    alert('✅ Cảm ơn bạn đã gửi báo cáo!\nMã báo cáo: ' + result.reportId);
+                    btnReport.disabled = true;
+                } else {
+                    alert('❌ Không thể gửi báo cáo. Vui lòng thử lại.');
+                }
+                
+            } catch (error) {
+                console.error('[Demo] Report error:', error);
+                alert('❌ Lỗi khi gửi báo cáo: ' + error.message);
+            }
+        }
+    </script>
+</body>
+</html>

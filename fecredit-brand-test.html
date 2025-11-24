@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FECredit Branding Test</title>
+    <link rel="stylesheet" href="/assets/css/fecredit-theme.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            background: #f3f4f6;
+        }
+        
+        .test-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .brand-showcase {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .logo-display {
+            font-size: 64px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        
+        .color-palette {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .color-box {
+            padding: 40px;
+            border-radius: 8px;
+            color: white;
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        .button-showcase {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 30px 0;
+        }
+        
+        .section-title {
+            color: var(--fecredit-red);
+            font-size: 28px;
+            margin: 30px 0 20px;
+            border-left: 4px solid var(--fecredit-red);
+            padding-left: 15px;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .feature-card {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            border: 2px solid #e5e7eb;
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            border-color: var(--fecredit-red);
+            box-shadow: 0 4px 12px rgba(232, 38, 41, 0.15);
+            transform: translateY(-5px);
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <!-- Brand Logo Showcase -->
+        <div class="brand-showcase">
+            <div class="logo-display">
+                <span style="color: #E82629;">FE</span><span style="color: #00A651;">Credit</span>
+            </div>
+            <p style="font-size: 18px; color: #6B7280;">Công Ty Tài Chính Hàng Đầu Việt Nam</p>
+        </div>
+        
+        <!-- Color Palette -->
+        <h2 class="section-title">Bảng Màu Chính Thức FECredit</h2>
+        <div class="color-palette">
+            <div class="color-box" style="background-color: #E82629;">
+                <p>FECredit Red</p>
+                <p style="font-size: 14px; margin-top: 10px;">#E82629</p>
+            </div>
+            <div class="color-box" style="background-color: #00A651;">
+                <p>FECredit Green</p>
+                <p style="font-size: 14px; margin-top: 10px;">#00A651</p>
+            </div>
+            <div class="color-box" style="background-color: #ECFAE2; color: #1F2937;">
+                <p>Soft Green</p>
+                <p style="font-size: 14px; margin-top: 10px;">#ECFAE2</p>
+            </div>
+            <div class="color-box" style="background-color: #29567D;">
+                <p>Astronaut Blue</p>
+                <p style="font-size: 14px; margin-top: 10px;">#29567D</p>
+            </div>
+        </div>
+        
+        <!-- Button Showcase -->
+        <h2 class="section-title">Nút Bấm & CTA</h2>
+        <div class="button-showcase">
+            <a href="#" class="btn-primary">Đăng Ký Vay Ngay</a>
+            <a href="#" class="btn-secondary">Tính Khoản Vay</a>
+            <button class="btn-primary">Primary Button</button>
+        </div>
+        
+        <!-- Feature Cards -->
+        <h2 class="section-title">Card Components</h2>
+        <div class="feature-grid">
+            <div class="feature-card">
+                <h3 style="color: #E82629; margin-bottom: 15px;">Lãi Suất Ưu Đãi</h3>
+                <p style="color: #6B7280;">Chỉ từ 1.1%/tháng, tính trên dư nợ giảm dần</p>
+            </div>
+            <div class="feature-card">
+                <h3 style="color: #E82629; margin-bottom: 15px;">Hạn Mức Cao</h3>
+                <p style="color: #6B7280;">Vay lên đến 500 triệu đồng</p>
+            </div>
+            <div class="feature-card">
+                <h3 style="color: #E82629; margin-bottom: 15px;">Giải Ngân Nhanh</h3>
+                <p style="color: #6B7280;">Phê duyệt trong 24h</p>
+            </div>
+        </div>
+        
+        <!-- Highlight Box -->
+        <div class="fecredit-highlight">
+            <h3 style="color: #E82629; margin-bottom: 10px;">🎉 Ưu Đãi Đặc Biệt</h3>
+            <p>Đăng ký vay ngay hôm nay để nhận ưu đãi lãi suất trong 3 tháng đầu!</p>
+        </div>
+        
+        <!-- Contact Info -->
+        <div class="brand-showcase">
+            <h3 style="color: #E82629; margin-bottom: 20px;">Liên Hệ Ngay</h3>
+            <p style="font-size: 24px; color: #E82629; font-weight: bold; margin-bottom: 10px;">
+                📞 1900 54 54 11
+            </p>
+            <p style="color: #6B7280;">
+                ✉️ support@fecredit.com.vn
+            </p>
+        </div>
+    </div>
+</body>
+</html>

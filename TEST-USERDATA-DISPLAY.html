@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test UserData Display - FE Credit</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+      background: #f5f5f5;
+    }
+    h1 {
+      color: #00468F;
+      border-bottom: 3px solid #2BB673;
+      padding-bottom: 10px;
+    }
+    .section {
+      background: white;
+      border-radius: 8px;
+      padding: 20px;
+      margin: 20px 0;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    .status {
+      display: inline-block;
+      padding: 5px 15px;
+      border-radius: 20px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    .status.success { background: #d1fae5; color: #065f46; }
+    .status.error { background: #fee2e2; color: #991b1b; }
+    .status.warning { background: #fef3c7; color: #92400e; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+    }
+    th, td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #e5e7eb;
+    }
+    th {
+      background: #f9fafb;
+      font-weight: 600;
+      color: #00468F;
+    }
+    .value {
+      font-weight: 600;
+      color: #1f2937;
+    }
+    .default {
+      color: #dc2626;
+      font-style: italic;
+    }
+    .loaded {
+      color: #059669;
+    }
+    button {
+      background: #00468F;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+      margin: 5px;
+    }
+    button:hover {
+      background: #003a78;
+    }
+    .code-block {
+      background: #1f2937;
+      color: #f3f4f6;
+      padding: 15px;
+      border-radius: 6px;
+      overflow-x: auto;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+    }
+    .nav-links {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+    }
+    .nav-links a {
+      background: #2BB673;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .nav-links a:hover {
+      background: #059669;
+    }
+  </style>
+</head>
+<body>
+  <h1>🧪 Test UserData Display - Kiểm tra dữ liệu hiển thị</h1>
+
+  <!-- Status -->
+  <div class="section">
+    <h2>📊 Trạng thái localStorage</h2>
+    <div id="storageStatus"></div>
+  </div>
+
+  <!-- UserData -->
+  <div class="section">
+    <h2>👤 Dữ liệu người dùng</h2>
+    <table id="userDataTable">
+      <thead>
+        <tr>
+          <th>Trường</th>
+          <th>Giá trị</th>
+          <th>Trạng thái</th>
+        </tr>
+      </thead>
+      <tbody id="userDataBody">
+        <tr><td colspan="3">Đang tải...</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Test Results -->
+  <div class="section">
+    <h2>✅ Kết quả kiểm tra</h2>
+    <div id="testResults"></div>
+  </div>
+
+  <!-- Raw Data -->
+  <div class="section">
+    <h2>🔍 Raw Data (JSON)</h2>
+    <button onclick="toggleRawData()">Toggle Raw Data</button>
+    <pre id="rawData" class="code-block" style="display: none;"></pre>
+  </div>
+
+  <!-- Navigation -->
+  <div class="section">
+    <h2>🔗 Test Navigation</h2>
+    <div class="nav-links">
+      <a href="pages/vi/step6.html">Step 6 - Hợp Đồng</a>
+      <a href="pages/vi/step7.html">Step 7 - Điều Kiện</a>
+      <a href="pages/vi/step8.html">Step 8 - Phê Duyệt</a>
+    </div>
+  </div>
+
+  <!-- Actions -->
+  <div class="section">
+    <h2>⚙️ Actions</h2>
+    <button onclick="reloadData()">🔄 Reload Data</button>
+    <button onclick="createMockData()">📝 Create Mock Data</button>
+    <button onclick="clearData()">🗑️ Clear Data</button>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/crypto-js@4.1.1/crypto-js.min.js"></script>
+  <script>
+    let userData = null;
+
+    // Load and decrypt userData
+    function loadUserData() {
+      try {
+        const raw = localStorage.getItem('userData');
+        
+        if (!raw) {
+          document.getElementById('storageStatus').innerHTML = 
+            '<span class="status error">❌ Không tìm thấy userData trong localStorage</span>';
+          return null;
+        }
+
+        document.getElementById('storageStatus').innerHTML = 
+          '<span class="status success">✅ Tìm thấy userData trong localStorage</span>';
+
+        // Try to decrypt
+        let data;
+        try {
+          const bytes = CryptoJS.AES.decrypt(raw, 'shinhan-secret-key');
+          const decrypted = bytes.toString(CryptoJS.enc.Utf8);
+          if (decrypted) {
+            data = JSON.parse(decrypted);
+            document.getElementById('storageStatus').innerHTML += 
+              '<br><span class="status success">🔐 Dữ liệu đã được mã hóa (Decrypted)</span>';
+          } else {
+            data = JSON.parse(raw);
+            document.getElementById('storageStatus').innerHTML += 
+              '<br><span class="status warning">⚠️ Dữ liệu không mã hóa (Plain JSON)</span>';
+          }
+        } catch {
+          data = JSON.parse(raw);
+          document.getElementById('storageStatus').innerHTML += 
+            '<br><span class="status warning">⚠️ Dữ liệu không mã hóa (Plain JSON)</span>';
+        }
+
+        return data;
+      } catch (err) {
+        console.error('Error loading userData:', err);
+        document.getElementById('storageStatus').innerHTML = 
+          '<span class="status error">❌ Lỗi khi load userData: ' + err.message + '</span>';
+        return null;
+      }
+    }
+
+    // Display userData in table
+    function displayUserData(data) {
+      const tbody = document.getElementById('userDataBody');
+      
+      if (!data) {
+        tbody.innerHTML = '<tr><td colspan="3" class="default">Không có dữ liệu</td></tr>';
+        return;
+      }
+
+      const fields = [
+        { key: 'fullName', label: 'Họ và tên', required: true },
+        { key: 'phone', label: 'Số điện thoại', required: true },
+        { key: 'email', label: 'Email', required: true },
+        { key: 'cccd', label: 'Số CCCD', required: true },
+        { key: 'loanAmount', label: 'Số tiền vay', required: true, format: 'currency' },
+        { key: 'loanTerm', label: 'Kỳ hạn vay', required: true, suffix: ' tháng' },
+        { key: 'interestRate', label: 'Lãi suất', required: false, suffix: '%/năm' },
+        { key: 'monthlyPayment', label: 'Trả hàng tháng', required: false, format: 'currency' },
+        { key: 'loanPurpose', label: 'Mục đích vay', required: false },
+        { key: 'accountNumber', label: 'Số tài khoản', required: false },
+        { key: 'bankName', label: 'Ngân hàng', required: false },
+        { key: 'accountName', label: 'Tên tài khoản', required: false },
+        { key: 'disbursementDate', label: 'Ngày giải ngân', required: false },
+        { key: 'loanCode', label: 'Mã khoản vay', required: false },
+        { key: 'currentStep', label: 'Bước hiện tại', required: false }
+      ];
+
+      let html = '';
+      let errors = [];
+
+      fields.forEach(field => {
+        const value = data[field.key];
+        let displayValue = '';
+        let statusClass = '';
+        let statusText = '';
+
+        if (value === undefined || value === null || value === '' || value === 'N/A' || value === 0) {
+          if (field.required) {
+            statusClass = 'default';
+            statusText = '❌ Thiếu (Required)';
+            displayValue = '<em>Chưa có dữ liệu</em>';
+            errors.push(`${field.label} bị thiếu`);
+          } else {
+            statusClass = 'warning';
+            statusText = '⚠️ Chưa có';
+            displayValue = '<em>Chưa điền</em>';
+          }
+        } else {
+          statusClass = 'loaded';
+          statusText = '✅ Đã load';
+          
+          if (field.format === 'currency') {
+            const num = parseFloat(value);
+            displayValue = !isNaN(num) ? num.toLocaleString('en-US') + ' VND' : value;
+          } else if (field.suffix) {
+            displayValue = value + field.suffix;
+          } else {
+            displayValue = value;
+          }
+        }
+
+        html += `
+          <tr>
+            <td><strong>${field.label}</strong> ${field.required ? '<span style="color: #dc2626;">*</span>' : ''}</td>
+            <td class="value ${statusClass}">${displayValue}</td>
+            <td>${statusText}</td>
+          </tr>
+        `;
+      });
+
+      tbody.innerHTML = html;
+
+      // Display test results
+      const resultsDiv = document.getElementById('testResults');
+      if (errors.length > 0) {
+        resultsDiv.innerHTML = `
+          <div class="status error">❌ Phát hiện ${errors.length} lỗi:</div>
+          <ul>
+            ${errors.map(err => `<li>${err}</li>`).join('')}
+          </ul>
+          <p><strong>Khuyến nghị:</strong> Vui lòng hoàn tất form đăng ký trước khi tiếp tục.</p>
+        `;
+      } else {
+        resultsDiv.innerHTML = `
+          <div class="status success">✅ Tất cả dữ liệu bắt buộc đã có</div>
+          <p><strong>Kết luận:</strong> UserData hợp lệ, có thể hiển thị trên step6, step7, step8.</p>
+        `;
+      }
+
+      // Calculate required amount (10%)
+      if (data.loanAmount) {
+        const required = parseFloat(data.loanAmount) * 0.1;
+        resultsDiv.innerHTML += `
+          <div style="margin-top: 15px; padding: 10px; background: #fef3c7; border-left: 4px solid #FFB703; border-radius: 4px;">
+            <strong>💰 Số dư cần chứng minh (10%):</strong> 
+            <span style="font-size: 1.2rem; color: #92400e;">${required.toLocaleString('en-US')} VND</span>
+          </div>
+        `;
+      }
+    }
+
+    // Display raw JSON
+    function displayRawData(data) {
+      document.getElementById('rawData').textContent = JSON.stringify(data, null, 2);
+    }
+
+    // Toggle raw data
+    function toggleRawData() {
+      const elem = document.getElementById('rawData');
+      elem.style.display = elem.style.display === 'none' ? 'block' : 'none';
+    }
+
+    // Reload data
+    function reloadData() {
+      userData = loadUserData();
+      if (userData) {
+        displayUserData(userData);
+        displayRawData(userData);
+      }
+    }
+
+    // Create mock data for testing
+    function createMockData() {
+      const mockData = {
+        fullName: "Nguyễn Văn Test",
+        phone: "0901234567",
+        email: "test@example.com",
+        cccd: "001234567890",
+        loanAmount: 30000000,
+        loanTerm: 12,
+        interestRate: 12.5,
+        monthlyPayment: 2678000,
+        loanPurpose: "Tiêu dùng",
+        accountNumber: "1234567890",
+        bankName: "Vietcombank",
+        accountName: "Nguyen Van Test",
+        disbursementDate: "2025-01-15",
+        loanCode: "SHB123456",
+        currentStep: 8,
+        isRegistered: true,
+        idIssueDate: "2020-01-15",
+        idIssuePlace: "TP. Hồ Chí Minh"
+      };
+
+      // Encrypt and save
+      const encrypted = CryptoJS.AES.encrypt(
+        JSON.stringify(mockData), 
+        'shinhan-secret-key'
+      ).toString();
+      
+      localStorage.setItem('userData', encrypted);
+      
+      alert('✅ Đã tạo mock data thành công!\nVui lòng reload để xem.');
+      reloadData();
+    }
+
+    // Clear data
+    function clearData() {
+      if (confirm('Bạn có chắc muốn xóa userData?')) {
+        localStorage.removeItem('userData');
+        alert('✅ Đã xóa userData');
+        reloadData();
+      }
+    }
+
+    // Init
+    window.onload = function() {
+      userData = loadUserData();
+      if (userData) {
+        displayUserData(userData);
+        displayRawData(userData);
+      } else {
+        document.getElementById('userDataBody').innerHTML = 
+          '<tr><td colspan="3" class="default">⚠️ Không có dữ liệu. Click "Create Mock Data" để test.</td></tr>';
+      }
+    };
+  </script>
+</head>
+<body>
+  <h1>🧪 Test UserData Display</h1>
+  
+  <div class="section" style="background: #dbeafe; border-left: 4px solid #00468F;">
+    <h3 style="margin: 0 0 10px 0; color: #00468F;">📋 Mục đích test</h3>
+    <p style="margin: 0;">
+      File này giúp kiểm tra xem userData từ localStorage có được load và hiển thị đúng 
+      trên các trang step6, step7, step8 hay không. Tất cả các trường <span style="color: #dc2626;">*</span> 
+      (required) phải có giá trị.
+    </p>
+  </div>
+
+  <!-- Placeholder divs will be filled by JavaScript -->
+  <div id="storageStatus"></div>
+  <div id="userDataTable"></div>
+  <div id="testResults"></div>
+  <div id="rawData"></div>
+
+</body>
+</html>
