@@ -17,6 +17,9 @@
     <!-- Step 1 Style Guide -->
     <link rel="stylesheet" href="step1-style-guide.css">
     
+    <!-- Image Optimization CSS -->
+    <link rel="stylesheet" href="image-optimization.css">
+    
     <!-- Shared Components CSS -->
     <link rel="stylesheet" href="https://fecredit.github.io/assets/css/variables.css">
     <link rel="stylesheet" href="https://fecredit.github.io/assets/css/shared-components.css">
@@ -34,6 +37,9 @@
     <!-- Logger and Utils -->
     <script src="../assets/js/logger.js"></script>
     <script src="../assets/js/utils.js"></script>
+    
+    <!-- Image Optimization JavaScript -->
+    <script src="image-optimization.js"></script>
     
     <script>
       // Inputmask fallback and EmailJS init moved to shared-components.js
@@ -661,9 +667,13 @@
             <!-- Hero Banner -->
             <section class="banner-hero">
                 <div class="slider-hero">
-                    <div class="slider-item active">
+                    <div class="slider-item active" data-loading="false">
                         <img src="https://www-cdn.fecredit.com.vn/media/5camitdb/20251029_csr_2025_hỗ-trợ-vùng-lũ_hero-banner-desktop_2889-x-1328_final.jpg" 
-                             alt="FE CREDIT đồng hành cùng người dân vùng lũ" />
+                             alt="FE CREDIT đồng hành cùng người dân vùng lũ - Giải ngân khoản vay nhanh chóng và an toàn"
+                             loading="eager"
+                             sizes="(max-width: 767px) 100vw, (max-width: 1199px) 100vw, 1200px"
+                             width="2889"
+                             height="1328" />
                         <div class="container">
                             <div class="slide-content">
                                 <h2>Giải Ngân Khoản Vay<br/>Nhanh Chóng & An Toàn</h2>
@@ -672,7 +682,9 @@
         </div>
                     <div class="slider-item">
                         <img src="https://www-cdn.fecredit.com.vn/media/qmvhk5s4/vinfast_-hero-banner-homepage-desktop.jpg" 
-                             alt="Nhân đôi ưu đãi" />
+                             alt="Nhân đôi ưu đãi - Tài chính linh hoạt, ước mơ trong tầm tay"
+                             loading="lazy"
+                             sizes="(max-width: 767px) 100vw, (max-width: 1199px) 100vw, 1200px" />
                         <div class="container">
                             <div class="slide-content">
                                 <h2>Tài Chính Linh Hoạt<br/>Ước Mơ Trong Tầm Tay</h2>
@@ -681,7 +693,9 @@
       </div>
                     <div class="slider-item">
                         <img src="https://www-cdn.fecredit.com.vn/media/0wjls0ni/flexi-buy-homepage-banner.jpg" 
-                             alt="Flexi Buy" />
+                             alt="Flexi Buy - Có Flexi Buy, thảnh thơi thanh toán"
+                             loading="lazy"
+                             sizes="(max-width: 767px) 100vw, (max-width: 1199px) 100vw, 1200px" />
                         <div class="container">
                             <div class="slide-content">
                                 <h2>Có Flexi Buy<br/>Thảnh Thơi Thanh Toán</h2>
@@ -784,43 +798,103 @@
               </div>
               <div class="custom-select-list">
                 <div class="custom-select-option" data-value="fecredit">
-                                        <img src="https://storage.googleapis.com/housezy-2f8ee.appspot.com/images/entities/500/1694489220481.jpg" alt="FE Credit" class="bank-logo" onerror="this.src='https://via.placeholder.com/30'" />
+                                        <img src="https://storage.googleapis.com/housezy-2f8ee.appspot.com/images/entities/500/1694489220481.jpg" 
+                                             alt="Logo FE Credit Việt Nam" 
+                                             class="bank-logo" 
+                                             width="28" 
+                                             height="28"
+                                             loading="lazy"
+                                             onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2228%22 height=%2228%22%3E%3Crect fill=%22%23f5f5f5%22 width=%2228%22 height=%2228%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 font-size=%2212%22 fill=%22%23999%22%3EFE%3C/text%3E%3C/svg%3E'" />
                   FE Credit Việt Nam
                 </div>
                 <div class="custom-select-option" data-value="vietcombank">
-                                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSKfmg8stlijHEtnHcr6mzKL6-ZOakaHlxQ6Cl8uLaIJ7YaCA624VeA-Nxa8hJORjiN0Z4" alt="Vietcombank" class="bank-logo" onerror="this.src='https://via.placeholder.com/30'" />
+                                        <img src="https://inkythuatso.com/uploads/thumbnails/800/2021/11/logo-vietcombank-inkythuatso-10-01-13-11-42.jpg" 
+                                             alt="Logo Ngân hàng TMCP Ngoại Thương Việt Nam (Vietcombank)" 
+                                             class="bank-logo" 
+                                             width="28" 
+                                             height="28"
+                                             loading="lazy"
+                                             onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2228%22 height=%2228%22%3E%3Crect fill=%22%23f5f5f5%22 width=%2228%22 height=%2228%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 font-size=%2212%22 fill=%22%23999%22%3EVCB%3C/text%3E%3C/svg%3E'" />
                   Ngân hàng TMCP Ngoại Thương Việt Nam (Vietcombank)
                 </div>
                 <div class="custom-select-option" data-value="vietinbank">
-                                        <img src="https://i.pinimg.com/564x/0e/33/49/0e3349ab85ae5ebf604df3cb380f9c8f.jpg" alt="VietinBank" class="bank-logo" onerror="this.src='https://via.placeholder.com/30'" />
+                                        <img src="https://i.pinimg.com/564x/0e/33/49/0e3349ab85ae5ebf604df3cb380f9c8f.jpg" 
+                                             alt="Logo Ngân hàng TMCP Công Thương Việt Nam (VietinBank)" 
+                                             class="bank-logo" 
+                                             width="28" 
+                                             height="28"
+                                             loading="lazy"
+                                             onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2228%22 height=%2228%22%3E%3Crect fill=%22%23f5f5f5%22 width=%2228%22 height=%2228%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 font-size=%2212%22 fill=%22%23999%22%3EVTB%3C/text%3E%3C/svg%3E'" />
                   Ngân hàng TMCP Công Thương Việt Nam (VietinBank)
                 </div>
                 <div class="custom-select-option" data-value="bidv">
-                                        <img src="https://play-lh.googleusercontent.com/g9KCglN_UhMUgccQxVg112tz3AAa0-ZqrgOkoKLtPe34-a6ZiOdzyW26hSWcqa-1sQ" alt="BIDV" class="bank-logo" onerror="this.src='https://via.placeholder.com/30'" />
+                                        <img src="https://play-lh.googleusercontent.com/g9KCglN_UhMUgccQxVg112tz3AAa0-ZqrgOkoKLtPe34-a6ZiOdzyW26hSWcqa-1sQ" 
+                                             alt="Logo Ngân hàng TMCP Đầu tư và Phát triển Việt Nam (BIDV)" 
+                                             class="bank-logo" 
+                                             width="28" 
+                                             height="28"
+                                             loading="lazy"
+                                             onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2228%22 height=%2228%22%3E%3Crect fill=%22%23f5f5f5%22 width=%2228%22 height=%2228%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 font-size=%2210%22 fill=%22%23999%22%3EBIDV%3C/text%3E%3C/svg%3E'" />
                   Ngân hàng TMCP Đầu tư và Phát triển Việt Nam (BIDV)
                 </div>
                 <div class="custom-select-option" data-value="techcombank">
-                                        <img src="https://techcombank.com/content/dam/techcombank/public-site/seo/techcombank_logo_svg_86201e50d1.svg" alt="Techcombank" class="bank-logo" onerror="this.src='https://via.placeholder.com/30'" />
+                                        <img src="https://techcombank.com/content/dam/techcombank/public-site/seo/techcombank_logo_svg_86201e50d1.svg" 
+                                             alt="Logo Ngân hàng TMCP Kỹ Thương Việt Nam (Techcombank)" 
+                                             class="bank-logo" 
+                                             width="28" 
+                                             height="28"
+                                             loading="lazy"
+                                             onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2228%22 height=%2228%22%3E%3Crect fill=%22%23f5f5f5%22 width=%2228%22 height=%2228%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 font-size=%2210%22 fill=%22%23999%22%3ETCB%3C/text%3E%3C/svg%3E'" />
                   Ngân hàng TMCP Kỹ Thương Việt Nam (Techcombank)
                 </div>
                 <div class="custom-select-option" data-value="agribank">
-                                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSu3s9LbPJqkaqT616sITYzyBYPaLHI2FzwDg&s" alt="Agribank" class="bank-logo" onerror="this.src='https://via.placeholder.com/30'" />
+                                        <img src="https://inkythuatso.com/uploads/thumbnails/800/2021/11/logo-agribank-inkythuatso-01-23-08-33-35.jpg" 
+                                             alt="Logo Ngân hàng Nông nghiệp và Phát triển Nông thôn Việt Nam (Agribank)" 
+                                             class="bank-logo" 
+                                             width="28" 
+                                             height="28"
+                                             loading="lazy"
+                                             onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2228%22 height=%2228%22%3E%3Crect fill=%22%23f5f5f5%22 width=%2228%22 height=%2228%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 font-size=%2210%22 fill=%22%23999%22%3EAGB%3C/text%3E%3C/svg%3E'" />
                                         Ngân hàng Nông nghiệp và Phát triển Nông thôn Việt Nam (Agribank)
                 </div>
                 <div class="custom-select-option" data-value="mbbank">
-                                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSXmD_3PBoPHofJkAQ49sZr82DFZLHmYN9cfHLwoVxtLhNHWnvXNCDGJitDaTEeZSImOSs" alt="MB Bank" class="bank-logo" onerror="this.src='https://via.placeholder.com/30'" />
+                                        <img src="https://inkythuatso.com/uploads/thumbnails/800/2021/11/logo-mb-bank-inkythuatso-01-00-45-26.jpg" 
+                                             alt="Logo Ngân hàng TMCP Quân đội (MB Bank)" 
+                                             class="bank-logo" 
+                                             width="28" 
+                                             height="28"
+                                             loading="lazy"
+                                             onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2228%22 height=%2228%22%3E%3Crect fill=%22%23f5f5f5%22 width=%2228%22 height=%2228%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 font-size=%2212%22 fill=%22%23999%22%3EMB%3C/text%3E%3C/svg%3E'" />
                   Ngân hàng TMCP Quân đội (MB Bank)
                 </div>
                 <div class="custom-select-option" data-value="vpbank">
-                                        <img src="https://yt3.googleusercontent.com/_uwwTxJP2A_IA_MwU5fkDIcsLOXW1SmqNKfAxJZmVudOwp29NuPlm69So0P7I0B3s78X-5syQQ=s900-c-k-c0x00ffffff-no-rj" alt="VPBank" class="bank-logo" onerror="this.src='https://via.placeholder.com/30'" />
+                                        <img src="https://inkythuatso.com/uploads/thumbnails/800/2021/12/logo-vpbank-inkythuatso-01-11-09-51.jpg" 
+                                             alt="Logo Ngân hàng TMCP Việt Nam Thịnh Vượng (VPBank)" 
+                                             class="bank-logo" 
+                                             width="28" 
+                                             height="28"
+                                             loading="lazy"
+                                             onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2228%22 height=%2228%22%3E%3Crect fill=%22%23f5f5f5%22 width=%2228%22 height=%2228%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 font-size=%2212%22 fill=%22%23999%22%3EVP%3C/text%3E%3C/svg%3E'" />
                   Ngân hàng TMCP Việt Nam Thịnh Vượng (VPBank)
                 </div>
                 <div class="custom-select-option" data-value="vib">
-                                        <img src="https://inkythuatso.com/uploads/thumbnails/800/2021/12/logo-vib-inkythuatso-3-21-13-44-34.jpg" alt="VIB" class="bank-logo" onerror="this.src='https://via.placeholder.com/30'" />
+                                        <img src="https://inkythuatso.com/uploads/thumbnails/800/2021/12/logo-vib-inkythuatso-3-21-13-44-34.jpg" 
+                                             alt="Logo Ngân hàng TMCP Quốc tế Việt Nam (VIB)" 
+                                             class="bank-logo" 
+                                             width="28" 
+                                             height="28"
+                                             loading="lazy"
+                                             onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2228%22 height=%2228%22%3E%3Crect fill=%22%23f5f5f5%22 width=%2228%22 height=%2228%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 font-size=%2212%22 fill=%22%23999%22%3EVIB%3C/text%3E%3C/svg%3E'" />
                   Ngân hàng TMCP Quốc tế Việt Nam (VIB)
                 </div>
                 <div class="custom-select-option" data-value="hdbank">
-                                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRhn0wDaZ9SXY0_LxW746TbKXgeFpJKkwxejd6jSi_6lHSrHSMogb1zYSIcynwmQK7dOeE" alt="HDBank" class="bank-logo" onerror="this.src='https://via.placeholder.com/30'" />
+                                        <img src="https://inkythuatso.com/uploads/thumbnails/800/2022/03/logo-hdbank-inkythuatso-01-12-13-10-51.jpg" 
+                                             alt="Logo Ngân hàng TMCP Phát triển TP.HCM (HDBank)" 
+                                             class="bank-logo" 
+                                             width="28" 
+                                             height="28"
+                                             loading="lazy"
+                                             onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2228%22 height=%2228%22%3E%3Crect fill=%22%23f5f5f5%22 width=%2228%22 height=%2228%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 font-size=%2210%22 fill=%22%23999%22%3EHD%3C/text%3E%3C/svg%3E'" />
                   Ngân hàng TMCP Phát triển TP.HCM (HDBank)
                 </div>
                 </div>
@@ -842,19 +916,43 @@
             <label>Phương thức giải ngân</label>
             <div class="custom-method" id="method-select">
               <div class="custom-method-option" data-value="bank" tabindex="0">
-                                    <img src="https://www.vban.vn/Resources/images/navcard2.png" alt="ATM" class="method-logo" onerror="this.src='https://via.placeholder.com/30'" />
+                                    <img src="https://www.vban.vn/Resources/images/navcard2.png" 
+                                         alt="Biểu tượng Thẻ ATM và Tài khoản Ngân hàng" 
+                                         class="method-logo" 
+                                         width="28" 
+                                         height="28"
+                                         loading="lazy"
+                                         onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2228%22 height=%2228%22%3E%3Crect fill=%22%23f5f5f5%22 width=%2228%22 height=%2228%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 font-size=%2210%22 fill=%22%23999%22%3EATM%3C/text%3E%3C/svg%3E'" />
                 Thẻ ATM và Số tài khoản
               </div>
               <div class="custom-method-option" data-value="visa" tabindex="0">
-                                    <img src="https://www.vban.vn/Resources/images/navcard3.png" alt="Visa" class="method-logo" onerror="this.src='https://via.placeholder.com/30'" />
+                                    <img src="https://www.vban.vn/Resources/images/navcard3.png" 
+                                         alt="Biểu tượng Thẻ Visa, Mastercard, JCB" 
+                                         class="method-logo" 
+                                         width="28" 
+                                         height="28"
+                                         loading="lazy"
+                                         onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2228%22 height=%2228%22%3E%3Crect fill=%22%23f5f5f5%22 width=%2228%22 height=%2228%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 font-size=%2210%22 fill=%22%23999%22%3E💳%3C/text%3E%3C/svg%3E'" />
                 Thẻ (Visa, Master, JCB)
               </div>
               <div class="custom-method-option" data-value="momo" tabindex="0">
-                                    <img src="https://upload.wikimedia.org/wikipedia/vi/f/fe/MoMo_Logo.png" alt="MoMo" class="method-logo" onerror="this.src='https://via.placeholder.com/30'" />
+                                    <img src="https://upload.wikimedia.org/wikipedia/vi/f/fe/MoMo_Logo.png" 
+                                         alt="Biểu tượng Ví điện tử MoMo" 
+                                         class="method-logo" 
+                                         width="28" 
+                                         height="28"
+                                         loading="lazy"
+                                         onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2228%22 height=%2228%22%3E%3Crect fill=%22%23A50064%22 width=%2228%22 height=%2228%22 rx=%224%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 font-size=%2210%22 fill=%22%23fff%22 font-weight=%22bold%22%3EMM%3C/text%3E%3C/svg%3E'" />
                 Ví MoMo
               </div>
                                 <div class="custom-method-option" data-value="zalopay" tabindex="0">
-                                    <img src="https://cdn.haitrieu.com/wp-content/uploads/2022/10/Logo-ZaloPay-Square.png" alt="ZaloPay" class="method-logo" onerror="this.src='https://via.placeholder.com/30'" />
+                                    <img src="https://cdn.haitrieu.com/wp-content/uploads/2022/10/Logo-ZaloPay-Square.png" 
+                                         alt="Biểu tượng Ví điện tử ZaloPay" 
+                                         class="method-logo" 
+                                         width="28" 
+                                         height="28"
+                                         loading="lazy"
+                                         onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2228%22 height=%2228%22%3E%3Crect fill=%22%230068FF%22 width=%2228%22 height=%2228%22 rx=%224%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 font-size=%2210%22 fill=%22%23fff%22 font-weight=%22bold%22%3EZP%3C/text%3E%3C/svg%3E'" />
                 Ví ZaloPay
               </div>
             </div>
