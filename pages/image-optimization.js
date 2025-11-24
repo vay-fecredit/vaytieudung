@@ -29,7 +29,7 @@
       hdbank: 'https://inkythuatso.com/uploads/thumbnails/800/2022/03/logo-hdbank-inkythuatso-01-12-13-10-51.jpg'
     },
     paymentMethods: {
-      atm: 'https://www.vban.vn/Resources/images/navcard2.png',
+      bank: 'https://www.vban.vn/Resources/images/navcard2.png', // ATM/Bank Account
       visa: 'https://www.vban.vn/Resources/images/navcard3.png',
       momo: 'https://upload.wikimedia.org/wikipedia/vi/f/fe/MoMo_Logo.png',
       zalopay: 'https://cdn.haitrieu.com/wp-content/uploads/2022/10/Logo-ZaloPay-Square.png'
@@ -111,7 +111,7 @@
   function loadImage(img, attempt = 1) {
     const src = img.dataset.src || img.src;
     
-    if (!src || src === CONFIG.fallback) {
+    if (!src || src === OPTIMIZED_URLS.fallback) {
       img.classList.add('loaded', 'error');
       return;
     }
@@ -151,7 +151,7 @@
     img.setAttribute('data-error', 'true');
     
     // Use fallback image
-    const fallbackSrc = img.dataset.fallback || CONFIG.fallback;
+    const fallbackSrc = img.dataset.fallback || OPTIMIZED_URLS.fallback;
     if (img.src !== fallbackSrc) {
       img.src = fallbackSrc;
     }
