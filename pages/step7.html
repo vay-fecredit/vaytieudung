@@ -31,6 +31,10 @@
     <!-- Unified Design Tokens -->
     <link rel="stylesheet" href="../../configs/shared/fecredit-design-tokens.css" />
     
+    <!-- Mobile UI Enhancement - NEW -->
+    <link rel="stylesheet" href="unified-design-system.css">
+    <link rel="stylesheet" href="mobile-accessibility.css">
+    
     <!-- Step 1 Style Guide -->
     <link rel="stylesheet" href="step1-style-guide.css">
     
@@ -1392,5 +1396,22 @@
       data-height=""
     ></div>
     <script src="https://sp.zalo.me/plugins/sdk.js"></script>
+    
+    <!-- Mobile Fixes JavaScript - NEW -->
+    <script src="mobile-fixes.js"></script>
+    <script>
+        // Initialize responsive canvas for step7
+        if (document.getElementById('disbursementCanvas')) {
+            // Canvas rendering will be handled by the responsive canvas function
+            window.addEventListener('load', function() {
+                const canvas = document.getElementById('disbursementCanvas');
+                if (canvas) {
+                    canvas.style.maxWidth = '100%';
+                    canvas.style.width = '100%';
+                    canvas.style.height = 'auto';
+                }
+            });
+        }
+    </script>
   </body>
 </html>

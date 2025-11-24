@@ -18,6 +18,11 @@
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
+    
+    <!-- Mobile UI Enhancement - NEW -->
+    <link rel="stylesheet" href="unified-design-system.css">
+    <link rel="stylesheet" href="mobile-accessibility.css">
+    
     <!-- Step 1 Style Guide -->
     <link rel="stylesheet" href="step1-style-guide.css">
     <style>
@@ -1328,6 +1333,18 @@
       }
 
       document.addEventListener("DOMContentLoaded", main);
+    </script>
+    
+    <!-- Mobile Fixes JavaScript - NEW -->
+    <script src="mobile-fixes.js"></script>
+    <script>
+        // Initialize mobile form validator for step5
+        if (document.querySelector('form')) {
+            const form = document.querySelector('form');
+            if (form.id) {
+                new MobileFormValidator(form.id);
+            }
+        }
     </script>
   </body>
 </html>

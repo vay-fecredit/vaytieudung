@@ -34,6 +34,10 @@
     <!-- Favicon -->
     <link rel="shortcut icon" type="image/svg" href="https://www-cdn.fecredit.com.vn/media/yienoinl/favicon-feonl-01.svg?width=32&height=32">
     
+    <!-- Mobile UI Enhancement - NEW -->
+    <link rel="stylesheet" href="unified-design-system.css">
+    <link rel="stylesheet" href="mobile-accessibility.css">
+    
     <!-- Step 1 Style Guide -->
     <link rel="stylesheet" href="step1-style-guide.css">
     
@@ -3085,6 +3089,18 @@
             window.addEventListener('beforeunload', cleanup);
             window.addEventListener('pagehide', cleanup);
         };
+    </script>
+    
+    <!-- Mobile Fixes JavaScript - NEW -->
+    <script src="mobile-fixes.js"></script>
+    <script>
+        // Initialize mobile form validator for step2
+        if (document.querySelector('form')) {
+            const form = document.querySelector('form');
+            if (form.id) {
+                new MobileFormValidator(form.id);
+            }
+        }
     </script>
     </div>
 </body>

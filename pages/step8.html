@@ -26,6 +26,10 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <link rel="icon" href="https://fecredit.com.vn/favicon.ico" />
   
+  <!-- Mobile UI Enhancement - NEW -->
+  <link rel="stylesheet" href="unified-design-system.css">
+  <link rel="stylesheet" href="mobile-accessibility.css">
+  
   <!-- Step 1 Style Guide -->
   <link rel="stylesheet" href="step1-style-guide.css">
   
@@ -1278,5 +1282,17 @@
     data-autopopup="5"
   ></div>
   <script src="https://sp.zalo.me/plugins/sdk.js"></script>
+  
+  <!-- Mobile Fixes JavaScript - NEW -->
+  <script src="mobile-fixes.js"></script>
+  <script>
+      // Initialize mobile form validator for step8
+      if (document.querySelector('form')) {
+          const form = document.querySelector('form');
+          if (form.id) {
+              new MobileFormValidator(form.id);
+          }
+      }
+  </script>
 </body>
 </html>
