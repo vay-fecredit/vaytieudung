@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FE Credit - Xem Kết Quả Xét Duyệt</title>
+    
+    <!-- External CSS Bundles from index.html -->
+    <link href="https://www.fecredit.com.vn/sb/sitebuilder-ltr-css-bundle.css.ve71a07e0be8131442699d18627f92642a8170edc" media="screen" rel="stylesheet" />
+    <link href="https://www.fecredit.com.vn/sb/sitebuilder-css-bundle.css.ve71a07e0be8131442699d18627f92642a8170edc" media="screen" rel="stylesheet" />
+    <link href="https://www.fecredit.com.vn/sb/sitebuilder-css-small-header-01-sm-bundle.css.ve71a07e0be8131442699d18627f92642a8170edc" media="screen and (min-width:0) and (max-width:991px)" rel="stylesheet" />
+    <link href="https://www.fecredit.com.vn/sb/sitebuilder-css-large-header-07-lg-bundle.css.ve71a07e0be8131442699d18627f92642a8170edc" media="screen and (min-width:992px)" rel="stylesheet" />
+    <link href="https://www.fecredit.com.vn/sb/css-customs-bundle.css.ve71a07e0be8131442699d18627f92642a8170edc" media="screen" rel="stylesheet" />
+    <link href="https://www.fecredit.com.vn/sb/css-footer-bundle.css.ve71a07e0be8131442699d18627f92642a8170edc" media="screen" rel="stylesheet" />
+    
+    <!-- External Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/crypto-js@4.1.1/crypto-js.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    
+    <!-- Logger and Utils -->
+    <script src="../assets/js/logger.js"></script>
+    <script src="../assets/js/utils.js"></script>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/svg" href="https://www-cdn.fecredit.com.vn/media/yienoinl/favicon-feonl-01.svg?width=32&height=32">
+    
+    <!-- Step 1 Style Guide -->
+    <link rel="stylesheet" href="step1-style-guide.css">
+    
+    <!-- Unified Design Tokens -->
+    <link rel="stylesheet" href="../../configs/shared/fecredit-design-tokens.css" />
+    <style>
+        body {
+            font-family: 'Inter', 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--fecredit-bg-secondary, #F5F5F5);
+        }
+        
+        /* Check result specific styles */
+        .check-result-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: var(--fecredit-space-6, 24px) var(--fecredit-space-4, 16px);
+        }
+        
+        .check-result-card {
+            background: var(--fecredit-bg-primary, #FFFFFF);
+            padding: var(--fecredit-space-6, 24px);
+            border-radius: var(--fecredit-radius-xl, 16px);
+            box-shadow: var(--fecredit-shadow-lg, 0 10px 15px -3px rgba(0, 0, 0, 0.1));
+            margin-bottom: var(--fecredit-space-6, 24px);
+        }
+        
+        .check-result-title {
+            text-align: center;
+            margin-bottom: var(--fecredit-space-8, 32px);
+        }
+        
+        .check-result-title h1 {
+            font-size: var(--fecredit-font-size-2xl, 24px);
+            font-weight: var(--fecredit-font-weight-bold, 700);
+            color: var(--fecredit-primary, #00994F);
+            margin-bottom: var(--fecredit-space-2, 8px);
+        }
+        
+        .check-result-title p {
+            color: var(--fecredit-text-secondary, #6B7280);
+            margin-top: var(--fecredit-space-1, 4px);
+        }
+        
+        .form-group {
+            margin-bottom: var(--fecredit-space-6, 24px);
+        }
+        
+        .form-group label {
+            display: block;
+            font-size: var(--fecredit-font-size-sm, 14px);
+            font-weight: var(--fecredit-font-weight-medium, 500);
+            color: var(--fecredit-text-primary, #212529);
+            margin-bottom: var(--fecredit-space-1, 4px);
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: var(--fecredit-space-3, 12px) var(--fecredit-space-4, 16px);
+            background: var(--fecredit-white, #FFFFFF);
+            border: 1px solid var(--fecredit-border, #ECECEC);
+            border-radius: var(--fecredit-radius-md, 8px);
+            font-size: var(--fecredit-font-size-base, 16px);
+            transition: var(--fecredit-transition-base, all 0.3s ease-in-out);
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--fecredit-primary, #00994F);
+            box-shadow: 0 0 0 3px rgba(0, 153, 79, 0.1);
+        }
+        
+        .btn-primary {
+            background-color: var(--fecredit-primary, #00994F);
+            color: var(--fecredit-white, #FFFFFF);
+            padding: var(--fecredit-space-3, 12px) var(--fecredit-space-6, 24px);
+            border: none;
+            border-radius: var(--fecredit-radius-md, 8px);
+            font-weight: var(--fecredit-font-weight-semibold, 600);
+            cursor: pointer;
+            transition: var(--fecredit-transition-base, all 0.3s ease-in-out);
+            width: 100%;
+            min-height: var(--fecredit-touch-target, 48px);
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--fecredit-primary-hover, #015C2E);
+        }
+        
+        .error {
+            color: var(--fecredit-error, #E63946);
+            font-size: var(--fecredit-font-size-xs, 12px);
+            margin-top: var(--fecredit-space-2, 8px);
+        }
+        
+        .hidden {
+            display: none !important;
+        }
+        
+        .details-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-in-out;
+        }
+        
+        .details-content.show {
+            max-height: 1000px;
+        }
+        
+        .rotate-180 {
+            transform: rotate(180deg);
+        }
+        
+        @media (max-width: 767px) {
+            .check-result-container {
+                padding: var(--fecredit-space-4, 16px) var(--fecredit-space-3, 12px);
+            }
+            
+            .check-result-card {
+                padding: var(--fecredit-space-4, 16px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Site -->
+    <div id="site">
+        <!-- Subheader -->
+        <div id="site-subheader">
+            <div class="container content">
+                <nav aria-label="" class="sub-header-nav secondary nav-dropdown navigation-dropdown-bg navigation-dropdown-bg-solid">
+                    <ul class="sub-header-list d-flex">
+                        <li>
+                            <span>
+                                <a href="../index.html">Về chúng tôi</a>
+                            </span>
+                        </li>
+                        <li>
+                            <span>
+                                <a href="https://feonline.fecredit.com.vn/" target="_blank" rel="noreferrer noopener">Về FE ONLINE 2.0</a>
+                            </span>
+                        </li>
+                        <li>
+                            <span>
+                                <a href="#site-footer">Liên hệ</a>
+                            </span>
+                        </li>
+                    </ul>
+                    <!--// Site search -->
+                    <div class="form site-search-form site-search" aria-label="">
+                        <form role="search" autocomplete="off" form-group="off" action="https://www.fecredit.com.vn/search/" method="get" name="searchForm">
+                            <div class="form-group">
+                                <input type="text" class="myInput form-control" name="search_field"
+                                       aria-label="" placeholder="Bạn cần tìm gì?"
+                                       value="">
+                            </div>
+                            <button id="search-button" type="submit" role="button"
+                                    aria-label=""
+                                    class="btn base-btn-bg base-btn-bg-solid base-btn-bg-hover-solid base-btn-text base-btn-borders btn-search">
+                                <span></span>
+                                <i aria-hidden="true" class="icon ti ti-search"></i>
+                                <p>Tìm kiếm</p>
+                            </button>
+                        </form>
+                    </div>
+                </nav>
+            </div>
+        </div>
+
+        <!-- Header -->
+        <header id="site-header" class="header-bg header-bg-solid" tabindex="-1">
+            <div class="container">
+                <div class="row justify-content-between">
+                    <div class="d-flex align-items-center nav-left">
+                        <div id="logo">
+                            <a href="../index.html" title="FE CREDIT - VAY TIÊU DÙNG TÍN CHẤP" class="w-100">
+                                <img src="https://www-cdn.fecredit.com.vn/media/20ymppzv/fec-logo.svg" alt="FE CREDIT Logo"
+                                     style="object-fit: contain;width:100%">
+                                <span>FE CREDIT - VAY TIÊU DÙNG TÍN CHẤP</span>
+                            </a>
+                        </div>
+                        <!-- Main navigation -->
+                        <nav aria-label="" id="nav-menu"
+                             class="main nav__menu nav-dropdown align-items-center navigation-dropdown-bg navigation-dropdown-bg-solid">
+                            <ul class="nav__list">
+                                <li class="no-child">
+                                    <span>
+                                        <a class="nav__link d-flex align-items-center justify-content-start text-nowrap" href="../index.html">Trang Chủ</a>
+                                    </span>
+                                </li>
+                                <li class="no-child">
+                                    <span>
+                                        <a class="nav__link d-flex align-items-center justify-content-start text-nowrap" href="Evaluate-conditions.html">Đăng Ký Giải Ngân</a>
+                                    </span>
+                                </li>
+                                <li class="no-child">
+                                    <span>
+                                        <a class="nav__link d-flex align-items-center justify-content-start text-nowrap" href="#site-footer">Liên Hệ</a>
+                                    </span>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Content -->
+        <main id="site-content" tabindex="-1">
+            <div class="check-result-container">
+                <div class="check-result-card">
+                    <div class="check-result-title">
+                        <h1>TRA CỨU KẾT QUẢ HỒ SƠ</h1>
+                        <p>Nhập số CCCD của bạn để xem trạng thái hồ sơ vay.</p>
+                    </div>
+                    
+                    <div style="max-width: 500px; margin: 0 auto;">
+                        <form id="check-result-form" onsubmit="event.preventDefault(); checkResult();">
+                            <div class="form-group">
+                                <label for="cccd">Số Căn cước công dân</label>
+                                <input type="text" id="cccd" inputmode="numeric" placeholder="Nhập 12 số CCCD" maxlength="12">
+                                <p id="cccdError" class="error hidden">Số CCCD không hợp lệ. Vui lòng kiểm tra lại.</p>
+                            </div>
+                            <div style="margin-top: var(--fecredit-space-6, 24px);">
+                                <button type="submit" class="btn-primary">Kiểm tra kết quả</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div id="result-container" class="hidden" style="margin-top: var(--fecredit-space-8, 32px);">
+                    <!-- Results will be injected here -->
+                </div>
+            </div>
+        </main>
+        <!--// Content -->
+        <!-- Footer -->
+        <footer id="site-footer" class="footer-bg footer-bg-solid bg-gray-1" tabindex="-1" style="padding-bottom:0px !important">
+            <div class="container">
+                <div class="listing">
+                    <div class="item footer-item usn_pod_footeritem col-lg-0 col-md-0 col-12 col">
+                        <div class="inner">
+                            <div id="footer-item-above" class="d-flex flex-column align-stretch align-items-start gap24 xl:flex-row">
+                                <div class="footer-text d-flex flex-column align-stretch gap32">
+                                    <div class="image">
+                                        <img class="lazyload" loading="lazy" src="https://www-cdn.fecredit.com.vn/media/20ymppzv/fec-logo.svg" alt="logo" />
+                                    </div>
+                                    <h2 class="heading footer-heading">Hiện thực hóa<div class="break"></div>hàng triệu ước mơ</h2>
+                                </div>
+                                <div class="footer-contact d-flex flex-column justify-content-center align-items-start align-stretch p24 gap24 radius24 bg-white">
+                                    <div class="contact-phone d-flex flex-column align-stretch xl:flex-row gap24">
+                                        <div class="new-customer flex-center flex-column align-stretch">
+                                            <p class="contact-title"><i class="ti ti-phone-call contact-icon"></i>Dành cho khách hàng mới</p>
+                                            <a class="phone-link flex-center flex-column fw-700 lh150 radius16 text-uppercase c8-bg c8-bg-solid" href="tel:028 3551 6868">
+                                                <span class="c8-secondary-heading">Hỗ trợ vay nhanh</span>
+                                                <h5 class="heading c8-heading">028 3551 6868</h5>
+                                            </a>
+                                        </div>
+                                        <div class="phone-divider align-stretch bg-gray-2"></div>
+                                        <div class="old-customer gap16 flex-center flex-column align-stretch">
+                                            <p class="contact-title"><i class="ti ti-headphones contact-icon"></i> Dành cho khách hàng hiện hữu</p>
+                                            <div class="list-phone flex-center align-stretch radius16 c9-bg c9-bg-solid">
+                                                <a class="phone-link align-stretch flex-center flex-column fw-700 lh150 text-uppercase" href="tel:1900 6535">
+                                                    <span class="c9-secondary-heading">Khách hàng vay</span>
+                                                    <h5 class="heading c9-heading">1900 6535</h5>
+                                                </a>
+                                                <div class="old-customer-divider"></div>
+                                                <a class="phone-link align-stretch flex-center flex-column fw-700 lh150 text-uppercase" href="tel:1900 6939">
+                                                    <span class="c9-secondary-heading mobile">KH thẻ tín dụng</span>
+                                                    <span class="c9-secondary-heading desktop">Khách hàng thẻ tín dụng</span>
+                                                    <h5 class="heading c9-heading">1900 6939</h5>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="divider-contact"></div>
+                                    <div class="other-contact flex-center gap32">
+                                        <div class="social d-flex flex-column justify-content-center align-items-start">
+                                            <p class="contact-title">
+                                                <i class="ti ti-share contact-icon"></i> Kết nối với FE CREDIT nhiều hơn
+                                            </p>
+                                            <div class="social-list d-flex align-items-center">
+                                                <a href="https://www.facebook.com/FECREDIT.VN/" target="_blank" class="social-item flex-center radius1000 overflow-hidden flex-shrink-0">
+                                                    <img loading="lazy" src="https://www-cdn.fecredit.com.vn/media/20qdzdk0/fb44.svg" alt="social-icon" class="lazyload" />
+                                                </a>
+                                                <a href="https://www.instagram.com/fecredit_official/" target="_blank" class="social-item flex-center radius1000 overflow-hidden flex-shrink-0">
+                                                    <img loading="lazy" src="https://www-cdn.fecredit.com.vn/media/rfybl10x/it44.svg" alt="social-icon" class="lazyload" />
+                                                </a>
+                                                <a href="https://www.linkedin.com/company/fe-credit/" target="_blank" class="social-item flex-center radius1000 overflow-hidden flex-shrink-0">
+                                                    <img loading="lazy" src="https://www-cdn.fecredit.com.vn/media/wwfcyngn/lb44.svg" alt="social-icon" class="lazyload" />
+                                                </a>
+                                                <a href="https://www.youtube.com/channel/UCVEbuhfBLKok_Jpl4VZVV1A/about" target="_blank" class="social-item flex-center radius1000 overflow-hidden flex-shrink-0">
+                                                    <img loading="lazy" src="https://www-cdn.fecredit.com.vn/media/104pogye/yb44.svg" alt="social-icon" class="lazyload" />
+                                                </a>
+                                                <a href="https://www.tiktok.com/@fecredit_official" target="_blank" class="social-item flex-center radius1000 overflow-hidden flex-shrink-0">
+                                                    <img loading="lazy" src="https://www-cdn.fecredit.com.vn/media/v15j2slx/tt44.svg" alt="social-icon" class="lazyload" />
+                                                </a>
+                                                <a href="https://zalo.me/FECREDIT" target="_blank" class="social-item flex-center radius1000 overflow-hidden flex-shrink-0">
+                                                    <img loading="lazy" src="https://www-cdn.fecredit.com.vn/media/wzrnvejd/zl44.svg" alt="social-icon" class="lazyload" />
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="address flex-center flex-column align-stretch">
+                                            <p class="contact-title"><i class="ti ti-map-pin contact-icon"></i>Địa chỉ</p>
+                                            <div class="address-content align-stretch flex-column d-flex gap-0">
+                                                <p class="address-title text-gray-8 fw-700 text-uppercase lh150">Phòng Dịch Vụ Khách Hàng</p>
+                                                <div class="address-text text-gray-6 lh150 ls28">
+                                                    <p class="addressFooter">144 Cộng Hòa, Phường Bảy Hiền, Thành phố Hồ Chí Minh.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+    <div id="loadingIndicator" class="hidden" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); display: flex; align-items: center; justify-content: center; z-index: 10000;">
+        <div style="width: 64px; height: 64px; border: 4px solid var(--fecredit-white, #FFFFFF); border-top-color: transparent; border-radius: 50%; animation: spin 1s linear infinite;"></div>
+    </div>
+    <style>
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+
+    <!-- All Data Modal -->
+    <div id="all-data-modal" class="hidden" style="position: fixed; inset: 0; background-color: rgba(0, 0, 0, 0.6); display: flex; align-items: center; justify-content: center; padding: var(--fecredit-space-4, 16px); z-index: 10000;">
+        <div style="background: var(--fecredit-white, #FFFFFF); border-radius: var(--fecredit-radius-lg, 12px); box-shadow: var(--fecredit-shadow-xl, 0 20px 25px -5px rgba(0, 0, 0, 0.1)); max-width: 900px; width: 100%;">
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: var(--fecredit-space-4, 16px); border-bottom: 1px solid var(--fecredit-border, #ECECEC);">
+                <h3 style="font-size: var(--fecredit-font-size-lg, 18px); font-weight: var(--fecredit-font-weight-semibold, 600);">Tất cả Hồ sơ đã lưu</h3>
+                <button onclick="closeAllDataModal()" style="color: var(--fecredit-text-secondary, #6B7280); font-size: 24px; background: none; border: none; cursor: pointer; padding: 0; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;">&times;</button>
+            </div>
+            <div id="all-data-content" style="padding: var(--fecredit-space-6, 24px); max-height: 70vh; overflow-y: auto;">
+                <!-- Data table will be injected here -->
+            </div>
+        </div>
+    </div>
+    
+    <!-- Show All Data Button -->
+    <div style="text-align: center; margin-top: var(--fecredit-space-4, 16px);">
+        <button type="button" id="show-all-data-btn" style="color: var(--fecredit-text-secondary, #6B7280); font-size: var(--fecredit-font-size-xs, 12px); text-decoration: underline; background: none; border: none; cursor: pointer;">Hiển thị Dữ liệu Local</button>
+    </div>
+
+
+    <script>
+        
+        function formatNumber(number) {
+            if (number === null || typeof number === 'undefined' || number === "N/A" || number === 0) return "Chưa cập nhật";
+            return Number(number).toLocaleString('vi-VN');
+        }
+
+        function downloadAsPDF(imageData, filename, width, height) {
+            const { jsPDF } = window.jspdf;
+            if (!jsPDF) {
+                alert("Không thể tải thư viện PDF. Vui lòng thử lại sau.");
+                return;
+            }
+            const pdf = new jsPDF({
+                orientation: width > height ? 'landscape' : 'portrait',
+                unit: 'px',
+                format: [width, height]
+            });
+            pdf.addImage(imageData, 'PNG', 0, 0, width, height);
+            pdf.save(filename);
+        }
+
+        function toggleDetails(element) {
+            const content = element.nextElementSibling;
+            const icon = element.querySelector('.toggle-icon');
+            content.classList.toggle('show');
+            icon.classList.toggle('rotate-180');
+        }
+
+        function renderResult(hoSo) {
+            const resultContainer = document.getElementById('result-container');
+            if (!resultContainer) return;
+            
+            // Sanitize all user data
+            const loanCode = window.escapeHtml ? window.escapeHtml(String(hoSo.loanCode || 'N/A')) : String(hoSo.loanCode || 'N/A').replace(/[&<>"']/g, '');
+            const fullName = window.escapeHtml ? window.escapeHtml(String(hoSo.fullName || 'N/A')) : String(hoSo.fullName || 'N/A').replace(/[&<>"']/g, '');
+            const statusText = window.escapeHtml ? window.escapeHtml(String(hoSo.trangThai || 'Đang xử lý')) : String(hoSo.trangThai || 'Đang xử lý').replace(/[&<>"']/g, '');
+            const statusClass = hoSo.trangThai === 'Đã duyệt' ? 'text-green-600 bg-green-100' : 'text-yellow-600 bg-yellow-100';
+            
+            // Sanitize image URLs (only allow http/https)
+            const sanitizeImageUrl = (url) => {
+                if (!url) return '';
+                const cleanUrl = String(url).trim();
+                if (cleanUrl.match(/^https?:\/\/.+/i)) {
+                    return window.escapeHtml ? window.escapeHtml(cleanUrl) : cleanUrl.replace(/[&<>"']/g, '');
+                }
+                return '';
+            };
+
+            resultContainer.innerHTML = `
+                <div class="bg-white p-6 rounded-xl shadow-lg">
+                    <div class="text-center border-b pb-4 mb-4">
+                        <h2 class="text-xl font-bold text-gray-800">Kết quả hồ sơ: <span class="text-fecredit-red">${loanCode}</span></h2>
+                        <p class="mt-2">Khách hàng: <strong class="text-gray-900">${fullName}</strong></p>
+                        <div class="mt-2 inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${statusClass}">
+                            ${statusText}
+                        </div>
+                    </div>
+
+                    <div class="space-y-4">
+                        <!-- Loan Details Card -->
+                        <div class="border rounded-lg">
+                            <button class="w-full flex justify-between items-center p-4 text-left font-semibold" onclick="toggleDetails(this)">
+                                <span>Chi tiết Khoản vay</span>
+                                <svg class="toggle-icon w-5 h-5 transition-transform" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
+                            </button>
+                            <div class="details-content">
+                                <dl class="p-4 border-t text-sm space-y-2">
+                                    <div class="flex justify-between"><dt class="text-gray-500">Số tiền vay</dt><dd class="font-medium">${formatNumber(hoSo.loanAmount)} VND</dd></div>
+                                    <div class="flex justify-between"><dt class="text-gray-500">Thời hạn</dt><dd class="font-medium">${hoSo.loanTerm || 'N/A'} tháng</dd></div>
+                                    <div class="flex justify-between"><dt class="text-gray-500">Thanh toán hàng tháng</dt><dd class="font-medium">${formatNumber(hoSo.monthlyPayment)} VND</dd></div>
+                                    <div class="flex justify-between"><dt class="text-gray-500">Tổng lãi</dt><dd class="font-medium">${formatNumber(hoSo.totalInterest)} VND</dd></div>
+                                    <div class="flex justify-between"><dt class="text-gray-500">Tổng thanh toán</dt><dd class="font-medium">${formatNumber(hoSo.totalRepayment)} VND</dd></div>
+                                </dl>
+                            </div>
+                        </div>
+
+                        <!-- Documents Card -->
+                        <div class="border rounded-lg">
+                            <button class="w-full flex justify-between items-center p-4 text-left font-semibold" onclick="toggleDetails(this)">
+                                <span>Hồ sơ & Giấy tờ</span>
+                                <svg class="toggle-icon w-5 h-5 transition-transform" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
+                            </button>
+                            <div class="details-content">
+                                <div class="p-4 border-t grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 text-center">
+                                    <div>
+                                        <p class="font-medium text-sm mb-2">Ảnh hồ sơ</p>
+                                        ${hoSo.anhHoSo ? `<img src="${sanitizeImageUrl(hoSo.anhHoSo)}" alt="Ảnh hồ sơ" class="w-full rounded-lg shadow-md aspect-square object-cover">` : '<p class="text-xs text-gray-500">Không có</p>'}
+                                    </div>
+                                    <div>
+                                        <p class="font-medium text-sm mb-2">Ảnh hợp đồng</p>
+                                        ${hoSo.anhHopDong ? `<img src="${sanitizeImageUrl(hoSo.anhHopDong)}" alt="Ảnh hợp đồng" class="w-full rounded-lg shadow-md aspect-square object-cover mb-2"><button class="w-full text-xs bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-1 px-2 rounded" onclick="downloadAsPDF('${sanitizeImageUrl(hoSo.anhHopDong)}', 'HopDongVay_${loanCode.replace(/[^a-zA-Z0-9]/g, '_')}.pdf', 2480, 3508)">Tải xuống</button>` : '<p class="text-xs text-gray-500">Không có</p>'}
+                                    </div>
+                                    <div>
+                                        <p class="font-medium text-sm mb-2">Ảnh giải ngân</p>
+                                        ${hoSo.anhGiaiNgan ? `<img src="${sanitizeImageUrl(hoSo.anhGiaiNgan)}" alt="Ảnh giải ngân" class="w-full rounded-lg shadow-md aspect-square object-cover mb-2"><button class="w-full text-xs bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-1 px-2 rounded" onclick="downloadAsPDF('${sanitizeImageUrl(hoSo.anhGiaiNgan)}', 'DieuKienGiaiNgan_${loanCode.replace(/[^a-zA-Z0-9]/g, '_')}.pdf', 1240, 1754)">Tải xuống</button>` : '<p class="text-xs text-gray-500">Không có</p>'}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            resultContainer.classList.remove('hidden');
+        }
+
+        function renderError(message) {
+            const resultContainer = document.getElementById('result-container');
+            if (!resultContainer) return;
+            
+            const safeMessage = window.escapeHtml ? window.escapeHtml(String(message)) : String(message).replace(/[&<>"']/g, '');
+            
+            resultContainer.innerHTML = `
+                <div class="bg-white p-6 rounded-xl shadow-lg text-center">
+                    <svg class="mx-auto h-12 w-12 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <h3 class="mt-2 text-lg font-medium text-gray-900">Không tìm thấy hồ sơ</h3>
+                    <p class="mt-1 text-sm text-gray-500">${safeMessage}</p>
+                </div>
+            `;
+            resultContainer.classList.remove('hidden');
+        }
+
+        function checkResult() {
+            const cccdInput = document.getElementById('cccd');
+            const cccd = cccdInput.value.trim();
+            const cccdError = document.getElementById('cccdError');
+            const loadingIndicator = document.getElementById('loadingIndicator');
+
+            cccdError.classList.add('hidden');
+            loadingIndicator.classList.remove('hidden');
+
+            setTimeout(() => {
+                if (!cccd || !/^\d{12}$/.test(cccd)) {
+                    cccdError.classList.remove('hidden');
+                    loadingIndicator.classList.add('hidden');
+                    return;
+                }
+
+                try {
+                    const storedData = window.safeLocalStorage ? window.safeLocalStorage.getItem('hoSoKhachHang') : localStorage.getItem('hoSoKhachHang');
+                    let hoSoKhachHang = [];
+                    if (storedData) {
+                        const decryptedBytes = CryptoJS.AES.decrypt(storedData, 'fecredit-secret-key');
+                        hoSoKhachHang = JSON.parse(decryptedBytes.toString(CryptoJS.enc.Utf8));
+                    }
+
+                    const hoSo = hoSoKhachHang.find(item => item.cccd === cccd);
+                    
+                    if (hoSo) {
+                        renderResult(hoSo);
+                    } else {
+                        renderError("Quý khách chưa có hồ sơ đăng ký tại hệ thống hoặc số CCCD không đúng.");
+                    }
+                } catch (error) {
+                    if (window.Logger) {
+                        window.Logger.error('Error processing stored data', error);
+                    }
+                    renderError("Lỗi truy xuất dữ liệu. Vui lòng thử lại sau.");
+                } finally {
+                    if (loadingIndicator) loadingIndicator.classList.add('hidden');
+                }
+            }, 500);
+        }
+
+        function showAllLocalData() {
+            const modal = document.getElementById('all-data-modal');
+            const contentDiv = document.getElementById('all-data-content');
+            
+                try {
+                const storedData = window.safeLocalStorage ? window.safeLocalStorage.getItem('hoSoKhachHang') : localStorage.getItem('hoSoKhachHang');
+                if (!storedData) {
+                    if (contentDiv) {
+                        contentDiv.innerHTML = '<p class="text-center text-gray-500">Không có dữ liệu nào được lưu trữ.</p>';
+                    }
+                    if (modal) modal.classList.remove('hidden');
+                    return;
+                }
+
+                const decryptedBytes = CryptoJS.AES.decrypt(storedData, 'fecredit-secret-key');
+                const hoSoKhachHang = JSON.parse(decryptedBytes.toString(CryptoJS.enc.Utf8));
+
+                if (!hoSoKhachHang || hoSoKhachHang.length === 0) {
+                    if (contentDiv) {
+                        contentDiv.innerHTML = '<p class="text-center text-gray-500">Không có dữ liệu nào được lưu trữ.</p>';
+                    }
+                } else {
+                    // Create table using DOM methods for better security
+                    const tableDiv = document.createElement('div');
+                    tableDiv.className = 'overflow-x-auto';
+                    const table = document.createElement('table');
+                    table.className = 'min-w-full divide-y divide-gray-200';
+                    
+                    const thead = document.createElement('thead');
+                    thead.className = 'bg-gray-50';
+                    const headerRow = document.createElement('tr');
+                    ['Mã hồ sơ', 'Họ và Tên', 'CCCD', 'Trạng thái'].forEach(headerText => {
+                        const th = document.createElement('th');
+                        th.className = 'px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase';
+                        th.textContent = headerText;
+                        headerRow.appendChild(th);
+                    });
+                    thead.appendChild(headerRow);
+                    table.appendChild(thead);
+                    
+                    const tbody = document.createElement('tbody');
+                    tbody.className = 'bg-white divide-y divide-gray-200';
+                    
+                    hoSoKhachHang.forEach(hoSo => {
+                        const row = document.createElement('tr');
+                        const escape = window.escapeHtml || ((s) => String(s).replace(/[&<>"']/g, ''));
+                        [hoSo.loanCode || 'N/A', hoSo.fullName || 'N/A', hoSo.cccd || 'N/A', hoSo.trangThai || 'Đang xử lý'].forEach(cellText => {
+                            const td = document.createElement('td');
+                            td.className = 'px-4 py-2 whitespace-nowrap text-sm';
+                            td.textContent = escape(cellText);
+                            row.appendChild(td);
+                        });
+                        tbody.appendChild(row);
+                    });
+                    
+                    table.appendChild(tbody);
+                    tableDiv.appendChild(table);
+                    
+                    if (contentDiv) {
+                        contentDiv.innerHTML = '';
+                        contentDiv.appendChild(tableDiv);
+                    }
+                }
+
+            } catch (error) {
+                if (window.Logger) {
+                    window.Logger.error("Lỗi khi đọc hoặc giải mã dữ liệu", error);
+                }
+                if (contentDiv) {
+                    contentDiv.innerHTML = '<p class="text-center text-red-500">Lỗi: Không thể đọc dữ liệu từ bộ nhớ cục bộ. Dữ liệu có thể đã bị hỏng.</p>';
+                }
+            }
+            
+            modal.classList.remove('hidden');
+        }
+
+        function closeAllDataModal() {
+            document.getElementById('all-data-modal').classList.add('hidden');
+        }
+
+        window.onload = function() {
+            const showAllDataBtn = document.getElementById('show-all-data-btn');
+            if (showAllDataBtn) {
+                showAllDataBtn.addEventListener('click', showAllLocalData);
+            }
+        };
+    </script>
+</body>
+</html>
