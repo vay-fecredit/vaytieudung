@@ -65,31 +65,21 @@
         object-fit: contain;
       }
       
-      .header {
-          padding: 15px;
-          background-color: var(--primary-color);
-          border-bottom: 1px solid #ECECEC;
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-      }
-      .header img {
-          height: 35px;
-      }
       .header-icons {
-          display: flex;
-          align-items: center;
-          gap: 15px;
+        display: flex;
+        align-items: center;
+        gap: 15px;
       }
       .header-icons i {
-          font-size: 24px;
-          cursor: pointer;
-          color: #ffffff;
-          transition: color 0.3s;
+        font-size: 24px;
+        cursor: pointer;
+        color: #00994F;
+        transition: color 0.3s;
       }
       .header-icons i:hover {
-          color: var(--primary-light);
+        color: var(--primary-light);
       }
+
       .container-main {
           max-width: 90%;
           width: 100%;
@@ -306,10 +296,12 @@
           <a href="../index.html" title="FE CREDIT - VAY TIÊU DÙNG TÍN CHẤP" style="display: flex; align-items: center; text-decoration: none;">
             <img src="https://www-cdn.fecredit.com.vn/media/20ymppzv/fec-logo.svg" alt="FE CREDIT Logo" 
                  style="object-fit: contain; height: 40px; max-width: 200px;">
-            <span style="margin-left: 10px; font-size: 14px; font-weight: 600; color: #00994F; display: none;" class="logo-text">FE CREDIT - VAY TIÊU DÙNG TÍN CHẤP</span>
+            <span style="margin-left: 10px; font-size: 14px; font-weight: 600; color: #00994F; display: none;" class="logo-text">
+              FE CREDIT - VAY TIÊU DÙNG TÍN CHẤP
+            </span>
           </a>
         </div>
-        <div class="header-icons" style="color: #00994F;">
+        <div class="header-icons">
           <i class="bi bi-search"></i>
           <div class="dropdown">
             <i
@@ -319,14 +311,10 @@
             ></i>
             <ul class="dropdown-menu dropdown-menu-end">
               <li>
-                <a class="dropdown-item" href="loan_registration.html"
-                  >ĐĂNG KÝ TRỰC TUYẾN</a
-                >
+                <a class="dropdown-item" href="loan_registration.html">ĐĂNG KÝ TRỰC TUYẾN</a>
               </li>
               <li>
-                <a class="dropdown-item" href="#footer"
-                  >LIÊN HỆ</a
-                >
+                <a class="dropdown-item" href="#footer">LIÊN HỆ</a>
               </li>
             </ul>
           </div>
@@ -337,7 +325,7 @@
     <hr class="divider-blue" style="margin: 0" />
 
     <div class="container-main">
-      <!-- Tabs: chỉ còn 1 lần -->
+      <!-- Tabs -->
       <ul class="nav nav-tabs">
         <li class="nav-item">
           <a class="nav-link" href="step1.html">1. Nhập thông tin</a>
@@ -363,10 +351,13 @@
         </div>
         <hr class="divider-blue" />
         <div class="button-group">
+          <!-- Quay lại đúng step5 -->
           <a href="step5.html" class="btn btn-secondary">QUAY LẠI</a>
+          <!-- Tải xuống PDF từ canvas -->
           <button id="downloadContractBtn" class="btn btn-download" disabled>
             TẢI XUỐNG
           </button>
+          <!-- Tiếp tục sang step7, yêu cầu đã tải -->
           <button
             id="proceedToStep7Btn"
             type="button"
@@ -824,7 +815,7 @@
           },
         ];
 
-        tickFields = []; // nếu bạn cần các tick như bản gốc, có thể thêm lại ở đây
+        tickFields = []; // nếu cần tick, có thể thêm lại ở đây
 
         renderCanvas(
           "contractCanvas",
