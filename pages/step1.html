@@ -34,6 +34,10 @@
     <!-- Favicon -->
     <link rel="shortcut icon" type="image/svg" href="https://www-cdn.fecredit.com.vn/media/yienoinl/favicon-feonl-01.svg?width=32&height=32">
     
+    <!-- Mobile UI Enhancement - NEW -->
+    <link rel="stylesheet" href="unified-design-system.css">
+    <link rel="stylesheet" href="mobile-accessibility.css">
+    
     <!-- Link to External CSS -->
     <link rel="stylesheet" href="step1.css">
 </head>
@@ -1667,6 +1671,15 @@
                 activeIntervals.push(bannerInterval);
             };
         };
+    </script>
+    
+    <!-- Mobile Fixes JavaScript - NEW -->
+    <script src="mobile-fixes.js"></script>
+    <script>
+        // Initialize mobile form validator for step1
+        if (document.getElementById('step1Form')) {
+            new MobileFormValidator('step1Form');
+        }
     </script>
     </div>
 </body>

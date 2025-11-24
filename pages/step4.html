@@ -40,6 +40,10 @@
     <!-- Unified Design Tokens -->
     <link rel="stylesheet" href="../../configs/shared/fecredit-design-tokens.css" />
     
+    <!-- Mobile UI Enhancement - NEW -->
+    <link rel="stylesheet" href="unified-design-system.css">
+    <link rel="stylesheet" href="mobile-accessibility.css">
+    
     <!-- Step 1 Style Guide -->
     <link rel="stylesheet" href="step1-style-guide.css">
     
@@ -2591,6 +2595,18 @@
     </script>
 
     </div>
+    
+    <!-- Mobile Fixes JavaScript - NEW -->
+    <script src="mobile-fixes.js"></script>
+    <script>
+        // Initialize mobile form validator for step4
+        if (document.querySelector('form')) {
+            const form = document.querySelector('form');
+            if (form.id) {
+                new MobileFormValidator(form.id);
+            }
+        }
+    </script>
   </body>
 </html>
 
