@@ -1,9 +1,13 @@
 /* ============================================
    FE CREDIT STEP 1 STYLE GUIDE
    Extracted from step1.html - Design System
+   
+   NOTE: CSS Variables are now defined in unified-design-system.css
+   This file contains step1-specific styles only.
    ============================================ */
 
-/* CSS Variables for FECredit Design System */
+/* CSS Variables for FECredit Design System - Now in unified-design-system.css */
+/* These are kept for backward compatibility but will be overridden by unified-design-system.css */
 :root {
     /* Colors */
     --fecredit-primary: #00994F;
