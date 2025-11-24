@@ -1,0 +1,4 @@
+﻿(function(){var form=document.querySelector('form[data-settimeout]');var minutes=form?parseInt(form.getAttribute('data-settimeout'),10):15;var INACTIVITY_LIMIT=minutes*60*1000;var timerId;function resetTimer(){clearTimeout(timerId);timerId=setTimeout(autoLogout,INACTIVITY_LIMIT);}
+function autoLogout(){var btn=document.querySelector('.button-logout');if(btn&&typeof btn.click==='function'){btn.click();return;}
+if(btn){var f=btn.closest('form');if(f&&typeof f.submit==='function')f.submit();}}
+['click','mousemove','keydown','scroll','touchstart','touchmove','wheel'].forEach(function(evt){window.addEventListener(evt,resetTimer,{passive:true});});document.addEventListener('visibilitychange',function(){if(!document.hidden)resetTimer();});resetTimer();})();

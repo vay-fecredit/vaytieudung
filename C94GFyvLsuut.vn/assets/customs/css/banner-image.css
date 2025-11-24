@@ -1,0 +1,388 @@
+:root {
+  --banner-image-background: url("");
+  --banner-image-background-mobile: url("");
+  --banner-image: url("");
+  --banner-image-mobile: url("");
+}
+
+.banner-image {
+  display: flex;
+  width: 100%;
+  height: 524px;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  background-image: var(--banner-image-background-mobile);
+  background-position: center;
+  background-size: cover;
+}
+
+.banner-image .banner-image-content {
+  width: 100%;
+  display: flex;
+  max-width: 100%;
+  padding: 0px;
+  align-items: center;
+  gap: 48px;
+  flex: 1 0 0;
+  align-self: stretch;
+  position: relative;
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.banner-image .banner-image-content > .container {
+  padding-top: 0;
+  z-index: 1;
+  position: relative;
+  display: flex;
+  align-self: stretch;
+}
+.banner-image .content-text {
+  display: flex;
+  min-width: 300px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  min-height: 120px;
+}
+.banner-image .content-text > .heading {
+  text-align: center;
+  align-self: stretch;
+}
+.banner-image .content-text .button-card {
+  display: flex;
+  padding: 12px 12px 12px 20px;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  border-radius: 999px;
+  background: #fff;
+}
+
+.banner-image.small .banner-image-content .content-text .heading {
+  padding: 0 24px;
+  font-size: 44px;
+  font-style: normal;
+}
+
+.banner-image .content-text .button-card .heading {
+  color: #00994f;
+  align-self: stretch;
+  font-size: 16px;
+  font-style: normal;
+  font-family: "Averta-semibold";
+  line-height: 140%;
+  letter-spacing: -0.32px;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  --base-half-spacing: 0 !important;
+}
+
+.banner-image .content-text .button-card .card-text {
+  flex-grow: 1;
+}
+
+.banner-image.small .banner-image-content .content-text .text p {
+  letter-spacing: 0.5px;
+}
+
+.banner-image .content-text .text {
+  text-align: center;
+  width: 100%;
+  --base-spacing: -48px;
+}
+
+.banner-image .content-text .button-card .secondary-heading {
+  color: #292929;
+  font-size: 15px;
+  font-style: normal;
+  font-family: "Averta-bold";
+  line-height: 140%;
+  letter-spacing: -0.3px;
+  align-self: stretch;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  text-transform: none;
+}
+
+.banner-image .content-image {
+  background-image: var(--banner-image-mobile);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  flex-shrink: 0;
+  width: 100%;
+}
+/* Slider */
+.banner-image .slider-image {
+  position: relative;
+  width: 100%;
+  height: auto;
+  flex-grow: 1;
+}
+
+.banner-image .banner-image-content .slick-slider .slick-list,
+.banner-image .banner-image-content .slick-slider .slick-track {
+  height: 100%;
+}
+
+.banner-image .slider-item:not(.slick-slide):not(:first-child) {
+  display: none;
+}
+
+.banner-image .slider-item {
+  background-image: var(--banner-image-mobile);
+  width: 100%;
+  height: 100%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+/* Banner Default */
+.banner-image.default .heading {
+  color: #015c2e;
+  text-align: center;
+  font-size: 36px;
+  font-style: normal;
+  line-height: 120%;
+  letter-spacing: -1.44px;
+  max-width: 1280px;
+  align-self: stretch;
+}
+
+.banner-image.default .text {
+  color: #015c2e;
+  font-size: 15px;
+  font-style: normal;
+  line-height: 140%;
+  letter-spacing: -0.3px;
+  align-self: stretch;
+  text-shadow: 0px 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* banner small */
+.banner-image.small {
+  width: 100%;
+  height: 360px;
+  border-radius: 16px;
+  background-position: 65%;
+}
+
+.banner-image.small .banner-image-content .content-text .text {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 10;
+  align-self: stretch;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #015c2e;
+  font-family: sans-serif !important;
+  font-size: 14px;
+  font-style: normal;
+  font-family: "Averta-bold";
+  line-height: 140%;
+  letter-spacing: -0.36px;
+  padding: 0 24px;
+  text-align: left;
+}
+
+@media (min-width: 394px) and (max-width: 991px) {
+  .banner-image .slider-item {
+    background-size: contain;
+  }
+
+  .banner-image .content-image {
+    background-size: contain;
+  }
+}
+
+@media (max-width: 767px) {
+  .banner-image.small {
+    height: 440px;
+  }
+  .banner-image .slider-indicator {
+    z-index: 1;
+  }
+  .banner-image .content-text {
+    position: relative;
+    z-index: 1;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .banner-image.small {
+    background-image: var(--banner-image-background);
+    background-position: 84%;
+  }
+
+  .banner-image .content-text {
+    align-items: flex-start;
+  }
+
+  .banner-image.small .banner-image-content .content-text .heading {
+    text-align: left;
+    max-width: 73%;
+  }
+}
+
+@media (max-width: 991px) {
+  .banner-image .banner-image-content > .container {
+    flex-direction: column-reverse;
+    row-gap: 12px;
+    /* padding: 0; */
+  }
+  .banner-image .banner-image-content > .container:has(> .slider-image) {
+    padding: 48px 24px;
+    padding-top: 0;
+  }
+  .banner-image .content-text {
+    padding-bottom: 24px;
+  }
+  .banner-image .banner-image-content:has(> .slider-indicator) > .container {
+    padding-bottom: 68px;
+  }
+  .banner-image .content-image {
+    flex-grow: 1;
+  }
+}
+/* Tablet */
+@media (min-width: 992px) {
+  .banner-image {
+    height: 380px;
+  }
+  .banner-image .banner-image-content > .container {
+    flex-direction: row;
+    gap: 12px;
+    padding-bottom: 0;
+  }
+  .banner-image .content-text {
+    width: 50%;
+    align-items: flex-start;
+  }
+  .banner-image .content-image {
+    width: 50%;
+    background-image: var(--banner-image);
+    height: 100%;
+    background-position: bottom;
+  }
+  .banner-image .slider-item {
+    background-image: var(--banner-image);
+  }
+  .banner-image {
+    gap: 0;
+    background-image: var(--banner-image-background);
+    background-position: center;
+    background-size: cover;
+  }
+  .banner-image .banner-image-content {
+    flex-direction: row;
+    padding: 0;
+    align-items: unset;
+    gap: 48px;
+  }
+  .banner-image .content-text {
+    gap: 16px;
+    align-self: stretch;
+    padding-bottom: 0px;
+  }
+  .banner-image .content-text > .heading {
+    text-align: left;
+  }
+  .banner-image .content-text .button-card {
+    gap: 16px;
+    align-self: unset;
+    justify-content: start;
+  }
+  .banner-image .content-text .button-card .heading {
+    letter-spacing: -0.4px;
+  }
+  .banner-image .content-text .button-card .secondary-heading {
+    letter-spacing: -0.34px;
+  }
+  .banner-image .slider-indicator .slider-wrapper .container {
+    justify-content: start;
+  }
+  .banner-image .slider-indicator {
+    bottom: 0;
+  }
+  .banner-image .slider-image {
+    width: 50%;
+    height: 100%;
+    right: 0;
+    overflow: hidden;
+  }
+  .banner-image .content-text .text {
+    text-align: left;
+    max-width: 460px;
+    --base-spacing: 0px;
+  }
+  .banner-image.default .heading {
+    text-align: left;
+    font-size: 48px;
+  }
+}
+/* Desktop */
+@media (min-width: 1280px) {
+  .banner-image .banner-image-content > .container {
+    padding-bottom: 0;
+    margin-top: auto;
+    margin-bottom: auto;
+  }
+  .banner-image .banner-image-content:has(> .content-image) > .container {
+    padding-bottom: 24px;
+  }
+  .banner-image {
+    height: 452px;
+  }
+  .banner-image .content-text {
+    width: auto;
+    flex-grow: 1;
+    gap: 20px;
+  }
+  .banner-image .content-text .button-card {
+    padding: 16px 16px 16px 32px;
+    gap: 24px;
+  }
+  .banner-image .content-text .button-card .card-text {
+    padding-right: 12px;
+  }
+  .banner-image .content-text .button-card .link {
+    width: auto;
+  }
+  .banner-image .content-text .button-card .heading {
+    font-size: 20px;
+  }
+  .banner-image .content-text .button-card .secondary-heading {
+    font-size: 17px;
+  }
+  .banner-image .content-image {
+    flex-shrink: 0;
+    height: 452px;
+    background-size: contain;
+  }
+  .banner-image .slider-image {
+    height: 452px;
+  }
+  .banner-image .slider-item {
+    height: 452px;
+  }
+  /* Banner Default */
+  .banner-image.default .heading {
+    font-size: 64px;
+    letter-spacing: -2.56px;
+  }
+  .banner-image .content-text .text {
+    max-width: 520px;
+  }
+  .banner-image.default .text {
+    font-size: 17px;
+    letter-spacing: -0.34px;
+  }
+}
