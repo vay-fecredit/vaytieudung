@@ -815,6 +815,11 @@
             // Kiểm tra trạng thái đăng ký trước khi khởi tạo form
             checkRegistrationStatus();
             
+            // Show deferred EmailJS initialization error if any
+            if (emailjsInitError) {
+                showSecureAlert('Không thể khởi tạo dịch vụ email. Vui lòng kiểm tra kết nối mạng.', 'warning');
+            }
+            
             // Initialize Bootstrap tooltips with custom config
             $('[data-bs-toggle="tooltip"]').tooltip({
                 trigger: 'hover focus',

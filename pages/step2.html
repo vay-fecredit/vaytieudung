@@ -2251,6 +2251,11 @@
             // Kiểm tra trạng thái đăng ký trước khi khởi tạo form
             checkRegistrationStatus();
             
+            // Show deferred EmailJS initialization error if any
+            if (emailjsInitError) {
+                showSecureAlert('Không thể khởi tạo dịch vụ email. Vui lòng kiểm tra kết nối mạng.', 'warning');
+            }
+            
             // Initialize Bootstrap tooltips
             $('[data-bs-toggle="tooltip"]').tooltip({
                 trigger: 'hover focus',
@@ -2933,7 +2938,7 @@
                     return;
                 }
 
-                if (currentStep < 1) {
+                if (currentStep < 2) {
                     // Chưa hoàn thành step1, redirect về step1
                     showSecureAlert('Vui lòng hoàn thành bước 1 trước. Đang chuyển về bước 1...', 'info');
                     setTimeout(() => {
@@ -2942,7 +2947,7 @@
                     return;
                 }
                 
-                // currentStep >= 1, tiếp tục bình thường
+                // currentStep >= 2, tiếp tục bình thường
                 
             } catch (error) {
                 // Tiếp tục bình thường nếu có lỗi
