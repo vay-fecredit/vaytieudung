@@ -457,7 +457,7 @@
                     cccd: $('#cccd').val().trim(),
                     contactAddress: $('#contactAddress').val().trim(),
                     issuePlace: $('#issuePlace').val(),
-                    phone: $('#phone').val().trim().replace(/\s/g, '').replace(/^\+84/, '0'),
+                    phone: $('#phone').val().trim().replace(/\s/g, '').replace(/^(\+?84)/, '0'),
                     email: $('#email').val().trim()
                 };
 

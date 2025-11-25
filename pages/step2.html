@@ -393,8 +393,9 @@
             }
 
             // Calculate monthly payment (PMT formula)
-            const monthlyPayment = (loanAmount * interestRate * Math.pow(1 + interestRate, loanTerm)) / 
-                                  (Math.pow(1 + interestRate, loanTerm) - 1);
+            const monthlyRate = interestRate;
+            const ratePower = Math.pow(1 + monthlyRate, loanTerm);
+            const monthlyPayment = (loanAmount * monthlyRate * ratePower) / (ratePower - 1);
             const totalAmount = monthlyPayment * loanTerm;
             const totalInterest = totalAmount - loanAmount;
 
