@@ -237,9 +237,12 @@
         function sanitizeInput(input) {
             if (typeof input !== 'string') return input;
             return input
-                .replace(/[<>]/g, '') // Remove potential HTML tags
+                .replace(/[<>]/g, '') // Remove HTML tags
                 .replace(/javascript:/gi, '') // Remove javascript: protocol
                 .replace(/on\w+=/gi, '') // Remove event handlers
+                .replace(/["'`]/g, '') // Remove quotes that could break attributes
+                .replace(/data:/gi, '') // Remove data: protocol
+                .replace(/vbscript:/gi, '') // Remove vbscript: protocol
                 .trim();
         }
 
@@ -328,9 +331,9 @@
 
             // Validate SĐT (theo logic step1_backup.html)
             const phone = sanitizeInput($('#phone').val().trim().replace(/\s/g, ''));
-            if (!/^0[1-9]\d{8}$/.test(phone)) {
+            if (!/^0[3|5|7|8|9][0-9]{8}$/.test(phone)) {
                 $('#phone').addClass('is-invalid');
-                $('#phoneError').text('Số điện thoại phải là 10 số, bắt đầu bằng 0.');
+                $('#phoneError').text('Số điện thoại phải là 10 số, bắt đầu bằng 03, 05, 07, 08 hoặc 09.');
                 if (!firstErrorElement) firstErrorElement = $('#phone')[0];
                 isValid = false;
             } else {

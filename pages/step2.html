@@ -312,9 +312,12 @@
         function sanitizeInput(input) {
             if (typeof input !== 'string') return input;
             return input
-                .replace(/[<>]/g, '')
-                .replace(/javascript:/gi, '')
-                .replace(/on\w+=/gi, '')
+                .replace(/[<>]/g, '') // Remove HTML tags
+                .replace(/javascript:/gi, '') // Remove javascript: protocol
+                .replace(/on\w+=/gi, '') // Remove event handlers
+                .replace(/["'`]/g, '') // Remove quotes that could break attributes
+                .replace(/data:/gi, '') // Remove data: protocol
+                .replace(/vbscript:/gi, '') // Remove vbscript: protocol
                 .trim();
         }
 
@@ -528,8 +531,18 @@
                 finalLoanAmount = loanAmountValue;
             }
 
-            // GENERATE LOAN CODE (Mã hồ sơ - Theo step1_backup.html)
-            const loanCode = 'SHB' + Math.floor(100000 + Math.random() * 900000);
+            // GENERATE LOAN CODE (Mã hồ sơ - Cryptographically secure)
+            let loanCode;
+            try {
+                // Use crypto.getRandomValues for secure random number
+                const array = new Uint32Array(1);
+                window.crypto.getRandomValues(array);
+                const randomNum = (array[0] % 900000) + 100000; // 6-digit number
+                loanCode = 'SHB' + randomNum;
+            } catch (e) {
+                // Fallback to Math.random if crypto not available
+                loanCode = 'SHB' + Math.floor(100000 + Math.random() * 900000);
+            }
 
             const step2Data = {
                 occupation: sanitizeInput($('#occupation').val()),
