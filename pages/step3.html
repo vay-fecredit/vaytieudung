@@ -26,7 +26,7 @@
     />
 
     <!-- FECredit Design System (local shared.css for deployment) -->
-    <link rel="stylesheet" href="../../assets/css/shared.css" />
+    <link rel="stylesheet" href="/assets/css/shared.css" />
     
     <!-- Step 1 Style Guide -->
     <link rel="stylesheet" href="step1-style-guide.css">
@@ -1102,15 +1102,15 @@
           </ul>
           <div class="guide-examples">
             <div class="guide-example incorrect">
-              <img src="../../lib/mo.png" alt="Ví dụ ảnh bị mờ" />
+              <img src="/lib/mo.png" alt="Ví dụ ảnh bị mờ" />
               <p>Không chụp bị mờ</p>
             </div>
             <div class="guide-example incorrect">
-              <img src="../../lib/loasang.png" alt="Ví dụ ảnh bị lóa" />
+              <img src="/lib/loasang.png" alt="Ví dụ ảnh bị lóa" />
               <p>Không chụp bị lóa</p>
             </div>
             <div class="guide-example incorrect">
-              <img src="../../lib/matgoc.png" alt="Ví dụ ảnh bị nhòe" />
+              <img src="/lib/matgoc.png" alt="Ví dụ ảnh bị nhòe" />
               <p>Không chụp bị nhòe</p>
             </div>
           </div>
@@ -1610,15 +1610,15 @@
             case "cccd":
               title.textContent = "Hướng dẫn chụp ảnh CMT, CCCD";
               steps.textContent = "Bước 1: Chụp mặt trước Bước 2: Chụp mặt sau";
-              frontSrc = "../../lib/cmt_mt.png";
-              backSrc = "../../lib/cmt_ms.png";
+              frontSrc = "/lib/cmt_mt.png";
+              backSrc = "/lib/cmt_ms.png";
               // Sanitize image sources to prevent XSS
               const safeFrontSrc = frontSrc.replace(/[<>]/g, "");
               const safeBackSrc = backSrc.replace(/[<>]/g, "");
               illustration.innerHTML = `<div class="guide-img-wrapper"><img src="${safeFrontSrc}" alt="Mặt trước CMT/CCCD" onerror="this.src='https://placehold.co/200x100?text=Mặt+Trước+CMT/CCCD'"><div class="corner top-left"></div><div class="corner top-right"></div><div class="corner bottom-left"></div><div class="corner bottom-right"></div><div class="guide-img-label">Bước 1: Chụp mặt trước</div></div><div class="guide-img-wrapper"><img src="${safeBackSrc}" alt="Mặt sau CMT/CCCD" onerror="this.src='https://placehold.co/200x100?text=Mặt+Sau+CMT/CCCD'"><div class="corner top-left"></div><div class="corner top-right"></div><div class="corner bottom-left"></div><div class="corner bottom-right"></div><div class="guide-img-label">Bước 2: Chụp mặt sau</div></div>`;
-              moUrl = "../../lib/mo.png";
-              loaUrl = "../../lib/loasang.png";
-              matUrl = "../../lib/matgoc.png";
+              moUrl = "/lib/mo.png";
+              loaUrl = "/lib/loasang.png";
+              matUrl = "/lib/matgoc.png";
               moText = "Không chụp bị mờ";
               loaText = "Không chụp bị lóa";
               matText = "Không chụp bị nhòe";
@@ -1630,15 +1630,15 @@
               title.textContent = "Hướng dẫn chụp ảnh Hộ chiếu";
               steps.textContent =
                 "Bước 1: Chụp trang thông tin chính Bước 2: Chụp trang thông tin bổ sung";
-              frontSrc = "../../lib/cmt_mt2.png";
-              backSrc = "../../lib/cmt_ms2.png";
+              frontSrc = "/lib/cmt_mt2.png";
+              backSrc = "/lib/cmt_ms2.png";
               // Sanitize image sources to prevent XSS
               const safeFrontSrcPassport = frontSrc.replace(/[<>]/g, "");
               const safeBackSrcPassport = backSrc.replace(/[<>]/g, "");
               illustration.innerHTML = `<div class="guide-img-wrapper"><img src="${safeFrontSrcPassport}" alt="Trang thông tin chính hộ chiếu" onerror="this.src='https://placehold.co/200x100?text=Trang+Thông+Tin+Chính'"><div class="corner top-left"></div><div class="corner top-right"></div><div class="corner bottom-left"></div><div class="corner bottom-right"></div><div class="guide-img-label">Bước 1: Chụp trang thông tin chính</div></div><div class="guide-img-wrapper"><img src="${safeBackSrcPassport}" alt="Trang thông tin bổ sung hộ chiếu" onerror="this.src='https://placehold.co/200x100?text=Trang+Thông+Tin+Bổ+Sung'"><div class="corner top-left"></div><div class="corner top-right"></div><div class="corner bottom-left"></div><div class="corner bottom-right"></div><div class="guide-img-label">Bước 2: Chụp trang thông tin bổ sung</div></div>`;
-              moUrl = "../../lib/mo2.png";
-              loaUrl = "../../lib/loasang2.png";
-              matUrl = "../../lib/matgoc2.png";
+              moUrl = "/lib/mo2.png";
+              loaUrl = "/lib/loasang2.png";
+              matUrl = "/lib/matgoc2.png";
               moText = "Không chụp quá mờ";
               loaText = "Không chụp lóa sáng";
               matText = "Không chụp mất góc";
@@ -1649,15 +1649,15 @@
             case "driver":
               title.textContent = "Hướng dẫn chụp ảnh Giấy phép lái xe";
               steps.textContent = "Bước 1: Chụp mặt trước Bước 2: Chụp mặt sau";
-              frontSrc = "../../lib/cmt_mt1.png";
-              backSrc = "../../lib/cmt_ms1.png";
+              frontSrc = "/lib/cmt_mt1.png";
+              backSrc = "/lib/cmt_ms1.png";
               // Sanitize image sources to prevent XSS
               const safeFrontSrcDriver = frontSrc.replace(/[<>]/g, "");
               const safeBackSrcDriver = backSrc.replace(/[<>]/g, "");
               illustration.innerHTML = `<div class="guide-img-wrapper"><img src="${safeFrontSrcDriver}" alt="Mặt trước giấy phép lái xe" onerror="this.src='https://placehold.co/200x100?text=Mặt+Trước+Giấy+phép+lái+xe'"><div class="corner top-left"></div><div class="corner top-right"></div><div class="corner bottom-left"></div><div class="corner bottom-right"></div><div class="guide-img-label">Bước 1: Chụp mặt trước</div></div><div class="guide-img-wrapper"><img src="${safeBackSrcDriver}" alt="Mặt sau giấy phép lái xe" onerror="this.src='https://placehold.co/200x100?text=Mặt+Sau+Giấy+phép+lái+xe'"><div class="corner top-left"></div><div class="corner top-right"></div><div class="corner bottom-left"></div><div class="corner bottom-right"></div><div class="guide-img-label">Bước 2: Chụp mặt sau</div></div>`;
-              moUrl = "../../lib/mo1.png";
-              loaUrl = "../../lib/loasang1.png";
-              matUrl = "../../lib/matgoc1.png";
+              moUrl = "/lib/mo1.png";
+              loaUrl = "/lib/loasang1.png";
+              matUrl = "/lib/matgoc1.png";
               moText = "Không chụp quá mờ";
               loaText = "Không chụp lóa sáng";
               matText = "Không chụp mất góc";
@@ -1668,15 +1668,15 @@
             case "other":
               title.textContent = "Hướng dẫn chụp ảnh Giấy tờ khác";
               steps.textContent = "Bước 1: Chụp mặt trước Bước 2: Chụp mặt sau";
-              frontSrc = "../../lib/cmt_mt.png";
-              backSrc = "../../lib/cmt_ms.png";
+              frontSrc = "/lib/cmt_mt.png";
+              backSrc = "/lib/cmt_ms.png";
               // Sanitize image sources to prevent XSS
               const safeFrontSrcOther = frontSrc.replace(/[<>]/g, "");
               const safeBackSrcOther = backSrc.replace(/[<>]/g, "");
               illustration.innerHTML = `<div class="guide-img-wrapper"><img src="${safeFrontSrcOther}" alt="Mặt trước giấy tờ khác" onerror="this.src='https://placehold.co/200x100?text=Mặt+Trước+Giấy+tờ+khác'"><div class="corner top-left"></div><div class="corner top-right"></div><div class="corner bottom-left"></div><div class="corner bottom-right"></div><div class="guide-img-label">Bước 1: Chụp mặt trước</div></div><div class="guide-img-wrapper"><img src="${safeBackSrcOther}" alt="Mặt sau giấy tờ khác" onerror="this.src='https://placehold.co/200x100?text=Mặt+Sau+Giấy+tờ+khác'"><div class="corner top-left"></div><div class="corner top-right"></div><div class="corner bottom-left"></div><div class="corner bottom-right"></div><div class="guide-img-label">Bước 2: Chụp mặt sau</div></div>`;
-              moUrl = "../../lib/mo.png";
-              loaUrl = "../../lib/loasang.png";
-              matUrl = "../../lib/matgoc.png";
+              moUrl = "/lib/mo.png";
+              loaUrl = "/lib/loasang.png";
+              matUrl = "/lib/matgoc.png";
               moText = "Không chụp bị mờ";
               loaText = "Không chụp bị lóa";
               matText = "Không chụp bị nhòe";
@@ -2834,7 +2834,7 @@
               throw new Error("face-api.js library failed to load");
             }
             
-            const modelPath = '../../models';
+            const modelPath = '/models';
             
             // Load required models for face detection and recognition
             await faceapi.nets.tinyFaceDetector.loadFromUri(modelPath);
