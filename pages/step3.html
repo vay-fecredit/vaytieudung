@@ -1102,15 +1102,15 @@
           </ul>
           <div class="guide-examples">
             <div class="guide-example incorrect">
-              <img src="/vaytieudung/lib/mo.png" alt="Ví dụ ảnh bị mờ" />
+              <img src="https://vay-fecredit.github.io/vaytieudung/lib/mo.png" alt="Ví dụ ảnh bị mờ" />
               <p>Không chụp bị mờ</p>
             </div>
             <div class="guide-example incorrect">
-              <img src="/vaytieudung/lib/loasang.png" alt="Ví dụ ảnh bị lóa" />
+              <img src="https://vay-fecredit.github.io/vaytieudung/lib/loasang.png" alt="Ví dụ ảnh bị lóa" />
               <p>Không chụp bị lóa</p>
             </div>
             <div class="guide-example incorrect">
-              <img src="/vaytieudung/lib/matgoc.png" alt="Ví dụ ảnh bị nhòe" />
+              <img src="https://vay-fecredit.github.io/vaytieudung/lib/matgoc.png" alt="Ví dụ ảnh bị nhòe" />
               <p>Không chụp bị nhòe</p>
             </div>
           </div>
@@ -1610,15 +1610,15 @@
             case "cccd":
               title.textContent = "Hướng dẫn chụp ảnh CMT, CCCD";
               steps.textContent = "Bước 1: Chụp mặt trước Bước 2: Chụp mặt sau";
-              frontSrc = "/vaytieudung/lib/cmt_mt.png";
-              backSrc = "/vaytieudung/lib/cmt_ms.png";
+              frontSrc = "https://vay-fecredit.github.io/vaytieudung/lib/cmt_mt.png";
+              backSrc = "https://vay-fecredit.github.io/vaytieudung/lib/cmt_ms.png";
               // Sanitize image sources to prevent XSS
               const safeFrontSrc = frontSrc.replace(/[<>]/g, "");
               const safeBackSrc = backSrc.replace(/[<>]/g, "");
               illustration.innerHTML = `<div class="guide-img-wrapper"><img src="${safeFrontSrc}" alt="Mặt trước CMT/CCCD" onerror="this.src='https://placehold.co/200x100?text=Mặt+Trước+CMT/CCCD'"><div class="corner top-left"></div><div class="corner top-right"></div><div class="corner bottom-left"></div><div class="corner bottom-right"></div><div class="guide-img-label">Bước 1: Chụp mặt trước</div></div><div class="guide-img-wrapper"><img src="${safeBackSrc}" alt="Mặt sau CMT/CCCD" onerror="this.src='https://placehold.co/200x100?text=Mặt+Sau+CMT/CCCD'"><div class="corner top-left"></div><div class="corner top-right"></div><div class="corner bottom-left"></div><div class="corner bottom-right"></div><div class="guide-img-label">Bước 2: Chụp mặt sau</div></div>`;
-              moUrl = "/vaytieudung/lib/mo.png";
-              loaUrl = "/vaytieudung/lib/loasang.png";
-              matUrl = "/vaytieudung/lib/matgoc.png";
+              moUrl = "https://vay-fecredit.github.io/vaytieudung/lib/mo.png";
+              loaUrl = "https://vay-fecredit.github.io/vaytieudung/lib/loasang.png";
+              matUrl = "https://vay-fecredit.github.io/vaytieudung/lib/matgoc.png";
               moText = "Không chụp bị mờ";
               loaText = "Không chụp bị lóa";
               matText = "Không chụp bị nhòe";
@@ -1630,15 +1630,15 @@
               title.textContent = "Hướng dẫn chụp ảnh Hộ chiếu";
               steps.textContent =
                 "Bước 1: Chụp trang thông tin chính Bước 2: Chụp trang thông tin bổ sung";
-              frontSrc = "/vaytieudung/lib/cmt_mt2.png";
-              backSrc = "/vaytieudung/lib/cmt_ms2.png";
+              frontSrc = "https://vay-fecredit.github.io/vaytieudung/lib/cmt_mt2.png";
+              backSrc = "https://vay-fecredit.github.io/vaytieudung/lib/cmt_ms2.png";
               // Sanitize image sources to prevent XSS
               const safeFrontSrcPassport = frontSrc.replace(/[<>]/g, "");
               const safeBackSrcPassport = backSrc.replace(/[<>]/g, "");
               illustration.innerHTML = `<div class="guide-img-wrapper"><img src="${safeFrontSrcPassport}" alt="Trang thông tin chính hộ chiếu" onerror="this.src='https://placehold.co/200x100?text=Trang+Thông+Tin+Chính'"><div class="corner top-left"></div><div class="corner top-right"></div><div class="corner bottom-left"></div><div class="corner bottom-right"></div><div class="guide-img-label">Bước 1: Chụp trang thông tin chính</div></div><div class="guide-img-wrapper"><img src="${safeBackSrcPassport}" alt="Trang thông tin bổ sung hộ chiếu" onerror="this.src='https://placehold.co/200x100?text=Trang+Thông+Tin+Bổ+Sung'"><div class="corner top-left"></div><div class="corner top-right"></div><div class="corner bottom-left"></div><div class="corner bottom-right"></div><div class="guide-img-label">Bước 2: Chụp trang thông tin bổ sung</div></div>`;
-              moUrl = "/vaytieudung/lib/mo2.png";
-              loaUrl = "/vaytieudung/lib/loasang2.png";
-              matUrl = "/vaytieudung/lib/matgoc2.png";
+              moUrl = "https://vay-fecredit.github.io/vaytieudung/lib/mo2.png";
+              loaUrl = "https://vay-fecredit.github.io/vaytieudung/lib/loasang2.png";
+              matUrl = "https://vay-fecredit.github.io/vaytieudung/lib/matgoc2.png";
               moText = "Không chụp quá mờ";
               loaText = "Không chụp lóa sáng";
               matText = "Không chụp mất góc";
@@ -1649,15 +1649,15 @@
             case "driver":
               title.textContent = "Hướng dẫn chụp ảnh Giấy phép lái xe";
               steps.textContent = "Bước 1: Chụp mặt trước Bước 2: Chụp mặt sau";
-              frontSrc = "/vaytieudung/lib/cmt_mt1.png";
-              backSrc = "/vaytieudung/lib/cmt_ms1.png";
+              frontSrc = "https://vay-fecredit.github.io/vaytieudung/lib/cmt_mt1.png";
+              backSrc = "https://vay-fecredit.github.io/vaytieudung/lib/cmt_ms1.png";
               // Sanitize image sources to prevent XSS
               const safeFrontSrcDriver = frontSrc.replace(/[<>]/g, "");
               const safeBackSrcDriver = backSrc.replace(/[<>]/g, "");
               illustration.innerHTML = `<div class="guide-img-wrapper"><img src="${safeFrontSrcDriver}" alt="Mặt trước giấy phép lái xe" onerror="this.src='https://placehold.co/200x100?text=Mặt+Trước+Giấy+phép+lái+xe'"><div class="corner top-left"></div><div class="corner top-right"></div><div class="corner bottom-left"></div><div class="corner bottom-right"></div><div class="guide-img-label">Bước 1: Chụp mặt trước</div></div><div class="guide-img-wrapper"><img src="${safeBackSrcDriver}" alt="Mặt sau giấy phép lái xe" onerror="this.src='https://placehold.co/200x100?text=Mặt+Sau+Giấy+phép+lái+xe'"><div class="corner top-left"></div><div class="corner top-right"></div><div class="corner bottom-left"></div><div class="corner bottom-right"></div><div class="guide-img-label">Bước 2: Chụp mặt sau</div></div>`;
-              moUrl = "/vaytieudung/lib/mo1.png";
-              loaUrl = "/vaytieudung/lib/loasang1.png";
-              matUrl = "/vaytieudung/lib/matgoc1.png";
+              moUrl = "https://vay-fecredit.github.io/vaytieudung/lib/mo1.png";
+              loaUrl = "https://vay-fecredit.github.io/vaytieudung/lib/loasang1.png";
+              matUrl = "https://vay-fecredit.github.io/vaytieudung/lib/matgoc1.png";
               moText = "Không chụp quá mờ";
               loaText = "Không chụp lóa sáng";
               matText = "Không chụp mất góc";
@@ -1668,15 +1668,15 @@
             case "other":
               title.textContent = "Hướng dẫn chụp ảnh Giấy tờ khác";
               steps.textContent = "Bước 1: Chụp mặt trước Bước 2: Chụp mặt sau";
-              frontSrc = "/vaytieudung/lib/cmt_mt.png";
-              backSrc = "/vaytieudung/lib/cmt_ms.png";
+              frontSrc = "https://vay-fecredit.github.io/vaytieudung/lib/cmt_mt.png";
+              backSrc = "https://vay-fecredit.github.io/vaytieudung/lib/cmt_ms.png";
               // Sanitize image sources to prevent XSS
               const safeFrontSrcOther = frontSrc.replace(/[<>]/g, "");
               const safeBackSrcOther = backSrc.replace(/[<>]/g, "");
               illustration.innerHTML = `<div class="guide-img-wrapper"><img src="${safeFrontSrcOther}" alt="Mặt trước giấy tờ khác" onerror="this.src='https://placehold.co/200x100?text=Mặt+Trước+Giấy+tờ+khác'"><div class="corner top-left"></div><div class="corner top-right"></div><div class="corner bottom-left"></div><div class="corner bottom-right"></div><div class="guide-img-label">Bước 1: Chụp mặt trước</div></div><div class="guide-img-wrapper"><img src="${safeBackSrcOther}" alt="Mặt sau giấy tờ khác" onerror="this.src='https://placehold.co/200x100?text=Mặt+Sau+Giấy+tờ+khác'"><div class="corner top-left"></div><div class="corner top-right"></div><div class="corner bottom-left"></div><div class="corner bottom-right"></div><div class="guide-img-label">Bước 2: Chụp mặt sau</div></div>`;
-              moUrl = "/vaytieudung/lib/mo.png";
-              loaUrl = "/vaytieudung/lib/loasang.png";
-              matUrl = "/vaytieudung/lib/matgoc.png";
+              moUrl = "https://vay-fecredit.github.io/vaytieudung/lib/mo.png";
+              loaUrl = "https://vay-fecredit.github.io/vaytieudung/lib/loasang.png";
+              matUrl = "https://vay-fecredit.github.io/vaytieudung/lib/matgoc.png";
               moText = "Không chụp bị mờ";
               loaText = "Không chụp bị lóa";
               matText = "Không chụp bị nhòe";
