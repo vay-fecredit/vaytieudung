@@ -2046,13 +2046,19 @@
             publicKey: window.EMAILJS_PUBLIC_KEY || 'J4YH-lyfEfxXeu7aV'
         };
         
+        // Defer EmailJS initialization until after ErrorHandler is defined
+        let emailjsInitError = null;
         try {
-            emailjs.init(emailjsConfig.publicKey);
+            if (typeof emailjs !== 'undefined') {
+                emailjs.init(emailjsConfig.publicKey);
+            } else {
+                emailjsInitError = 'EmailJS library not loaded';
+            }
         } catch (error) {
             if (window.Logger) {
                 window.Logger.error("Failed to initialize EmailJS", error);
             }
-            showSecureAlert('Cannot initialize EmailJS. Please check connection or configuration.');
+            emailjsInitError = error.message || 'Cannot initialize EmailJS';
         }
 
         let userData = {};
@@ -2148,7 +2154,13 @@
         
         // Legacy function for backward compatibility
         function showSecureAlert(message, type = 'info') {
-            errorHandler.showSecureAlert(message, type);
+            // Guard against undefined errorHandler during initialization
+            if (typeof errorHandler !== 'undefined' && errorHandler) {
+                errorHandler.showSecureAlert(message, type);
+            } else {
+                // Fallback: Use basic alert during early initialization
+                console.warn('[showSecureAlert] errorHandler not ready:', message);
+            }
         }
         
         // Input sanitization function
@@ -2896,9 +2908,11 @@
         
         function checkRegistrationStatus() {
             try {
-                const userData = loadUserData();
+                // Load user data from localStorage (populates global userData object)
+                loadUserData();
                 
-                if (!userData) {
+                // Check if userData exists and has meaningful step1 data
+                if (!userData || !userData.fullName) {
                     // Không có dữ liệu đăng ký, redirect về step1
                     showSecureAlert('Vui lòng điền thông tin cá nhân trước. Đang chuyển về bước 1...', 'info');
                     setTimeout(() => {
@@ -2919,7 +2933,7 @@
                     return;
                 }
 
-                if (currentStep < 2) {
+                if (currentStep < 1) {
                     // Chưa hoàn thành step1, redirect về step1
                     showSecureAlert('Vui lòng hoàn thành bước 1 trước. Đang chuyển về bước 1...', 'info');
                     setTimeout(() => {
@@ -2928,7 +2942,7 @@
                     return;
                 }
                 
-                // currentStep >= 2, tiếp tục bình thường
+                // currentStep >= 1, tiếp tục bình thường
                 
             } catch (error) {
                 // Tiếp tục bình thường nếu có lỗi

