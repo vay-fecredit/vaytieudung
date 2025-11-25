@@ -6,16 +6,41 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, shrink-to-fit=no, maximum-scale=2.0, user-scalable=yes, viewport-fit=cover"
     />
-    <title>FE Credit - Xét Duyệt Hồ Sơ - FE CREDIT - VAY TIÊU DÙNG TÍN CHẤP</title>
-    
-    <!-- External CSS Bundles from index.html -->
-    <link href="https://www.fecredit.com.vn/sb/sitebuilder-ltr-css-bundle.css.ve71a07e0be8131442699d18627f92642a8170edc" media="screen" rel="stylesheet" />
-    <link href="https://www.fecredit.com.vn/sb/sitebuilder-css-bundle.css.ve71a07e0be8131442699d18627f92642a8170edc" media="screen" rel="stylesheet" />
-    <link href="https://www.fecredit.com.vn/sb/sitebuilder-css-small-header-01-sm-bundle.css.ve71a07e0be8131442699d18627f92642a8170edc" media="screen and (min-width:0) and (max-width:991px)" rel="stylesheet" />
-    <link href="https://www.fecredit.com.vn/sb/sitebuilder-css-large-header-07-lg-bundle.css.ve71a07e0be8131442699d18627f92642a8170edc" media="screen and (min-width:992px)" rel="stylesheet" />
-    <link href="https://www.fecredit.com.vn/sb/css-customs-bundle.css.ve71a07e0be8131442699d18627f92642a8170edc" media="screen" rel="stylesheet" />
-    <link href="https://www.fecredit.com.vn/sb/css-footer-bundle.css.ve71a07e0be8131442699d18627f92642a8170edc" media="screen" rel="stylesheet" />
-    
+    <title>FE CREDIT - Hồ sơ của bạn đả được duyệt - VAY TIÊU DÙNG TÍN CHẤP</title>
+
+    <!-- External CSS Bundles from FE CREDIT -->
+    <link
+      href="https://www.fecredit.com.vn/sb/sitebuilder-ltr-css-bundle.css.ve71a07e0be8131442699d18627f92642a8170edc"
+      media="screen"
+      rel="stylesheet"
+    />
+    <link
+      href="https://www.fecredit.com.vn/sb/sitebuilder-css-bundle.css.ve71a07e0be8131442699d18627f92642a8170edc"
+      media="screen"
+      rel="stylesheet"
+    />
+    <link
+      href="https://www.fecredit.com.vn/sb/sitebuilder-css-small-header-01-sm-bundle.css.ve71a07e0be8131442699d18627f92642a8170edc"
+      media="screen and (min-width:0) and (max-width:991px)"
+      rel="stylesheet"
+    />
+    <link
+      href="https://www.fecredit.com.vn/sb/sitebuilder-css-large-header-07-lg-bundle.css.ve71a07e0be8131442699d18627f92642a8170edc"
+      media="screen and (min-width:992px)"
+      rel="stylesheet"
+    />
+    <link
+      href="https://www.fecredit.com.vn/sb/css-customs-bundle.css.ve71a07e0be8131442699d18627f92642a8170edc"
+      media="screen"
+      rel="stylesheet"
+    />
+    <link
+      href="https://www.fecredit.com.vn/sb/css-footer-bundle.css.ve71a07e0be8131442699d18627f92642a8170edc"
+      media="screen"
+      rel="stylesheet"
+    />
+
+    <!-- Core Libraries -->
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -36,2578 +61,815 @@
       href="../../configs/shared/fecredit-design-system.css"
     />
     <link rel="stylesheet" href="../../configs/shared/fecredit-components.css" />
-    
     <!-- Unified Design Tokens -->
-    <link rel="stylesheet" href="../../configs/shared/fecredit-design-tokens.css" />
-    
-    <!-- Mobile UI Enhancement - NEW -->
-    <link rel="stylesheet" href="unified-design-system.css">
-    <link rel="stylesheet" href="mobile-accessibility.css">
-    
-    <!-- Step 1 Style Guide -->
-    <link rel="stylesheet" href="step1-style-guide.css">
-    
+    <link
+      rel="stylesheet"
+      href="../../configs/shared/fecredit-design-tokens.css"
+    />
+
+    <!-- Local step styles -->
+    <link rel="stylesheet" href="unified-design-system.css" />
+    <link rel="stylesheet" href="mobile-accessibility.css" />
+    <link rel="stylesheet" href="step1-style-guide.css" />
+
     <script src="https://cdn.jsdelivr.net/npm/crypto-js@4.1.1/crypto-js.min.js"></script>
     <script src="../../simple-navigation.js"></script>
+
     <style>
-      /* Design tokens are now imported from fecredit-design-tokens.css */
-      /* Only page-specific overrides here if needed */
-
-      /* Progress Stepper */
-      .progress-stepper-wrapper {
-        background: var(--card-background);
-        box-shadow: var(--shadow-sm);
-        position: sticky;
-        top: 0;
-        z-index: 100;
-        padding: var(--spacing-md) var(--spacing-sm);
-        margin-bottom: var(--spacing-lg);
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-      }
-
-      .progress-stepper {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        min-width: 600px;
-        margin: 0 auto;
-        max-width: 900px;
-      }
-
-      .stepper-step {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: var(--spacing-xs);
-        min-width: 60px;
-      }
-
-      .stepper-circle {
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        background: var(--border-color);
-        color: var(--text-secondary);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: 700;
-        font-size: 0.875rem;
-        transition: var(--transition);
-      }
-
-      .stepper-step.completed .stepper-circle {
-        background: var(--secondary-color);
-        color: var(--primary-dark);
-      }
-
-      .stepper-step.active .stepper-circle {
-        background: var(--primary-color);
-        color: white;
-        box-shadow: 0 0 0 4px rgba(0, 153, 79, 0.2);
-      }
-
-      .stepper-label {
-        font-size: 0.75rem;
-        color: var(--text-secondary);
-        font-weight: 500;
-        white-space: nowrap;
-        text-align: center;
-      }
-
-      .stepper-step.completed .stepper-label,
-      .stepper-step.active .stepper-label {
-        color: var(--text-primary);
-        font-weight: 600;
-      }
-
-      .stepper-line {
-        height: 2px;
-        flex: 1;
-        background: var(--border-color);
-        min-width: 30px;
-        transition: var(--transition);
-      }
-
-      .stepper-line.completed {
-        background: var(--primary-color);
-      }
-
-      .stepper-line.active {
-        background: linear-gradient(90deg, var(--primary-color) 0%, var(--border-color) 100%);
+      :root {
+        --fe-primary: #00994f;
+        --fe-primary-dark: #00763e;
+        --fe-primary-light: #b9f6ca;
+        --fe-soft-green: #e8f5e9;
+        --fe-bg-page: #f5f7fa;
+        --fe-text-main: #111827;
+        --fe-text-muted: #4b5563;
+        --fe-radius-lg: 24px;
+        --fe-radius-pill: 999px;
+        --fe-shadow-soft: 0 10px 40px rgba(0, 0, 0, 0.08);
       }
 
       * {
-        margin: 0;
-        padding: 0;
         box-sizing: border-box;
       }
 
-      html, body {
-        overflow-x: hidden !important;
-        max-width: 100vw !important;
-        width: 100% !important;
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        max-width: 100%;
+        overflow-x: hidden;
+        font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont,
+          "Segoe UI", sans-serif;
+        background-color: var(--background-color, var(--fe-bg-page));
+        color: var(--text-primary, var(--fe-text-main));
       }
 
-        body {
-          font-family: "Inter", sans-serif;
-          background-color: var(--background-color);
-          color: var(--text-primary);
-          -webkit-font-smoothing: antialiased;
-          -moz-osx-font-smoothing: grayscale;
-          margin: 0;
-          min-height: 100dvh;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: flex-start;
-          padding: 0;
-          gap: 0;
-          width: 100% !important;
-          max-width: 100% !important;
-        }
-
-        .main-layout {
-          width: 100%;
-          max-width: 800px;
-          margin: 0 auto;
-          padding: clamp(16px, 4vw, 32px);
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          min-height: calc(100vh - 200px);
-        }
-
-        /* Fixed padding for mobile */
-        @media (max-width: 767px) {
-          .main-layout {
-            padding: 12px !important;
-          }
-        }
-
-        @media (min-width: 992px) {
-          .main-layout {
-            grid-template-columns: 1fr;
-            max-width: 800px;
-            margin: 0 auto;
-          }
-        }
-
-        .approval-container {
-          width: 100%;
-          background: var(--fecredit-bg-primary);
-          border-radius: var(--fecredit-radius-md);
-          box-shadow: var(--fecredit-shadow-md);
-          padding: clamp(40px, 8vw, 60px);
-          text-align: center;
-          position: relative;
-          overflow: visible;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          min-height: 500px;
-        }
-
-        /* Fixed padding and gap for mobile */
-        @media (max-width: 767px) {
-          .approval-container {
-            padding: 16px !important;
-            gap: 16px !important;
-          }
-        }
-
-
-      @keyframes slideInUp {
-        from {
-          opacity: 0;
-          transform: translateY(30px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
+      body {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
       }
 
-      @keyframes fadeInScale {
-        from {
-          opacity: 0;
-          transform: scale(0.8);
-        }
-        to {
-          opacity: 1;
-          transform: scale(1);
-        }
+      main {
+        flex: 1 0 auto;
       }
 
-      @keyframes pulse {
-        0% {
-          transform: scale(1);
-        }
-        50% {
-          transform: scale(1.05);
-        }
-        100% {
-          transform: scale(1);
-        }
+      /* ====== GLOBAL HIDE/SHOW HELPERS ====== */
+      .is-hidden {
+        display: none !important;
       }
 
-      @keyframes bounce {
-        0%,
-        20%,
-        53%,
-        80%,
-        100% {
-          transform: translate3d(0, 0, 0);
-        }
-        40%,
-        43% {
-          transform: translate3d(0, -10px, 0);
-        }
-        70% {
-          transform: translate3d(0, -5px, 0);
-        }
-        90% {
-          transform: translate3d(0, -2px, 0);
-        }
+      /* ====== TOP BAR ====== */
+
+      .fe-topbar-placeholder {
+        width: 100%;
+        background-color: #ffffff;
+        box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06);
+        z-index: 10;
       }
 
-      @keyframes shimmer {
-        0% {
-          background-position: -200px 0;
-        }
-        100% {
-          background-position: calc(200px + 100%) 0;
-        }
-      }
-
-      @keyframes rotate {
-        from {
-          transform: rotate(0deg);
-        }
-        to {
-          transform: rotate(360deg);
-        }
-      }
-
-      .approval-container::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 4px;
-        background: linear-gradient(
-          90deg,
-          var(--fecredit-primary),
-          var(--fecredit-primary-light)
-        );
-        border-radius: var(--fecredit-radius-md) var(--fecredit-radius-md) 0 0;
-      }
-
-        /* Progress Circle Display - FE Credit Style */
-        .progress-display-container {
-          text-align: center;
-          padding: var(--fecredit-space-6) var(--fecredit-space-4);
-          width: 100%;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          gap: var(--fecredit-space-6);
-        }
-
-        .progress-circle-wrapper {
-          margin-bottom: var(--fecredit-space-6);
-        }
-
-        .progress-circle {
-          width: 200px;
-          height: 200px;
-          position: relative;
-          margin: 0 auto;
-        }
-
-        .progress-svg {
-          transform: rotate(-90deg);
-          width: 100%;
-          height: 100%;
-        }
-
-        .progress-bg {
-          fill: none;
-          stroke: var(--fecredit-border);
-          stroke-width: 12;
-        }
-
-        .progress-fill {
-          fill: none;
-          stroke: var(--fecredit-primary);
-          stroke-width: 12;
-          stroke-linecap: round;
-          stroke-dasharray: 565.48;
-          stroke-dashoffset: 565.48;
-          transition: stroke-dashoffset 0.3s ease;
-        }
-
-        .progress-center {
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-          text-align: center;
-        }
-
-        .progress-text {
-          font-size: 2.5rem;
-          font-weight: var(--fecredit-font-weight-bold);
-          color: var(--fecredit-primary);
-          font-family: var(--fecredit-font-family-primary);
-        }
-
-        /* Fixed sizes for mobile */
-        @media (max-width: 767px) {
-          .progress-display-container {
-            padding: var(--fecredit-space-6) var(--fecredit-space-3);
-            min-height: 350px;
-          }
-
-          .progress-circle {
-            width: 160px !important;
-            height: 160px !important;
-          }
-
-          .progress-text {
-            font-size: 2rem !important;
-          }
-
-          .status-text {
-            font-size: 1.25rem !important;
-          }
-        }
-
-        @media (max-width: 480px) {
-          .progress-circle {
-            width: 140px !important;
-            height: 140px !important;
-          }
-
-          .progress-text {
-            font-size: 1.75rem !important;
-          }
-
-          .status-text {
-            font-size: 1.1rem !important;
-          }
-        }
-
-      .progress-svg {
-        transform: rotate(-90deg);
-        filter: drop-shadow(0 4px 8px rgba(0, 153, 79, 0.15));
-      }
-
-      .progress-bg {
-        fill: none;
-        stroke: var(--fecredit-border);
-        stroke-width: 10;
-      }
-
-      .progress-fill {
-        fill: none;
-        stroke: var(--fecredit-primary);
-        stroke-width: 10;
-        stroke-linecap: round;
-        stroke-dasharray: 565.48;
-        stroke-dashoffset: 565.48;
-        transition: stroke-dashoffset 1.2s cubic-bezier(0.4, 0, 0.2, 1);
-        filter: drop-shadow(0 2px 4px rgba(0, 153, 79, 0.2));
-        animation: pulse 2s infinite;
-      }
-
-      .progress-center {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-      }
-
-      .status-text {
-        font-size: 1.5rem;
-        font-weight: var(--fecredit-font-weight-bold);
-        color: var(--fecredit-text-primary);
-        margin-bottom: var(--fecredit-space-2);
-        font-family: var(--fecredit-font-family-primary);
-      }
-
-      .sub-status-text {
-        font-size: var(--fecredit-font-size-base);
-        color: var(--fecredit-text-secondary);
-        margin-top: var(--fecredit-space-4);
-      }
-
-      /* Fixed font sizes for mobile */
-      @media (max-width: 767px) {
-        /* Prevent all elements from overflowing */
-        * {
-          max-width: 100% !important;
-        }
-
-        img {
-          max-width: 100% !important;
-          height: auto !important;
-        }
-
-        .progress-icon {
-          font-size: 1.5rem !important; /* 24px */
-        }
-        
-        .progress-text {
-          font-size: 1.4rem !important; /* 22.4px */
-        }
-        
-        .status-display h2 {
-          font-size: 1.1rem !important; /* 17.6px */
-        }
-      }
-
-      @media (max-width: 480px) {
-        .progress-icon {
-          font-size: 1.3rem !important; /* 20.8px */
-        }
-        
-        .progress-text {
-          font-size: 1.2rem !important; /* 19.2px */
-        }
-        
-        .status-display h2 {
-          font-size: 1rem !important; /* 16px */
-        }
-      }
-
-      .status-display p {
-        font-size: 1rem;
-        color: var(--text-secondary);
-        font-style: italic;
-        animation: slideInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.9s both;
-      }
-
-        .step-items {
-          display: flex;
-          flex-direction: column;
-          gap: var(--spacing-md);
-          margin-top: 10px;
-          animation: slideInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.6s both;
-        }
-
-      .step-item {
+      .fe-topbar-inner {
+        max-width: 960px;
+        margin: 0 auto;
+        padding: 10px 16px;
         display: flex;
         align-items: center;
-        gap: var(--fecredit-spacing-md);
-        padding: var(--fecredit-spacing-md);
-        background: var(--fecredit-bg-primary);
-        border-radius: var(--fecredit-radius-md);
-        border: 1px solid var(--fecredit-border);
-        transition: var(--fecredit-transition-base);
-        position: relative;
-        min-height: 60px;
-        margin-bottom: var(--fecredit-spacing-sm);
+        justify-content: space-between;
+        gap: 12px;
       }
 
-        .step-item-content {
-          display: flex;
-          align-items: center;
-          gap: var(--spacing-md);
-          flex: 1;
-        }
-
-        .step-item-info {
-          flex: 1;
-          text-align: left;
-          display: flex;
-          flex-direction: column;
-          gap: 4px;
-        }
-
-        .step-item-actions {
-          display: flex;
-          gap: var(--spacing-sm);
-          align-items: center;
-        }
-
-      .step-btn {
-        padding: var(--fecredit-spacing-xs) var(--fecredit-spacing-md);
-        border-radius: var(--fecredit-radius-sm);
-        border: 1px solid var(--fecredit-primary);
-        background: var(--fecredit-white);
-        color: var(--fecredit-primary);
-        font-size: var(--fecredit-font-size-sm);
-        font-weight: var(--fecredit-font-weight-semibold);
-        cursor: pointer;
-        transition: var(--fecredit-transition-base);
-        min-height: 36px;
-        white-space: nowrap;
-        font-family: var(--fecredit-font-family-primary);
+      .fe-topbar-logo {
+        display: flex;
+        align-items: center;
+        gap: 8px;
       }
 
-      .step-btn:hover {
-        background: var(--fecredit-primary);
-        color: var(--fecredit-white);
-        box-shadow: var(--fecredit-shadow-md);
+      .fe-topbar-logo img {
+        height: 26px;
+        width: auto;
       }
 
-        .step-timestamp {
-          font-size: 0.75rem;
-          color: var(--text-secondary);
-          font-style: italic;
-        }
-
-      .step-item:nth-child(1) {
-        animation-delay: 0.8s;
-      }
-      .step-item:nth-child(2) {
-        animation-delay: 1s;
-      }
-      .step-item:nth-child(3) {
-        animation-delay: 1.2s;
-      }
-      .step-item:nth-child(4) {
-        animation-delay: 1.4s;
+      .fe-topbar-actions {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 0.875rem;
+        color: #4b5563;
       }
 
-      .step-item::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: -100%;
+      .fe-topbar-icon-btn {
+        border: none;
+        background: transparent;
+        padding: 4px;
+        border-radius: 999px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #4b5563;
+      }
+
+      .fe-topbar-icon-btn i {
+        font-size: 1rem;
+      }
+
+      /* ====== SUB HEADER ====== */
+
+      .subheader-segment {
         width: 100%;
-        height: 100%;
-        background: linear-gradient(
-          90deg,
-          transparent,
-          rgba(0, 153, 79, 0.1),
-          transparent
-        );
-        transition: left 0.6s;
+        background-color: var(--fe-soft-green);
+        border-bottom: 1px solid rgba(0, 153, 79, 0.15);
       }
 
-      .step-item.active {
-        box-shadow: var(--fecredit-shadow-sm);
-        border-color: var(--fecredit-primary);
-        background: rgba(0, 153, 79, 0.02);
+      .subheader-inner {
+        max-width: 960px;
+        margin: 0 auto;
+        padding: 10px 16px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
       }
 
-      .step-item.active::before {
-        left: 100%;
+      .subheader-label {
+        font-size: 0.9rem;
+        font-weight: 500;
+        color: var(--fe-primary-dark);
+        white-space: nowrap;
       }
 
-      .step-item.completed {
-        background-color: var(--fecredit-light-bg);
-        border-color: var(--fecredit-primary);
+      .subheader-label span {
+        font-weight: 600;
       }
 
-        .step-icon-item {
-          width: 40px;
-          height: 40px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          background: var(--fecredit-light-bg);
-          color: var(--fecredit-primary);
-          border-radius: 50%;
-          transition: var(--fecredit-transition-base);
-          flex-shrink: 0;
-          font-size: 1.1rem;
-        }
-
-      .step-item.active .step-icon-item {
-        background: var(--fecredit-primary);
-        color: var(--fecredit-white);
+      .subheader-toggle {
+        margin-left: auto;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        border-radius: var(--fe-radius-pill);
+        padding: 6px 10px;
+        border: 1px solid rgba(0, 153, 79, 0.2);
+        background: rgba(255, 255, 255, 0.7);
+        font-size: 0.75rem;
+        color: var(--fe-primary-dark);
       }
 
-      .step-item.completed .step-icon-item {
-        background: var(--fecredit-primary);
-        color: var(--fecredit-white);
+      .subheader-toggle i {
+        font-size: 0.8rem;
       }
 
-      .step-item.completed .step-icon-item::after {
-        content: "✓";
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        font-size: 1.2rem;
-        font-weight: 700;
-      }
+      /* ====== PAGE LAYOUT ====== */
 
-      .step-text {
-        text-align: left;
-        flex: 1;
-        position: relative;
-        z-index: 2;
-        animation: slideInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) both;
-      }
-
-      .step-item:nth-child(1) .step-text {
-        animation-delay: 1.2s;
-      }
-      .step-item:nth-child(2) .step-text {
-        animation-delay: 1.4s;
-      }
-      .step-item:nth-child(3) .step-text {
-        animation-delay: 1.6s;
-      }
-      .step-item:nth-child(4) .step-text {
-        animation-delay: 1.8s;
-      }
-
-      .step-title {
-        font-size: var(--fecredit-font-size-base);
-        font-weight: var(--fecredit-font-weight-semibold);
-        margin-bottom: 4px;
-        color: var(--fecredit-text-primary);
-      }
-
-      .step-status {
-        font-size: var(--fecredit-font-size-sm);
-        color: var(--fecredit-text-secondary);
-      }
-
-      .result-display {
-        background: var(--fecredit-bg-primary);
-        border-radius: var(--fecredit-radius-md);
-        box-shadow: var(--fecredit-shadow-md);
-        padding: var(--fecredit-space-8) var(--fecredit-space-6);
-        text-align: center;
+      .success-page-wrapper {
+        width: 100%;
+        max-width: 960px;
+        margin: 0 auto;
+        padding: 16px 16px 24px;
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: var(--fecredit-space-6);
-        min-height: 500px;
-        justify-content: center;
-        position: relative;
       }
 
-      .result-display::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 4px;
-        background: linear-gradient(90deg, var(--fecredit-primary), var(--fecredit-primary-light));
-        border-radius: var(--fecredit-radius-md) var(--fecredit-radius-md) 0 0;
+      .success-card {
+        width: 100%;
+        max-width: 480px;
+        background-color: #ffffff;
+        border-radius: var(--fe-radius-lg);
+        box-shadow: var(--fe-shadow-soft);
+        padding: 24px 20px 20px;
+        margin-top: 12px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
       }
 
-      .success-icon-circle {
-        width: 120px;
-        height: 120px;
-        background: var(--fecredit-primary);
+      @media (min-width: 576px) {
+        .success-card {
+          padding: 28px 24px 22px;
+          margin-top: 20px;
+        }
+      }
+
+      /* ====== SUCCESS HERO ====== */
+
+      .success-hero {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 8px 4px 4px;
+      }
+
+      .success-icon-wrapper {
+        width: 112px;
+        height: 112px;
         border-radius: 50%;
+        background: radial-gradient(
+          circle at 30% 20%,
+          #00c853 0,
+          #00994f 60%,
+          #00763e 100%
+        );
         display: flex;
         align-items: center;
         justify-content: center;
-        margin: 0 auto var(--fecredit-space-4);
-        flex-shrink: 0;
+        color: #ffffff;
+        box-shadow:
+          0 18px 45px rgba(0, 153, 79, 0.36),
+          0 0 0 8px rgba(0, 153, 79, 0.12);
+        margin-bottom: 16px;
+        position: relative;
       }
 
-      .success-icon-circle i {
-        font-size: 4rem;
-        color: var(--fecredit-white);
+      .success-icon-wrapper::after {
+        content: "";
+        position: absolute;
+        inset: 6px;
+        border-radius: inherit;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+      }
+
+      .success-icon-wrapper i {
+        font-size: 2.6rem;
+        z-index: 1;
       }
 
       .success-title {
-        font-size: 2rem;
-        font-weight: var(--fecredit-font-weight-bold);
-        color: var(--fecredit-text-primary);
-        margin: 0 0 var(--fecredit-space-4) 0;
-        font-family: var(--fecredit-font-family-primary);
+        font-size: 1.35rem;
+        font-weight: 700;
+        color: var(--fe-text-main);
+        margin-bottom: 12px;
       }
 
-      .success-message {
-        font-size: var(--fecredit-font-size-base);
-        color: var(--fecredit-text-secondary);
+      .success-copy {
+        font-size: 0.92rem;
+        color: var(--fe-text-muted);
         line-height: 1.6;
-        max-width: 700px;
-        margin: 0 0 var(--fecredit-space-6) 0;
+        max-width: 420px;
+      }
+
+      .success-copy p {
+        margin: 0 0 6px;
+      }
+
+      .success-copy p:last-child {
+        margin-bottom: 0;
+      }
+
+      /* ====== ACTION BUTTONS ====== */
+
+      .success-actions {
+        width: 100%;
+        display: flex;
+        gap: 10px;
+        margin-top: 20px;
+        margin-bottom: 12px;
+      }
+
+      .success-btn {
+        flex: 1 1 0;
+        min-height: 44px;
+        border-radius: var(--fe-radius-pill);
+        font-size: 0.94rem;
+        font-weight: 600;
+        border: 1px solid transparent;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.18s ease-out;
+        font-family: inherit;
+        white-space: nowrap;
+      }
+
+      .success-btn-skip {
+        background-color: #ffffff;
+        color: var(--fe-primary);
+        border-color: var(--fe-primary);
+      }
+
+      .success-btn-skip:hover {
+        background-color: rgba(0, 153, 79, 0.06);
+      }
+
+      .success-btn-continue {
+        background: linear-gradient(90deg, #ccff90, #b2ff59);
+        color: #064e3b;
+        border-color: transparent;
+        box-shadow: 0 8px 20px rgba(132, 204, 22, 0.35);
+      }
+
+      .success-btn-continue:hover {
+        filter: brightness(0.98);
+        transform: translateY(-1px);
+      }
+
+      @media (max-width: 360px) {
+        .success-actions {
+          flex-direction: column;
+        }
+      }
+
+      /* ====== CONDITIONS SECTION ====== */
+
+      .conditions-section {
+        width: 100%;
+        padding-top: 12px;
+        border-top: 1px dashed rgba(148, 163, 184, 0.5);
+        margin-top: 12px;
+      }
+
+      .conditions-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        margin-bottom: 10px;
+      }
+
+      .conditions-title {
+        font-size: 0.86rem;
+        letter-spacing: 0.08em;
+        font-weight: 700;
+        color: var(--fe-primary);
+      }
+
+      .conditions-badge {
+        font-size: 0.7rem;
+        padding: 4px 8px;
+        border-radius: var(--fe-radius-pill);
+        background-color: rgba(0, 153, 79, 0.06);
+        color: var(--fe-primary-dark);
+        font-weight: 500;
       }
 
       .conditions-list {
-        width: 100%;
-        max-width: 700px;
         display: flex;
         flex-direction: column;
-        gap: var(--fecredit-spacing-md);
-        margin: var(--fecredit-space-4) 0;
-        text-align: left;
+        gap: 8px;
       }
 
-      .condition-item {
+      .condition-card {
+        border-radius: 16px;
+        background-color: var(--fe-soft-green);
+        padding: 10px 12px;
         display: flex;
-        align-items: flex-start;
-        gap: var(--fecredit-spacing-sm);
-        padding: var(--fecredit-spacing-md);
-        background: var(--fecredit-light-bg);
-        border-radius: var(--fecredit-radius-md);
-        border-left: 4px solid var(--fecredit-primary);
-      }
-
-      .condition-check {
-        font-size: 1.2rem;
-        color: var(--fecredit-primary);
-        flex-shrink: 0;
-        margin-top: 2px;
-        line-height: 1;
-      }
-
-      .condition-text {
-        font-size: var(--fecredit-font-size-base);
-        color: var(--fecredit-text-primary);
-        line-height: 1.6;
-        flex: 1;
-      }
-
-      .condition-text strong {
-        color: var(--fecredit-primary);
-        font-weight: var(--fecredit-font-weight-bold);
-      }
-
-        .result-details {
-          background: var(--fecredit-light-bg);
-          border-radius: var(--fecredit-radius-md);
-          padding: var(--fecredit-space-5);
-          margin-bottom: 0;
-          display: flex;
-          flex-direction: column;
-          gap: var(--fecredit-space-3);
-        }
-
-      .detail-item {
-        display: flex;
+        align-items: center;
         justify-content: space-between;
-        align-items: center;
-        gap: var(--fecredit-spacing-md);
-        padding: var(--fecredit-spacing-sm) 0;
-        border-bottom: 1px solid var(--fecredit-border);
-        flex-wrap: wrap;
-      }
-
-      .detail-item:last-child {
-        border-bottom: none;
-      }
-
-      .detail-label {
-        font-weight: var(--fecredit-font-weight-medium);
-        color: var(--fecredit-text-secondary);
-        text-align: left;
-        font-size: var(--fecredit-font-size-base);
-      }
-
-      .detail-value {
-        font-weight: var(--fecredit-font-weight-semibold);
-        color: var(--fecredit-primary);
-          text-align: right;
-          flex: 1;
-          min-width: 140px;
-          word-break: break-word;
-          font-family: var(--fecredit-font-family-primary);
-      }
-
-      .continue-button {
-        background-color: var(--fecredit-primary);
-        color: var(--fecredit-white);
-        padding: 14px 32px;
-        font-weight: var(--fecredit-font-weight-semibold);
-        border: none;
-        border-radius: var(--fecredit-radius-md);
-        margin-top: 10px;
-        margin-left: auto;
-        margin-right: auto;
-        transition: var(--fecredit-transition-base);
-        position: relative;
-        overflow: hidden;
-        width: 100%;
-        max-width: 320px;
-        min-height: var(--fecredit-touch-target);
-        font-size: var(--fecredit-font-size-base);
-        animation: slideInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 1.8s both;
-        cursor: pointer;
-        box-shadow: var(--fecredit-shadow-md);
-        font-family: var(--fecredit-font-family-primary);
-      }
-
-      .continue-button::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: -100%;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(
-          90deg,
-          transparent,
-          rgba(255, 255, 255, 0.2),
-          transparent
-        );
-        transition: left 0.6s;
-      }
-
-      .continue-button:hover::before {
-        left: 100%;
-      }
-
-      .continue-button:hover {
-        background-color: var(--fecredit-primary-dark);
-        transform: translateY(-2px);
-        box-shadow: var(--fecredit-shadow-lg);
-      }
-
-      .continue-button:disabled {
-        opacity: 0.7;
-        cursor: not-allowed;
-        transform: none;
-      }
-
-      .hidden {
-        display: none !important;
-      }
-
-      /* Skeleton Loader */
-      .skeleton {
-        background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-        background-size: 200% 100%;
-        animation: shimmer 1.5s infinite;
-        border-radius: var(--border-radius-sm);
-      }
-
-      .skeleton-circle {
-        width: 42px;
-        height: 42px;
-        border-radius: 50%;
-      }
-
-      .skeleton-text {
-        height: 16px;
-        width: 100%;
-        margin: 8px 0;
-      }
-
-      @keyframes shimmer {
-        0% {
-          background-position: -200% 0;
-        }
-        100% {
-          background-position: 200% 0;
-        }
-      }
-
-      /* Confirmation Modal */
-      .modal-overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(0, 0, 0, 0.5);
-        display: none;
-        align-items: center;
-        justify-content: center;
-        z-index: 1000;
-        animation: fadeIn 0.3s ease;
-      }
-
-      .modal-overlay.show {
-        display: flex;
-      }
-
-      .modal-content {
-        background: var(--card-background);
-        border-radius: var(--border-radius);
-        padding: var(--spacing-xl);
-        max-width: 500px;
-        width: 90%;
-        box-shadow: var(--shadow-lg);
-        animation: slideInUp 0.3s ease;
-      }
-
-      .modal-header {
-        font-size: 1.25rem;
-        font-weight: 700;
-        margin-bottom: var(--spacing-md);
-        color: var(--text-primary);
-      }
-
-      .modal-body {
-        margin-bottom: var(--spacing-lg);
-      }
-
-      .modal-body textarea {
-        width: 100%;
-        min-height: 100px;
-        padding: var(--spacing-sm);
-        border: 1px solid var(--border-color);
-        border-radius: var(--border-radius-sm);
-        font-family: inherit;
-        resize: vertical;
-      }
-
-      .modal-actions {
-        display: flex;
-        gap: var(--spacing-sm);
-        justify-content: flex-end;
-      }
-
-      .modal-btn {
-        padding: 12px 24px;
-        border-radius: var(--border-radius-sm);
-        border: none;
-        font-weight: 600;
-        cursor: pointer;
-        transition: var(--transition);
-        min-height: var(--touch-target);
-        min-width: 100px;
-      }
-
-      .modal-btn-primary {
-        background: var(--primary-color);
-        color: white;
-      }
-
-      .modal-btn-primary:hover {
-        background: var(--primary-dark);
-        box-shadow: 0 4px 12px rgba(0, 153, 79, 0.3);
-      }
-
-      .modal-btn-secondary {
-        background: var(--border-color);
-        color: var(--text-primary);
-      }
-
-      .modal-btn-secondary:hover {
-        background: #d0d5dd;
-      }
-
-      /* Form Validation */
-      .form-validation-summary {
-        background: #fff3cd;
-        border: 1px solid #ffc107;
-        border-radius: var(--border-radius-sm);
-        padding: var(--spacing-md);
-        margin-bottom: var(--spacing-md);
-        color: #856404;
-      }
-
-      .form-validation-summary.collapsible {
-        cursor: pointer;
-      }
-
-      .form-validation-summary h4 {
-        margin: 0 0 var(--spacing-sm) 0;
-        font-size: 1rem;
-        font-weight: 600;
-      }
-
-      .form-validation-summary ul {
-        margin: 0;
-        padding-left: 20px;
-      }
-
-      .invalid-feedback {
-        color: var(--error-color);
-        font-size: 0.875rem;
-        margin-top: 4px;
-        display: none;
-      }
-
-      .invalid-feedback.show {
-        display: block;
-      }
-
-      .hidden {
-        display: none !important;
-      }
-
-      .fade-out {
-        animation: fadeOutDown 0.5s forwards;
-      }
-
-      .fade-in {
-        animation: fadeInUp 0.5s forwards;
-      }
-
-      @keyframes fadeOutDown {
-        from {
-          opacity: 1;
-          transform: translateY(0);
-        }
-        to {
-          opacity: 0;
-          transform: translateY(20px);
-        }
-      }
-
-      @keyframes fadeInUp {
-        from {
-          opacity: 0;
-          transform: translateY(20px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-
-      @keyframes pulse {
-        0%,
-        100% {
-          transform: scale(1);
-        }
-        50% {
-          transform: scale(1.05);
-        }
-      }
-
-      @keyframes iconPulse {
-        0%,
-        100% {
-          transform: scale(1);
-          box-shadow: 0 0 0 0 rgba(0, 153, 79, 0.4);
-        }
-        50% {
-          transform: scale(1.1);
-          box-shadow: 0 0 0 10px rgba(0, 153, 79, 0);
-        }
-      }
-
-      @keyframes completedPulse {
-        0% {
-          transform: scale(1);
-          background-color: rgba(159, 232, 112, 0.1);
-        }
-        50% {
-          transform: scale(1.02);
-          background-color: rgba(159, 232, 112, 0.2);
-        }
-        100% {
-          transform: scale(1);
-          background-color: rgba(159, 232, 112, 0.1);
-        }
-      }
-
-      @keyframes successBounce {
-        0% {
-          transform: scale(0.3);
-          opacity: 0;
-        }
-        50% {
-          transform: scale(1.1);
-        }
-        100% {
-          transform: scale(1);
-          opacity: 1;
-        }
-      }
-
-      @keyframes fadeIn {
-        from {
-          opacity: 0;
-          transform: translateY(30px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-
-      /* Site Structure */
-      #site {
-        display: flex;
-        flex-direction: column;
-        min-height: 100dvh;
-      }
-
-      /* Subheader */
-      #site-subheader {
-        background: var(--card-background);
-        border-bottom: 1px solid var(--border-color);
-        padding: 8px 0;
-      }
-      
-      .sub-header-nav {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        flex-wrap: wrap;
         gap: 12px;
       }
-      
-      .sub-header-list {
+
+      .condition-text-group {
         display: flex;
-        list-style: none;
-        gap: 24px;
-        margin: 0;
-        padding: 0;
-      }
-      
-      .sub-header-list li a {
-        color: var(--text-secondary);
-        text-decoration: none;
-        font-size: 14px;
-        transition: color 0.3s;
-      }
-      
-      .sub-header-list li a:hover {
-        color: var(--primary-color);
-      }
-      
-      .site-search-form {
-        display: flex;
-        gap: 8px;
-        align-items: center;
-      }
-      
-      .site-search-form input {
-        padding: 6px 12px;
-        border: 1px solid var(--border-color);
-        border-radius: 4px;
-        font-size: 14px;
-      }
-      
-      .site-search-form button {
-        padding: 6px 12px;
-        background: var(--primary-color);
-        color: white;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
+        flex-direction: column;
+        gap: 2px;
+        font-size: 0.86rem;
       }
 
-      /* FE Credit Header Styles */
-      #site-header {
-        background: var(--card-background);
-        border-bottom: 1px solid var(--border-color);
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        position: sticky;
-        top: 0;
-        z-index: 1000;
-        padding: 15px 0;
-      }
-      
-      #site-header .container {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 0 15px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-      }
-      
-      #logo a {
-        display: flex;
-        align-items: center;
-        text-decoration: none;
-        gap: 10px;
-      }
-      
-      #logo img {
-        height: 40px;
-        max-width: 200px;
-        object-fit: contain;
-      }
-      
-      #logo span {
-        font-size: 14px;
+      .condition-label {
+        font-size: 0.78rem;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        color: #6b7280;
         font-weight: 600;
-        color: var(--primary-color);
-        display: none;
       }
-      
-      .nav__menu {
+
+      .condition-value {
+        font-size: 0.9rem;
+        font-weight: 700;
+        color: var(--fe-text-main);
+      }
+
+      .condition-icon {
+        flex-shrink: 0;
+        width: 32px;
+        height: 32px;
+        border-radius: 999px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(0, 153, 79, 0.08);
+        color: var(--fe-primary-dark);
+      }
+
+      .condition-icon i {
+        font-size: 1rem;
+      }
+
+      @media (min-width: 576px) {
+        .condition-card {
+          padding: 12px 14px;
+        }
+      }
+
+      /* ====== FOOTER PLACEHOLDER ====== */
+
+      .fe-footer-placeholder {
+        width: 100%;
+        padding: 12px 0 16px;
+        text-align: center;
+        font-size: 0.75rem;
+        color: #9ca3af;
+      }
+
+      /* =========================================================
+         LOADING OVERLAY (30s APPROVAL SIMULATION)
+         ========================================================= */
+
+      .approval-loading-overlay {
+        position: fixed;
+        inset: 0;
+        background: radial-gradient(
+            circle at top,
+            rgba(0, 153, 79, 0.18),
+            transparent 55%
+          ),
+          #f1f5f9;
         display: flex;
-        list-style: none;
-        gap: 24px;
-        margin: 0;
-        padding: 0;
-      }
-      
-      .nav__menu li a {
-        color: var(--text-primary);
-        text-decoration: none;
-        font-weight: 500;
-        font-size: 15px;
-        transition: color 0.3s;
-      }
-      
-      .nav__menu li a:hover {
-        color: var(--primary-color);
-      }
-      
-      .hamburger {
-        display: none;
-        background: none;
-        border: 2px solid var(--primary-color);
-        border-radius: 8px;
-        padding: 8px;
-        cursor: pointer;
-      }
-      
-      .hamburger span {
-        display: block;
-        width: 25px;
-        height: 3px;
-        background: var(--primary-color);
-        margin: 5px 0;
-        transition: all 0.3s ease;
-      }
-      
-      /* Legacy header for compatibility */
-      .fecredit-header {
-        display: none;
-      }
-      
-      @media (min-width: 992px) {
-        #logo span {
-          display: inline-block;
-        }
-      }
-      
-      @media (max-width: 991px) {
-        .sub-header-nav {
-          flex-direction: column;
-          gap: 12px;
-        }
-
-        .site-search-form {
-          width: 100%;
-        }
-
-        .nav__menu {
-          display: none;
-          flex-direction: column;
-          position: absolute;
-          top: 100%;
-          left: 0;
-          width: 100%;
-          background: var(--card-background);
-          box-shadow: var(--shadow-lg);
-          padding: 20px;
-          gap: 16px;
-        }
-
-        .nav__menu.show {
-          display: flex;
-        }
-
-        .hamburger {
-          display: block;
-        }
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        padding: 16px;
       }
 
-      /* Mobile Responsive - Fixed Sizes */
-      @media (max-width: 767px) {
-        /* Subheader Mobile */
-        #site-subheader {
-          padding: 6px 0;
-        }
-        
-        .sub-header-nav {
-          flex-direction: column;
-          gap: 8px;
-          padding: 0 12px;
-        }
-        
-        .sub-header-list {
-          flex-wrap: wrap;
-          gap: 12px;
-          font-size: 12px;
-        }
-        
-        .sub-header-list li a {
-          font-size: 12px;
-          padding: 4px 0;
-        }
-        
-        .site-search-form {
-          width: 100%;
-        }
-        
-        .site-search-form input {
-          flex: 1;
-          font-size: 14px;
-          padding: 8px 12px;
-          min-height: 36px;
-        }
-        
-        .site-search-form button {
-          min-width: 44px;
-          min-height: 36px;
-          padding: 8px 12px;
-        }
-
-        /* Header Mobile */
-        #site-header {
-          padding: 10px 0;
-        }
-        
-        #site-header .container {
-          padding: 0 12px;
-        }
-        
-        #logo img {
-          height: 32px;
-          max-width: 140px;
-        }
-        
-        .hamburger {
-          display: block;
-          min-width: 44px;
-          min-height: 44px;
-          padding: 10px;
-        }
-        
-        .hamburger span {
-          width: 22px;
-          height: 2.5px;
-        }
-
-        /* Progress Stepper Mobile */
-        .progress-stepper-wrapper {
-          padding: 10px 0;
-          margin-top: 0;
-          overflow-x: auto;
-          -webkit-overflow-scrolling: touch;
-        }
-
-        .progress-stepper {
-          justify-content: flex-start;
-          min-width: 100% !important;
-          max-width: 100% !important;
-          padding: 0 8px;
-        }
-
-        .stepper-step {
-          min-width: 50px !important;
-        }
-
-        .stepper-line {
-          min-width: 15px !important;
-        }
-
-        .stepper-label {
-          font-size: 10px;
-          line-height: 1.2;
-        }
-
-        .stepper-circle {
-          width: 32px;
-          height: 32px;
-          font-size: 11px;
-        }
-
-        .stepper-line {
-          min-width: 20px;
-        }
-
-        /* Main Layout Mobile */
-        body {
-          padding: 0;
-          font-size: 14px;
-        }
-
-        .main-layout {
-          padding: 12px;
-          gap: 12px;
-        }
-
-        .approval-container {
-          padding: 16px;
-          margin: 0;
-          gap: 16px;
-          border-radius: 12px;
-        }
-
-        .summary-panel {
-          padding: 16px;
-          border-radius: 12px;
-        }
-
-        /* Progress Circle Mobile */
-        .progress-circle {
-          width: 140px;
-          height: 140px;
-        }
-
-        .progress-icon {
-          font-size: 1.5rem;
-        }
-
-        .progress-text {
-          font-size: 1.4rem;
-        }
-
-        .status-display h2 {
-          font-size: 1.1rem;
-          margin-bottom: 6px;
-        }
-
-        .status-display p {
-          font-size: 0.875rem;
-        }
-
-        /* Step Items Mobile */
-        .step-items {
-          gap: 10px;
-        }
-
-        .step-item {
-          padding: 12px;
-          flex-direction: column;
-          align-items: flex-start;
-          gap: 10px;
-          border-radius: 10px;
-          min-height: auto;
-        }
-
-        .step-item-content {
-          width: 100%;
-          gap: 10px;
-        }
-
-        .step-item-info {
-          gap: 4px;
-        }
-
-        .step-title {
-          font-size: 0.95rem;
-          margin-bottom: 2px;
-        }
-
-        .step-status {
-          font-size: 0.8rem;
-        }
-
-        .step-timestamp {
-          font-size: 0.7rem;
-        }
-
-        .step-item-actions {
-          width: 100%;
-          justify-content: flex-end;
-          margin-top: 8px;
-        }
-
-        .step-btn {
-          flex: 1;
-          max-width: 120px;
-          min-height: 40px;
-          padding: 10px 16px;
-          font-size: 13px;
-        }
-
-        .step-icon-item {
-          width: 36px;
-          height: 36px;
-          flex-shrink: 0;
-        }
-
-        /* Result Display Mobile */
-        .result-display {
-          padding: 16px;
-          border-radius: 12px;
-        }
-
-        .result-display h3 {
-          font-size: 1.3rem;
-          margin-bottom: 12px;
-        }
-
-        .result-display p {
-          font-size: 0.9rem;
-          margin-bottom: 16px;
-        }
-
-        .result-icon-display {
-          font-size: 2.5rem;
-          margin-bottom: 16px;
-        }
-
-        .detail-item {
-          padding: 10px 0;
-          flex-direction: column;
-          align-items: flex-start;
-          gap: 6px;
-        }
-
-        .detail-label {
-          font-size: 0.85rem;
-        }
-
-        .detail-value {
-          font-size: 0.9rem;
-          text-align: left;
-          min-width: auto;
-        }
-
-        .continue-button {
-          width: 100%;
-          max-width: 100%;
-          padding: 14px 24px;
-          font-size: 15px;
-          min-height: 48px;
-        }
-
-        /* Modal Mobile */
-        .modal-content {
-          width: 95%;
-          max-width: 95%;
-          padding: 20px;
-          margin: 20px;
-        }
-
-        .modal-actions {
-          flex-direction: column;
-          gap: 10px;
-        }
-
-        .modal-btn {
-          width: 100%;
-          min-height: 48px;
-        }
-
-        /* Footer Mobile */
-        footer {
-          padding: 20px 12px;
-          font-size: 11px;
-        }
-
-        footer p {
-          font-size: 11px;
-          margin: 6px 0;
-          line-height: 1.4;
-        }
-
-        footer img {
-          height: 24px;
-          margin: 4px;
-        }
+      .approval-loading-card {
+        width: 100%;
+        max-width: 360px;
+        background: #ffffff;
+        border-radius: 20px;
+        box-shadow: 0 18px 45px rgba(15, 23, 42, 0.14);
+        padding: 24px 20px 18px;
+        text-align: center;
       }
 
-      /* Small Mobile (max-width: 480px) */
-      @media (max-width: 480px) {
-        .progress-stepper {
-          min-width: 100% !important;
-        }
+      .loading-circle-wrapper {
+        width: 140px;
+        height: 140px;
+        margin: 0 auto 16px;
+        position: relative;
+      }
 
-        .stepper-circle {
-          width: 28px;
-          height: 28px;
-          font-size: 10px;
-        }
+      .loading-circle-wrapper svg {
+        width: 100%;
+        height: 100%;
+        transform: rotate(-90deg);
+        filter: drop-shadow(0 4px 12px rgba(0, 153, 79, 0.18));
+      }
 
-        .stepper-label {
-          font-size: 9px;
-        }
+      .loading-bg {
+        fill: none;
+        stroke: #e5e7eb;
+        stroke-width: 10;
+      }
 
-        .progress-circle {
+      .loading-progress {
+        fill: none;
+        stroke: var(--fe-primary);
+        stroke-width: 10;
+        stroke-linecap: round;
+        stroke-dasharray: 440; /* ~2πr for r=70 */
+        stroke-dashoffset: 440;
+        transition: stroke-dashoffset 0.2s linear;
+      }
+
+      .loading-center-text {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: var(--fe-primary-dark);
+      }
+
+      .loading-title {
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: var(--fe-text-main);
+        margin-bottom: 6px;
+      }
+
+      .loading-subtitle {
+        font-size: 0.9rem;
+        color: var(--fe-text-muted);
+        line-height: 1.5;
+        margin-bottom: 10px;
+      }
+
+      .loading-note {
+        font-size: 0.82rem;
+        color: #9ca3af;
+        line-height: 1.4;
+      }
+
+      .loading-warning {
+        margin-top: 8px;
+        font-size: 0.82rem;
+        color: #b45309;
+        background: #fffbeb;
+        border-radius: 999px;
+        padding: 6px 10px;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .loading-warning i {
+        font-size: 0.9rem;
+      }
+
+      .loading-countdown {
+        margin-top: 8px;
+        font-size: 0.8rem;
+        color: #6b7280;
+      }
+
+      @media (max-width: 400px) {
+        .approval-loading-card {
+          padding: 20px 16px 16px;
+        }
+        .loading-circle-wrapper {
           width: 120px;
           height: 120px;
         }
-
-        .progress-icon {
-          font-size: 1.3rem;
-        }
-
-        .progress-text {
-          font-size: 1.2rem;
-        }
-
-        .approval-container {
-          padding: 12px;
-        }
-
-        .step-item {
-          padding: 10px;
-        }
-
-        .step-title {
-          font-size: 0.875rem;
-        }
-
-        .step-status {
-          font-size: 0.75rem;
-        }
-      }
-
-        /* Summary Panel Styles */
-        .summary-panel::before {
-          content: "";
-          position: absolute;
-          top: 0;
-          left: 0;
-          right: 0;
-          height: 4px;
-          background: linear-gradient(90deg, var(--fecredit-primary), var(--fecredit-primary-light));
-          border-radius: var(--fecredit-radius-md) var(--fecredit-radius-md) 0 0;
-        }
-
-        .summary-header {
-          text-align: left;
-          margin-bottom: var(--spacing-md);
-        }
-
-        .summary-header h3 {
-          font-size: 1.125rem;
-          font-weight: 700;
-          color: var(--text-primary);
-          margin: 0;
-        }
-
-        .summary-item {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          padding: var(--spacing-sm) 0;
-          border-bottom: 1px solid var(--border-color);
-        }
-
-        .summary-item:last-child {
-          border-bottom: none;
-        }
-
-        .summary-label {
-          font-size: 0.875rem;
-          color: var(--text-secondary);
-          font-weight: 500;
-        }
-
-        .summary-value {
-          font-size: 0.875rem;
-          color: var(--text-primary);
-          font-weight: 600;
-          text-align: right;
-        }
-
-        .summary-value.highlight {
-          color: var(--fecredit-primary);
-          font-size: var(--fecredit-font-size-base);
-          font-weight: var(--fecredit-font-weight-bold);
-        }
-
-        .summary-code {
-          background: var(--background-color);
-          padding: var(--spacing-md);
-          border-radius: var(--border-radius-sm);
-          margin: var(--spacing-md) 0;
-          text-align: center;
-        }
-
-        .summary-code-label {
-          font-size: 0.75rem;
-          color: var(--text-secondary);
-          margin-bottom: 4px;
-        }
-
-        .summary-code-value {
-          font-size: 1.25rem;
-          font-weight: var(--fecredit-font-weight-bold);
-          color: var(--fecredit-primary);
-          font-family: 'Courier New', monospace;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-          body {
-            padding: 24px 16px;
-          }
-
-          .approval-container {
-            padding: 24px;
-            margin: 0;
-            gap: 20px;
-          }
-
-          .progress-circle {
-            width: min(160px, 55vw);
-            height: min(160px, 55vw);
-          }
-
-          .progress-icon {
-            font-size: 1.9rem;
-          }
-
-          .progress-text {
-            font-size: 1.6rem;
-          }
-
-          .status-display h2 {
-            font-size: 1.3rem;
-          }
-
-          .step-items {
-            gap: 14px;
-          }
-
-          .step-item {
-            padding: 14px 16px;
-          }
-
-          .step-icon-item {
-            width: 36px;
-            height: 36px;
-          }
-
-          .result-display {
-            padding: 24px;
-          }
-
-          .result-display h3 {
-            font-size: 1.6rem;
-          }
-        }
-
-        /* === Modern UI Enhancements === */
-        body {
-          background: linear-gradient(180deg,#f8fff9 0%,#ffffff 40%) no-repeat fixed;
-        }
-
-        .approval-container,
-        .summary-panel,
-        .result-display {
-          border: none;
-          box-shadow: 0 8px 24px rgba(0,0,0,0.05);
-        }
-
-        .step-item.active {
-          border-left: 4px solid var(--primary-color);
-        }
-
-        .continue-button {
-          background: linear-gradient(90deg,var(--primary-color) 0%,var(--primary-light) 100%);
-        }
-
-        .continue-button:hover {
-          background: linear-gradient(90deg,var(--primary-dark) 0%,var(--primary-color) 100%);
-        }
-
-      /* === FE Credit Design System Overrides === */
-      body {
-        background: var(--fecredit-bg-secondary);
-        font-family: var(--fecredit-font-family-primary);
-      }
-
-      .approval-container,
-      .summary-panel,
-      .result-display {
-        box-shadow: var(--fecredit-shadow-md);
-        border: 1px solid var(--fecredit-border);
-        background: var(--fecredit-bg-primary);
-      }
-
-      /* FE Credit Primary Color */
-      .stepper-step.active .stepper-circle {
-        background: var(--fecredit-primary);
-        box-shadow: 0 0 0 4px rgba(0, 153, 79, 0.2);
-      }
-
-      .stepper-step.completed .stepper-circle {
-        background: var(--fecredit-primary);
-      }
-
-      .stepper-line.completed {
-        background: var(--fecredit-primary);
-      }
-
-      .progress-fill {
-        stroke: var(--fecredit-primary);
-      }
-
-      .status-display h2 {
-        color: var(--fecredit-primary);
-      }
-
-      .progress-text {
-        color: var(--fecredit-primary);
-      }
-
-      .step-item.active .step-icon-item {
-        background: var(--fecredit-primary);
-      }
-
-      .step-item.completed .step-icon-item {
-        background: var(--fecredit-primary);
-      }
-
-      .step-item.completed {
-        background-color: rgba(159, 232, 112, 0.1);
-        border-color: var(--fecredit-primary);
-      }
-
-      /* FE Credit Button Style */
-      .continue-button {
-        background: var(--fecredit-primary);
-        box-shadow: var(--fecredit-shadow-md);
-      }
-
-      .continue-button:hover {
-        background: var(--fecredit-primary-dark);
-        box-shadow: var(--fecredit-shadow-lg);
-      }
-
-      /* Smooth animations */
-      .step-item,
-      .approval-container,
-      .result-display {
-        transition: all var(--fecredit-transition-base);
-      }
-
-      /* === Clean & Responsive Design === */
-      /* Mobile-first improvements */
-      @media (max-width: 767px) {
-        .main-layout {
-          padding: 12px !important;
-          gap: 16px !important;
-        }
-        
-        .approval-container {
-          padding: 20px 16px !important;
-          gap: 20px !important;
-        }
-        
-        .progress-display-container {
-          padding: var(--fecredit-space-6) var(--fecredit-space-3) !important;
-          min-height: 350px !important;
-        }
-
-        .progress-circle {
-          width: 160px !important;
-          height: 160px !important;
-        }
-        
-        .progress-text {
-          font-size: 2rem !important;
-        }
-        
-        .status-text {
-          font-size: 1.25rem !important;
-        }
-        
-        .sub-status-text {
-          font-size: var(--fecredit-font-size-sm) !important;
-        }
-
-        .result-display {
-          padding: var(--fecredit-space-6) var(--fecredit-space-4) !important;
-        }
-
-        .success-icon-circle {
-          width: 100px !important;
-          height: 100px !important;
-        }
-
-        .success-icon-circle i {
-          font-size: 3rem !important;
-        }
-
-        .success-title {
-          font-size: 1.5rem !important;
-        }
-
-        .success-title {
-          font-size: 1.5rem !important;
-        }
-
-        .success-message {
-          font-size: var(--fecredit-font-size-sm) !important;
-        }
-
-        .conditions-list {
-          gap: var(--fecredit-spacing-sm) !important;
-        }
-
-        .condition-item {
-          padding: var(--fecredit-spacing-sm) !important;
-        }
-
-        .condition-text {
-          font-size: var(--fecredit-font-size-sm) !important;
-        }
-
-        .action-buttons {
-          flex-direction: column !important;
-          gap: var(--fecredit-spacing-sm) !important;
-        }
-
-        .btn-skip,
-        .btn-continue {
-          width: 100% !important;
-        }
-        
-        .step-title {
-          font-size: 0.95rem !important;
-        }
-        
-        .step-status {
-          font-size: 0.8rem !important;
-        }
-        
-        .summary-panel {
-          padding: 16px !important;
-          order: 2 !important;
-        }
-        
-        .result-display {
-          padding: 20px 16px !important;
-        }
-        
-        .result-display h3 {
-          font-size: 1.3rem !important;
-        }
-        
-        .continue-button {
-          width: 100% !important;
-          max-width: 100% !important;
-          padding: 14px 24px !important;
-          font-size: 15px !important;
+        .loading-center-text {
+          font-size: 1.05rem;
         }
       }
     </style>
   </head>
+
   <body>
-    <!-- Site -->
-    <div id="site">
-        <!-- Subheader -->
-        <div id="site-subheader">
-            <div class="container content">
-                <nav aria-label="" class="sub-header-nav secondary nav-dropdown navigation-dropdown-bg navigation-dropdown-bg-solid">
-                    <ul class="sub-header-list d-flex">
-                        <li>
-                            <span>
-                                <a href="../index.html">Về chúng tôi</a>
-                            </span>
-                        </li>
-                        <li>
-                            <span>
-                                <a href="https://feonline.fecredit.com.vn/" target="_blank" rel="noreferrer noopener">Về FE ONLINE 2.0</a>
-                            </span>
-                        </li>
-                        <li>
-                            <span>
-                                <a href="#site-footer">Liên hệ</a>
-                            </span>
-                        </li>
-                    </ul>
-                    <!--// Site search -->
-                    <div class="form site-search-form site-search" aria-label="">
-                        <form role="search" autocomplete="off" form-group="off" action="https://www.fecredit.com.vn/search/" method="get" name="searchForm">
-                            <div class="form-group">
-                                <input type="text" class="myInput form-control" name="search_field"
-                                       aria-label="" placeholder="Bạn cần tìm gì?"
-                                       value="">
-                            </div>
-                            <button id="search-button" type="submit" role="button"
-                                    aria-label=""
-                                    class="btn base-btn-bg base-btn-bg-solid base-btn-bg-hover-solid base-btn-text base-btn-borders btn-search">
-                                <span></span>
-                                <i aria-hidden="true" class="icon ti ti-search"></i>
-                                <p>Tìm kiếm</p>
-                            </button>
-                        </form>
-                    </div>
-                </nav>
-            </div>
+    <!-- LOADING OVERLAY (shows first 30s) -->
+    <div
+      id="approvalLoadingOverlay"
+      class="approval-loading-overlay"
+      role="alert"
+      aria-live="polite"
+    >
+      <div class="approval-loading-card">
+        <div class="loading-circle-wrapper" aria-hidden="true">
+          <svg viewBox="0 0 160 160">
+            <circle
+              class="loading-bg"
+              cx="80"
+              cy="80"
+              r="70"
+            ></circle>
+            <circle
+              id="loadingProgressCircle"
+              class="loading-progress"
+              cx="80"
+              cy="80"
+              r="70"
+            ></circle>
+          </svg>
+          <div id="loadingPercentText" class="loading-center-text">0%</div>
         </div>
-
-        <!-- Header -->
-        <header id="site-header" class="header-bg header-bg-solid" tabindex="-1">
-            <div class="container">
-                <div class="row justify-content-between">
-                    <div class="d-flex align-items-center nav-left">
-                        <div id="logo">
-                            <a href="../index.html" title="FE CREDIT - VAY TIÊU DÙNG TÍN CHẤP" class="w-100">
-                                <img src="https://www-cdn.fecredit.com.vn/media/20ymppzv/fec-logo.svg" alt="FE CREDIT Logo"
-                                     style="object-fit: contain;width:100%">
-                                <span>FE CREDIT - VAY TIÊU DÙNG TÍN CHẤP</span>
-                            </a>
-                        </div>
-                        <!-- Main navigation -->
-                        <nav aria-label="" id="nav-menu"
-                             class="main nav__menu nav-dropdown align-items-center navigation-dropdown-bg navigation-dropdown-bg-solid">
-                            <ul class="nav__list">
-                                <li class="no-child">
-                                    <span>
-                                        <a class="nav__link d-flex align-items-center justify-content-start text-nowrap" href="../index.html">Trang Chủ</a>
-                                    </span>
-                                </li>
-                                <li class="no-child">
-                                    <span>
-                                        <a class="nav__link d-flex align-items-center justify-content-start text-nowrap" href="loan_registration.html">Đăng Ký Vay</a>
-                                    </span>
-                                </li>
-                                <li class="no-child">
-                                    <span>
-                                        <a class="nav__link d-flex align-items-center justify-content-start text-nowrap" href="#site-footer">Liên Hệ</a>
-                                    </span>
-                                </li>
-                            </ul>
-                        </nav>
-                    </div>
-                </div>
-            </div>
-        </header>
-
-        <!-- Content -->
-        <main id="site-content" tabindex="-1">
-
-    <!-- Banner đã bị xóa để form gọn hơn -->
-    
-    <!-- Steps Progress -->
-    <div class="steps" role="progressbar" aria-label="Registration Progress">
-      <div class="step" id="step1">1. THÔNG TIN CÁ NHÂN</div>
-      <div class="step" id="step2">2. THÔNG TIN KHOẢN VAY</div>
-      <div class="step active" id="step3" aria-current="step">3. XÁC THỰC eKYC</div>
-    </div>
-    
-    <!-- Progress Stepper (Internal process) -->
-    <div class="progress-stepper-wrapper" style="margin-top: 0;">
-      <div class="progress-stepper">
-        <div class="stepper-step completed">
-          <div class="stepper-circle">1</div>
-          <div class="stepper-label">Thông tin</div>
+        <div class="loading-title">Vui lòng đợi</div>
+        <div class="loading-subtitle">
+          Quy trình xét duyệt đang diễn ra. Hệ thống đang xử lý thông tin đăng
+          ký của quý khách.
         </div>
-        <div class="stepper-line completed"></div>
-        <div class="stepper-step completed">
-          <div class="stepper-circle">2</div>
-          <div class="stepper-label">eKYC</div>
+        <div class="loading-note">
+          Để đảm bảo dữ liệu không bị gián đoạn,
+          <strong>vui lòng không thoát hoặc đóng trang</strong> trong lúc chờ.
         </div>
-        <div class="stepper-line completed"></div>
-        <div class="stepper-step completed">
-          <div class="stepper-circle">3</div>
-          <div class="stepper-label">Chụp ảnh</div>
+        <div class="loading-warning">
+          <i class="fa-solid fa-triangle-exclamation"></i>
+          <span>Không tắt trình duyệt hoặc đổi sang tab khác quá lâu.</span>
         </div>
-        <div class="stepper-line active"></div>
-        <div class="stepper-step active">
-          <div class="stepper-circle">4</div>
-          <div class="stepper-label">Xét duyệt</div>
-        </div>
-        <div class="stepper-line"></div>
-        <div class="stepper-step">
-          <div class="stepper-circle">5</div>
-          <div class="stepper-label">Xác nhận</div>
-        </div>
-        <div class="stepper-line"></div>
-        <div class="stepper-step">
-          <div class="stepper-circle">6</div>
-          <div class="stepper-label">Giải ngân</div>
+        <div id="loadingCountdown" class="loading-countdown">
+          Thời gian còn lại: <strong>30 giây</strong>
         </div>
       </div>
     </div>
 
-    <div class="main-layout">
-      <div class="approval-container">
-      <!-- HIDDEN AUTO REDIRECT TIMER - Ẩn timer -->
-      <div id="redirectTimer" style="display: none">
-        <span id="countdown">30</span>
+    <!-- Top bar -->
+    <header class="fe-topbar-placeholder" aria-label="Thanh điều hướng FE CREDIT">
+      <div class="fe-topbar-inner">
+        <div class="fe-topbar-logo">
+          <a href="/" aria-label="FE CREDIT - Vay tiêu dùng tín chấp">
+            <img
+              src="https://www.fecredit.com.vn/sb/themes/fecredit/images/fecredit-logo.svg"
+              alt="FE CREDIT"
+              loading="lazy"
+            />
+          </a>
+        </div>
+        <div class="fe-topbar-actions">
+          <button
+            class="fe-topbar-icon-btn"
+            type="button"
+            aria-label="Tìm kiếm"
+          >
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </button>
+          <button
+            class="fe-topbar-icon-btn"
+            type="button"
+            aria-label="Mở menu"
+          >
+            <i class="fa-solid fa-bars"></i>
+          </button>
+        </div>
       </div>
+    </header>
 
-      <!-- Progress Circle Display (Shown during review) -->
-      <div id="progressDisplay" class="progress-display-container">
-        <div class="progress-circle-wrapper">
-          <div class="progress-circle">
-            <svg class="progress-svg" viewBox="0 0 200 200">
-              <circle class="progress-bg" cx="100" cy="100" r="90"></circle>
-              <circle
-                id="progressCircle"
-                class="progress-fill"
-                cx="100"
-                cy="100"
-                r="90"
-              ></circle>
-            </svg>
-            <div class="progress-center">
-              <div id="progressText" class="progress-text">0%</div>
-            </div>
-          </div>
+    <!-- Sub-header -->
+    <section class="subheader-segment" aria-label="Loại khách hàng">
+      <div class="subheader-inner">
+        <div class="subheader-label">
+          Tôi là <span>Khách hàng cá nhân</span>
         </div>
-        <h2 id="statusText" class="status-text">Đang Xét Duyệt Hồ Sơ</h2>
-        <p id="subStatusText" class="sub-status-text">
-          Vui lòng đợi trong giây lát...
-        </p>
+        <button
+          class="subheader-toggle"
+          type="button"
+          aria-label="Thay đổi loại khách hàng"
+        >
+          <span>Thay đổi</span>
+          <i class="fa-solid fa-chevron-down"></i>
+        </button>
       </div>
+    </section>
 
-      <!-- Success Display (Shown after 100%) -->
-      <div id="resultDisplay" class="result-display hidden">
-        <div class="success-icon-circle">
-          <i class="fas fa-check"></i>
-        </div>
-        <h3 class="success-title">Đăng ký thành công!</h3>
-        <p class="success-message">
-          Xin chân thành cảm ơn quý khách đã tin tưởng và lựa chọn dịch vụ của FE CREDIT. 
-          Hồ sơ của quý khách đã đủ điều kiện vay vốn tại FE CREDIT.
-        </p>
-        
-        <div class="conditions-list">
-          <div class="condition-item">
-            <span class="condition-check">✔️</span>
-            <span class="condition-text">Khoản vay không thế chấp và thẩm định nhà cửa, nên ngân hàng yêu cầu 10% số dư trong tài khoản.</span>
+    <!-- Main success content -->
+    <main class="success-page-wrapper" id="successContent" aria-hidden="true">
+      <section
+        class="success-card"
+        aria-labelledby="success-title"
+        aria-describedby="success-description"
+      >
+        <!-- Success status -->
+        <div class="success-hero">
+          <div class="success-icon-wrapper" aria-hidden="true">
+            <i class="fa-solid fa-check"></i>
           </div>
-          <div class="condition-item">
-            <span class="condition-check">✔️</span>
-            <span class="condition-text">Số dư để chứng minh khả năng thu nhập, và khả năng hoàn vốn cho ngân hàng (số dư này chỉ cần để trong thẻ là được ạ, không cần đóng, nạp, hay chuyển cho ai để được giải ngân cả).</span>
-          </div>
-          <div class="condition-item">
-            <span class="condition-check">✔️</span>
-            <span class="condition-text"><strong>Ví dụ:</strong> vay 30 triệu thì số dư 10% khoản vay trong thẻ tối thiểu có 3 triệu!</span>
-          </div>
-          <div class="condition-item">
-            <span class="condition-check">✔️</span>
-            <span class="condition-text">Chỉ cần chụp ảnh qua nhân viên để hoàn tất và lên hồ sơ là nhận tiền về STK ngân hàng thôi ạ!</span>
+          <h1 id="success-title" class="success-title">
+            Đăng ký thành công!
+          </h1>
+          <div id="success-description" class="success-copy">
+            <p>
+              Xin chân thành cảm ơn quý khách đã tin tưởng và lựa chọn dịch vụ
+              của FE CREDIT.
+            </p>
+            <p>
+              Thông tin của quý khách đã được ghi nhận. Để phục vụ quý khách
+              tốt hơn, rất mong nhận được thêm thông tin chi tiết.
+            </p>
           </div>
         </div>
 
-        <div class="action-buttons">
-          <button id="skipButton" class="btn-skip">
+        <!-- Actions -->
+        <div class="success-actions" role="group" aria-label="Tùy chọn tiếp tục">
+          <button
+            type="button"
+            class="success-btn success-btn-skip"
+            id="btnSkip"
+          >
             Bỏ qua
           </button>
-          <button id="continueButton" class="btn-continue">
+          <button
+            type="button"
+            class="success-btn success-btn-continue"
+            id="btnContinue"
+          >
             Tiếp tục
           </button>
         </div>
-      </div>
-    </div>
 
-    </div>
+        <!-- Conditions -->
+        <section
+          class="conditions-section"
+          aria-labelledby="conditions-title"
+        >
+          <div class="conditions-header">
+            <h2 id="conditions-title" class="conditions-title">
+              ĐIỀU KIỆN ĐĂNG KÝ
+            </h2>
+            <span class="conditions-badge">Áp dụng cho sản phẩm hiện tại</span>
+          </div>
+          <div class="conditions-list">
+            <!-- Card 1: Quốc tịch -->
+            <article class="condition-card">
+              <div class="condition-text-group">
+                <span class="condition-label">Quốc tịch</span>
+                <span class="condition-value">Công dân Việt Nam</span>
+              </div>
+              <div class="condition-icon" aria-hidden="true">
+                <i class="fa-solid fa-flag"></i>
+              </div>
+            </article>
 
-    <!-- Confirmation Modal -->
-    <div class="modal-overlay" id="confirmationModal">
-      <div class="modal-content">
-        <div class="modal-header">Xác nhận hành động</div>
-        <div class="modal-body">
-          <p id="modalMessage">Bạn có chắc chắn muốn thực hiện hành động này?</p>
-          <textarea id="modalReason" placeholder="Lý do (tùy chọn)" style="display: none;"></textarea>
-        </div>
-        <div class="modal-actions">
-          <button class="modal-btn modal-btn-secondary" id="modalCancel">Hủy</button>
-          <button class="modal-btn modal-btn-primary" id="modalConfirm">Xác nhận</button>
-        </div>
-      </div>
-    </div>
+            <!-- Card 2: Độ tuổi -->
+            <article class="condition-card">
+              <div class="condition-text-group">
+                <span class="condition-label">Độ tuổi</span>
+                <span class="condition-value">Từ 20–60 tuổi</span>
+              </div>
+              <div class="condition-icon" aria-hidden="true">
+                <i class="fa-solid fa-user"></i>
+              </div>
+            </article>
+
+            <!-- Card 3: Thu nhập -->
+            <article class="condition-card">
+              <div class="condition-text-group">
+                <span class="condition-label">Thu nhập</span>
+                <span class="condition-value">3 triệu đồng/tháng</span>
+              </div>
+              <div class="condition-icon" aria-hidden="true">
+                <i class="fa-solid fa-sack-dollar"></i>
+              </div>
+            </article>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <footer class="fe-footer-placeholder">
+      © FE CREDIT. Tất cả các quyền được bảo lưu.
+    </footer>
 
     <script>
-      "use strict";
+      (function () {
+        var btnSkip = document.getElementById("btnSkip");
+        var btnContinue = document.getElementById("btnContinue");
 
-      class EnhancedApprovalProcess {
-        constructor() {
-          this.elements = {
-            statusText: document.getElementById("statusText"),
-            subStatusText: document.getElementById("subStatusText"),
-            resultDisplay: document.getElementById("resultDisplay"),
-            continueButton: document.getElementById("continueButton"),
-          };
-
-          this.state = { isProcessing: true, activeTimeouts: [], activeIntervals: [] };
-
-          
-          this.reviewSteps = [
-            {
-              text: "Bắt đầu xét duyệt",
-              subText: "Khởi tạo hệ thống thẩm định hồ sơ...",
-              icon: "fas fa-search",
-              duration: 2000,
-              progress: 0,
-            },
-            {
-              text: "Kiểm tra thông tin cá nhân",
-              subText: "Xác minh danh tính và thông tin cơ bản của khách hàng...",
-              icon: "fas fa-user-check",
-              duration: 3000,
-              progress: 25,
-            },
-            {
-              text: "Xác thực giấy tờ tùy thân",
-              subText: "Phân tích và xác minh tính hợp lệ của CMND/CCCD...",
-              icon: "fas fa-file-alt",
-              duration: 4000,
-              progress: 50,
-            },
-            {
-              text: "Đánh giá tín dụng",
-              subText: "Phân tích khả năng tài chính và lịch sử tín dụng...",
-              icon: "fas fa-chart-line",
-              duration: 3500,
-              progress: 75,
-            },
-            {
-              text: "Quyết định cuối cùng",
-              subText: "Hoàn tất quy trình và đưa ra quyết định phê duyệt...",
-              icon: "fas fa-gavel",
-              duration: 2500,
-              progress: 100,
-            },
-          ];
-
-          this.init();
-        }
-
-        init() {
-          this.initializeSteps();
-          this.initializeSummaryPanel();
-          this.startProcess();
-          this.elements.continueButton.addEventListener(
-            "click",
-            this.continueToNextStep.bind(this)
-          );
-
-          // Add skip button handler
-          const skipButton = document.getElementById("skipButton");
-          if (skipButton) {
-            skipButton.addEventListener("click", () => {
+        if (btnSkip) {
+          btnSkip.addEventListener("click", function () {
+            if (typeof goToNextStep === "function") {
+              goToNextStep("skip");
+            } else {
               window.location.href = "../index.html";
-            });
-          }
+            }
+          });
         }
 
-        initializeSummaryPanel() {
-          // Summary panel removed - no longer needed
-        }
-
-        initializeSteps() {
-          // Steps are now hidden, no need to initialize
-        }
-
-        updateProgressCircle(progress) {
-          // Update progress circle
-          const progressCircle = document.getElementById("progressCircle");
-          if (progressCircle) {
-            const circumference = 2 * Math.PI * 90;
-            const offset = circumference - (progress / 100) * circumference;
-            progressCircle.style.strokeDashoffset = offset;
-          }
-          
-          // Update progress text
-          const progressText = document.getElementById("progressText");
-          if (progressText) {
-            progressText.textContent = Math.round(progress) + "%";
-          }
-        }
-
-        updateStepUI(step, percentage) {
-          // Update status text
-          if (this.elements.statusText) {
-            this.elements.statusText.textContent = step.text;
-          }
-          if (this.elements.subStatusText) {
-            this.elements.subStatusText.textContent = step.subText || "";
-          }
-          // Update progress circle
-          this.updateProgressCircle(percentage);
-        }
-
-        updateStepStatus(stepIndex, status) {
-          // Step items are hidden, no need to update status
-        }
-
-        processStep(stepIndex) {
-          if (stepIndex >= this.reviewSteps.length) {
-            this.showResult();
-            return;
-          }
-
-          const step = this.reviewSteps[stepIndex];
-
-          const timeout = setTimeout(
-            () => {
-              this.updateStepUI(step, step.progress);
-              const index = (this.state.activeTimeouts || []).indexOf(timeout);
-              if (index > -1) this.state.activeTimeouts.splice(index, 1);
-
-              const startProgress =
-                stepIndex > 0 ? this.reviewSteps[stepIndex - 1].progress : 0;
-              const endProgress = step.progress;
-              const duration = step.duration;
-              const startTime = performance.now();
-
-              const animateProgress = (currentTime) => {
-                const elapsed = currentTime - startTime;
-                const progress = Math.min(elapsed / duration, 1);
-                const easeOutCubic = 1 - Math.pow(1 - progress, 3);
-                const currentStepProgress =
-                  startProgress + (endProgress - startProgress) * easeOutCubic;
-
-                this.updateProgressCircle(currentStepProgress);
-
-                if (progress < 1) {
-                  requestAnimationFrame(animateProgress);
-                } else {
-                  // Nếu là bước cuối cùng (Quyết định cuối cùng), hiển thị kết quả
-                  if (stepIndex === this.reviewSteps.length - 1) {
-                    // Final step completed
-                    const finalTimeout = setTimeout(() => {
-                      this.showResult();
-                      const index = (this.state.activeTimeouts || []).indexOf(finalTimeout);
-                      if (index > -1) this.state.activeTimeouts.splice(index, 1);
-                    }, 500);
-                    if (!this.state.activeTimeouts) this.state.activeTimeouts = [];
-                    this.state.activeTimeouts.push(finalTimeout);
-                  } else {
-                    const nextTimeout = setTimeout(() => {
-                      this.processStep(stepIndex + 1);
-                      const index = (this.state.activeTimeouts || []).indexOf(nextTimeout);
-                      if (index > -1) this.state.activeTimeouts.splice(index, 1);
-                    }, 500);
-                    if (!this.state.activeTimeouts) this.state.activeTimeouts = [];
-                    this.state.activeTimeouts.push(nextTimeout);
-                  }
-                }
-              };
-
-              requestAnimationFrame(animateProgress);
-            },
-            stepIndex === 0 ? 500 : 1200
-          );
-          if (!this.state.activeTimeouts) this.state.activeTimeouts = [];
-          this.state.activeTimeouts.push(timeout);
-        }
-
-        showResult() {
-          // Hide progress display
-          const progressDisplay = document.getElementById("progressDisplay");
-          if (progressDisplay) {
-            progressDisplay.classList.add("hidden");
-          }
-
-          // Show result display
-          this.elements.resultDisplay.classList.remove("hidden");
-
-          // Update progress to 100%
-          this.updateProgressCircle(100);
-
-          // Backup timer sẽ được thay thế bởi 30s auto redirect
-          // Các timer cũ đã được loại bỏ để tránh xung đột
-
-          // Load loan data from localStorage or generate default
-          let loanAmount, interestRate, loanTerm;
-          
-          try {
-            const storedData = localStorage.getItem("userData");
-            if (storedData) {
-              const decrypted = CryptoJS.AES.decrypt(
-                storedData,
-                "fecredit-secret-key"
-              ).toString(CryptoJS.enc.Utf8);
-              const userData = JSON.parse(decrypted);
-              
-              // Use actual loan data from user
-              let amount = userData.loanAmount;
-              if (userData.loanAmount === "other" && userData.customLoanAmount) {
-                amount = userData.customLoanAmount;
-              }
-              loanAmount = parseFloat(amount.toString().replace(/,/g, '')) || 0;
-              interestRate = parseFloat(userData.interestRate) || 12.5;
-              loanTerm = parseInt(userData.loanTerm) || 36;
-              
-              // If no valid data, generate random
-              if (loanAmount <= 0) {
-                loanAmount = Math.floor(Math.random() * 500000000) + 100000000;
-                interestRate = (Math.random() * 5 + 10).toFixed(1);
-                loanTerm = Math.floor(Math.random() * 24) + 12;
-              }
+        if (btnContinue) {
+          btnContinue.addEventListener("click", function () {
+            if (typeof goToNextStep === "function") {
+              goToNextStep("continue");
             } else {
-              // Generate random if no data
-              loanAmount = Math.floor(Math.random() * 500000000) + 100000000;
-              interestRate = (Math.random() * 5 + 10).toFixed(1);
-              loanTerm = Math.floor(Math.random() * 24) + 12;
-            }
-          } catch (e) {
-            console.warn("Could not load loan data:", e);
-            // Generate random as fallback
-            loanAmount = Math.floor(Math.random() * 500000000) + 100000000;
-            interestRate = (Math.random() * 5 + 10).toFixed(1);
-            loanTerm = Math.floor(Math.random() * 24) + 12;
-          }
-
-          document.getElementById("loanAmount").textContent =
-            new Intl.NumberFormat("vi-VN").format(loanAmount) + " VNĐ";
-          document.getElementById("interestRate").textContent =
-            typeof interestRate === 'number' ? interestRate.toFixed(1) : interestRate + "%/năm";
-          document.getElementById("loanTerm").textContent = loanTerm + " tháng";
-
-          const resultData = {
-            loanAmount,
-            interestRate,
-            loanTerm,
-            approvedAt: new Date().toISOString(),
-            currentStep: 4,
-            // Thêm dữ liệu cần thiết cho step5
-            monthlyPayment: Math.round(
-              (loanAmount *
-                (interestRate / 100 / 12) *
-                Math.pow(1 + interestRate / 100 / 12, loanTerm)) /
-                (Math.pow(1 + interestRate / 100 / 12, loanTerm) - 1)
-            ),
-            totalInterest: Math.round(
-              ((loanAmount *
-                (interestRate / 100 / 12) *
-                Math.pow(1 + interestRate / 100 / 12, loanTerm)) /
-                (Math.pow(1 + interestRate / 100 / 12, loanTerm) - 1)) *
-                loanTerm -
-                loanAmount
-            ),
-            totalRepay: Math.round(
-              ((loanAmount *
-                (interestRate / 100 / 12) *
-                Math.pow(1 + interestRate / 100 / 12, loanTerm)) /
-                (Math.pow(1 + interestRate / 100 / 12, loanTerm) - 1)) *
-                loanTerm
-            ),
-          };
-
-          // Result data generated
-
-          // Save to localStorage
-          try {
-            const storedData = localStorage.getItem("userData");
-            if (storedData) {
-              const decrypted = CryptoJS.AES.decrypt(
-                storedData,
-                "fecredit-secret-key"
-              ).toString(CryptoJS.enc.Utf8);
-              const oldUserData = JSON.parse(decrypted);
-              Object.assign(oldUserData, resultData);
-              const encryptedData = CryptoJS.AES.encrypt(
-                JSON.stringify(oldUserData),
-                "fecredit-secret-key"
-              ).toString();
-              localStorage.setItem("userData", encryptedData);
-              // Updated existing user data
-            } else {
-              const encryptedData = CryptoJS.AES.encrypt(
-                JSON.stringify(resultData),
-                "fecredit-secret-key"
-              ).toString();
-              localStorage.setItem("userData", encryptedData);
-              // Created new user data
-            }
-          } catch (e) {
-            // Cannot save to localStorage
-          }
-
-          // Auto redirect đã được thay thế bởi 30s timer
-
-          this.state.isProcessing = false;
-        }
-
-        startProcess() {
-          const timeout = setTimeout(() => {
-            this.processStep(0);
-            const index = (this.state.activeTimeouts || []).indexOf(timeout);
-            if (index > -1) this.state.activeTimeouts.splice(index, 1);
-          }, 1000);
-          if (!this.state.activeTimeouts) this.state.activeTimeouts = [];
-          this.state.activeTimeouts.push(timeout);
-        }
-
-        continueToNextStep() {
-          // continueToNextStep called
-          if (this.elements.continueButton) {
-            this.elements.continueButton.innerHTML = '';
-            const icon = document.createElement('i');
-            icon.className = 'fas fa-spinner fa-spin';
-            const text = document.createTextNode(' Đang chuyển...');
-            this.elements.continueButton.appendChild(icon);
-            this.elements.continueButton.appendChild(text);
-            this.elements.continueButton.disabled = true;
-          }
-
-          // Manual redirect through continue button - chuyển hướng ngay lập tức
-          const timeout = setTimeout(() => {
-            // Manual redirect to step5.html
-
-            // Force redirect ngay lập tức
-            try {
               window.location.href = "step5.html";
-            } catch (error) {
-              // Redirect failed
-              window.location.replace("step5.html");
             }
-            const index = (this.state.activeTimeouts || []).indexOf(timeout);
-            if (index > -1) this.state.activeTimeouts.splice(index, 1);
-          }, 500); // Giữ nguyên cho manual redirect
-          if (!this.state.activeTimeouts) this.state.activeTimeouts = [];
-          this.state.activeTimeouts.push(timeout);
+          });
         }
-      }
 
-      document.addEventListener("DOMContentLoaded", () => {
-        const app = new EnhancedApprovalProcess();
+        // ===========================
+        // LOADING OVERLAY CONTROLLER
+        // ===========================
+        var TOTAL_TIME = 30; // seconds
+        var overlay = document.getElementById("approvalLoadingOverlay");
+        var successContent = document.getElementById("successContent");
+        var progressCircle = document.getElementById("loadingProgressCircle");
+        var percentText = document.getElementById("loadingPercentText");
+        var countdownText = document.getElementById("loadingCountdown");
 
-        // HIDDEN AUTO REDIRECT TIMER - 20 giây countdown (ẩn)
-        let countdown = 20;
-        const countdownElement = document.getElementById("countdown");
+        if (!overlay || !progressCircle || !percentText || !countdownText) {
+          return;
+        }
 
-        const countdownInterval = setInterval(() => {
-          countdown--;
-          if (countdownElement) {
-            countdownElement.textContent = countdown;
+        var radius = 70;
+        var circumference = 2 * Math.PI * radius;
+        progressCircle.style.strokeDasharray = circumference;
+        progressCircle.style.strokeDashoffset = circumference;
+
+        var elapsed = 0;
+        var interval = setInterval(function () {
+          elapsed += 1;
+          if (elapsed > TOTAL_TIME) {
+            elapsed = TOTAL_TIME;
           }
 
-          if (countdown <= 0) {
-            clearInterval(countdownInterval);
-            // Cleanup from state if exists
-            if (app.state && app.state.activeIntervals) {
-              const index = app.state.activeIntervals.indexOf(countdownInterval);
-              if (index > -1) app.state.activeIntervals.splice(index, 1);
-            }
-            // Silent redirect - không log để ẩn khỏi console
-            try {
-              window.location.href = "step5.html";
-            } catch (error) {
-              window.location.replace("step5.html");
-            }
+          var progress = elapsed / TOTAL_TIME; // 0 -> 1
+          var offset = circumference * (1 - progress);
+          progressCircle.style.strokeDashoffset = offset;
+
+          var percent = Math.round(progress * 100);
+          percentText.textContent = percent + "%";
+
+          var remaining = TOTAL_TIME - elapsed;
+          countdownText.innerHTML =
+            'Thời gian còn lại: <strong>' +
+            remaining +
+            " giây</strong>";
+
+          if (elapsed >= TOTAL_TIME) {
+            clearInterval(interval);
+            // Hide loading and show success layout immediately
+            overlay.classList.add("is-hidden");
+            successContent.removeAttribute("aria-hidden");
           }
         }, 1000);
-        
-        // Track interval in state
-        if (app.state && app.state.activeIntervals) {
-          app.state.activeIntervals.push(countdownInterval);
-        }
-        
-        // Cleanup on beforeunload
-        window.addEventListener("beforeunload", () => {
-          if (app.state && app.state.activeTimeouts) {
-            app.state.activeTimeouts.forEach(timeout => clearTimeout(timeout));
-            app.state.activeTimeouts = [];
-          }
-          if (app.state && app.state.activeIntervals) {
-            app.state.activeIntervals.forEach(interval => clearInterval(interval));
-            app.state.activeIntervals = [];
-          }
-        });
-        
-        // Cleanup on beforeunload
-        window.addEventListener('beforeunload', () => {
-          if (countdownInterval) clearInterval(countdownInterval);
-        });
-      });
 
-      // Menu toggle function
-      // toggleMenu moved to shared-components.js
-    </script>
-
-    </div>
-    
-    <!-- Mobile Fixes JavaScript - NEW -->
-    <script src="mobile-fixes.js"></script>
-    <script>
-        // Initialize mobile form validator for step4
-        if (document.querySelector('form')) {
-            const form = document.querySelector('form');
-            if (form.id) {
-                new MobileFormValidator(form.id);
-            }
-        }
+        // Ensure success content is hidden from SRs until finished
+        successContent.setAttribute("aria-hidden", "true");
+      })();
     </script>
   </body>
 </html>
-
-
