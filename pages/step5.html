@@ -29,6 +29,7 @@
         --fe-text-muted: #6c757d;
         --fe-border: #e0e3eb;
         --fe-white: #ffffff;
+        --fe-accent-soft: #eef2ff;
       }
 
       * {
@@ -81,7 +82,6 @@
         }
       }
 
-      /* Mobile tối ưu hơn: gần full‑width, padding vừa tay */
       @media (max-width: 480px) {
         .content {
           padding: 10px 8px 16px 8px;
@@ -490,7 +490,6 @@
         const interestEl = document.getElementById("detail-interest");
 
         if (data) {
-          // Số tiền từ localStorage (Evaluate-conditions)
           let loanAmount = 0;
 
           if (data.loanAmount === "other" && data.customLoanAmount) {
@@ -503,7 +502,6 @@
             amountEl.textContent = formatCurrency(loanAmount);
           }
 
-          // Thời hạn vay
           let loanTerm = 0;
           if (data.loanTerm !== undefined && data.loanTerm !== null) {
             loanTerm = parseInt(String(data.loanTerm).trim(), 10);
@@ -514,7 +512,6 @@
               loanTerm > 0 ? loanTerm + " tháng" : "--";
           }
 
-          // Lãi suất/tháng nếu có interestRate theo năm
           if (interestEl && data.interestRate !== undefined && data.interestRate !== null) {
             const rateYear = toNumberOrZero(data.interestRate);
             if (rateYear > 0) {
@@ -533,20 +530,19 @@
           );
         }
 
-        // Checkbox logic
-        const checkboxRows = document.querySelectorAll("[data-checkbox]");
+        // Checkbox logic – CHỈ gắn event vào ô vuông
+        const checkboxSquares = document.querySelectorAll(
+          "[data-checkbox] .checkbox-square"
+        );
         const checkboxError = document.getElementById("checkbox-error");
 
-        checkboxRows.forEach((row) => {
-          const square = row.querySelector(".checkbox-square");
-          const clickTargets = [row, square];
-          clickTargets.forEach((target) => {
-            target.addEventListener("click", (e) => {
-              if (e.target.tagName === "A") return;
-              square.classList.toggle("checked");
-            });
+        checkboxSquares.forEach((square) => {
+          square.addEventListener("click", (e) => {
+            e.preventDefault();
+            square.classList.toggle("checked");
           });
-          square.addEventListener("keypress", (e) => {
+
+          square.addEventListener("keydown", (e) => {
             if (e.key === " " || e.key === "Enter") {
               e.preventDefault();
               square.classList.toggle("checked");
