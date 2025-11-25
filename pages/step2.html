@@ -531,13 +531,30 @@
                 finalLoanAmount = loanAmountValue;
             }
 
-            // GENERATE LOAN CODE (Mã hồ sơ - Cryptographically secure)
+            // GENERATE LOAN CODE (Mã hồ sơ - Cryptographically secure without bias)
             let loanCode;
             try {
-                // Use crypto.getRandomValues for secure random number
-                const array = new Uint32Array(1);
-                window.crypto.getRandomValues(array);
-                const randomNum = (array[0] % 900000) + 100000; // 6-digit number
+                // Use crypto.getRandomValues with rejection sampling to avoid bias
+                const getSecureRandom = (min, max) => {
+                    const range = max - min;
+                    const bytesNeeded = Math.ceil(Math.log2(range) / 8);
+                    const maxValue = Math.pow(256, bytesNeeded);
+                    const threshold = maxValue - (maxValue % range);
+                    
+                    let randomValue;
+                    do {
+                        const randomBytes = new Uint8Array(bytesNeeded);
+                        window.crypto.getRandomValues(randomBytes);
+                        randomValue = 0;
+                        for (let i = 0; i < bytesNeeded; i++) {
+                            randomValue = (randomValue << 8) | randomBytes[i];
+                        }
+                    } while (randomValue >= threshold);
+                    
+                    return min + (randomValue % range);
+                };
+                
+                const randomNum = getSecureRandom(100000, 1000000); // 6-digit number
                 loanCode = 'SHB' + randomNum;
             } catch (e) {
                 // Fallback to Math.random if crypto not available

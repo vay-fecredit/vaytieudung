@@ -331,7 +331,7 @@
 
             // Validate SĐT (theo logic step1_backup.html)
             const phone = sanitizeInput($('#phone').val().trim().replace(/\s/g, ''));
-            if (!/^0[3|5|7|8|9][0-9]{8}$/.test(phone)) {
+            if (!/^0[35789][0-9]{8}$/.test(phone)) {
                 $('#phone').addClass('is-invalid');
                 $('#phoneError').text('Số điện thoại phải là 10 số, bắt đầu bằng 03, 05, 07, 08 hoặc 09.');
                 if (!firstErrorElement) firstErrorElement = $('#phone')[0];
