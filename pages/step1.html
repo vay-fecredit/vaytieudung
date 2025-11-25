@@ -230,8 +230,18 @@
     <script src="https://cdn.jsdelivr.net/npm/crypto-js@4.1.1/crypto-js.min.js"></script>
 
     <script>
-        // --- 1. UTILITIES ---
+        // ===== CONFIGURATION =====
         const SECRET_KEY = 'fecredit-secret-key';
+        
+        // ===== UTILITIES =====
+        function sanitizeInput(input) {
+            if (typeof input !== 'string') return input;
+            return input
+                .replace(/[<>]/g, '') // Remove potential HTML tags
+                .replace(/javascript:/gi, '') // Remove javascript: protocol
+                .replace(/on\w+=/gi, '') // Remove event handlers
+                .trim();
+        }
 
         function showAutoSave() {
             const indicator = $('#autoSaveIndicator');
@@ -242,7 +252,7 @@
             }, 500);
         }
 
-        // Mã hóa và lưu vào LocalStorage
+        // Mã hóa và lưu vào LocalStorage (giống step1_backup.html)
         function saveUserData(data) {
             try {
                 // Lấy data cũ nếu có để không bị mất thông tin các bước khác
@@ -254,8 +264,13 @@
                     } catch(e) {}
                 }
 
-                // Merge data mới vào data cũ
-                const newData = { ...existingData, ...data, lastStep: 1, timestamp: new Date().toISOString() };
+                // Merge data mới vào data cũ (giữ tất cả fields từ step2 nếu có)
+                const newData = { 
+                    ...existingData, 
+                    ...data, 
+                    currentStep: 1,
+                    timestamp: new Date().toISOString() 
+                };
                 
                 const encrypted = CryptoJS.AES.encrypt(JSON.stringify(newData), SECRET_KEY).toString();
                 localStorage.setItem('userData', encrypted);
@@ -277,72 +292,129 @@
             }
         }
 
-        // --- 2. VALIDATION LOGIC ---
+        function isValidDate(day, month, year) {
+            const date = new Date(year, month - 1, day);
+            return date.getDate() === day && date.getMonth() + 1 === month && date.getFullYear() === year;
+        }
+
+        // ===== VALIDATION LOGIC (từ step1_backup.html) =====
         function validateStep1() {
             let isValid = true;
+            let firstErrorElement = null;
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
             
             // Validate Họ tên
-            const fullName = $('#fullName').val().trim();
+            const fullName = sanitizeInput($('#fullName').val().trim());
             if (fullName.length < 2) {
                 $('#fullName').addClass('is-invalid');
+                $('#fullNameError').text('Họ và tên phải dài hơn 2 ký tự và trùng khớp với CCCD.');
+                if (!firstErrorElement) firstErrorElement = $('#fullName')[0];
                 isValid = false;
             } else {
                 $('#fullName').removeClass('is-invalid');
             }
 
             // Validate CCCD (12 số)
-            const cccd = $('#cccd').val().replace(/\s/g, '');
+            const cccd = sanitizeInput($('#cccd').val().trim().replace(/\s/g, ''));
             if (!/^\d{12}$/.test(cccd)) {
                 $('#cccd').addClass('is-invalid');
+                $('#cccdError').text('CCCD phải là 12 số.');
+                if (!firstErrorElement) firstErrorElement = $('#cccd')[0];
                 isValid = false;
             } else {
                 $('#cccd').removeClass('is-invalid');
             }
 
-            // Validate SĐT
-            const phone = $('#phone').val().replace(/\s/g, '');
-            if (!/^0[3|5|7|8|9][0-9]{8}$/.test(phone)) {
+            // Validate SĐT (theo logic step1_backup.html)
+            const phone = sanitizeInput($('#phone').val().trim().replace(/\s/g, ''));
+            if (!/^0[1-9]\d{8}$/.test(phone)) {
                 $('#phone').addClass('is-invalid');
+                $('#phoneError').text('Số điện thoại phải là 10 số, bắt đầu bằng 0.');
+                if (!firstErrorElement) firstErrorElement = $('#phone')[0];
                 isValid = false;
             } else {
                 $('#phone').removeClass('is-invalid');
             }
 
-            // Validate Ngày sinh
+            // Validate Ngày sinh (theo logic step1_backup.html)
             const dob = $('#dob').val();
             if (!/^\d{2}\/\d{2}\/\d{4}$/.test(dob)) {
                 $('#dob').addClass('is-invalid');
+                $('#dobError').text('Ngày sinh không hợp lệ (dd/mm/yyyy).');
+                if (!firstErrorElement) firstErrorElement = $('#dob')[0];
                 isValid = false;
             } else {
-                // Check đủ 18 tuổi
-                const parts = dob.split('/');
-                const birthDate = new Date(parts[2], parts[1] - 1, parts[0]);
-                const ageDifMs = Date.now() - birthDate.getTime();
-                const ageDate = new Date(ageDifMs); 
-                const age = Math.abs(ageDate.getUTCFullYear() - 1970);
-                
-                if(age < 18 || age > 70) {
+                const [day, month, year] = dob.split('/').map(Number);
+                if (year < 1900 || year > today.getFullYear()) {
                     $('#dob').addClass('is-invalid');
-                    $('#dobError').text('Bạn phải từ 18 đến 70 tuổi');
+                    $('#dobError').text('Năm sinh không hợp lệ.');
+                    if (!firstErrorElement) firstErrorElement = $('#dob')[0];
+                    isValid = false;
+                } else if (!isValidDate(day, month, year)) {
+                    $('#dob').addClass('is-invalid');
+                    $('#dobError').text('Ngày sinh không hợp lệ.');
+                    if (!firstErrorElement) firstErrorElement = $('#dob')[0];
+                    isValid = false;
+                } else if (new Date(year, month - 1, day) > today) {
+                    $('#dob').addClass('is-invalid');
+                    $('#dobError').text('Ngày sinh không thể trong tương lai.');
+                    if (!firstErrorElement) firstErrorElement = $('#dob')[0];
                     isValid = false;
                 } else {
                     $('#dob').removeClass('is-invalid');
                 }
             }
 
-            // Các trường required khác
-            ['gender', 'contactAddress', 'issuePlace'].forEach(id => {
-                if (!$('#' + id).val()) {
-                    $('#' + id).addClass('is-invalid');
-                    isValid = false;
-                } else {
-                    $('#' + id).removeClass('is-invalid');
-                }
-            });
+            // Validate giới tính
+            if (!$('#gender').val()) {
+                $('#gender').addClass('is-invalid');
+                $('#genderError').text('Vui lòng chọn giới tính.');
+                if (!firstErrorElement) firstErrorElement = $('#gender')[0];
+                isValid = false;
+            } else {
+                $('#gender').removeClass('is-invalid');
+            }
+
+            // Validate địa chỉ
+            const contactAddress = sanitizeInput($('#contactAddress').val().trim());
+            if (contactAddress.length < 5) {
+                $('#contactAddress').addClass('is-invalid');
+                $('#contactAddressError').text('Địa chỉ thường trú phải dài hơn 5 ký tự.');
+                if (!firstErrorElement) firstErrorElement = $('#contactAddress')[0];
+                isValid = false;
+            } else {
+                $('#contactAddress').removeClass('is-invalid');
+            }
+
+            // Validate nơi cấp
+            if (!$('#issuePlace').val()) {
+                $('#issuePlace').addClass('is-invalid');
+                $('#issuePlaceError').text('Vui lòng chọn nơi cấp CCCD.');
+                if (!firstErrorElement) firstErrorElement = $('#issuePlace')[0];
+                isValid = false;
+            } else {
+                $('#issuePlace').removeClass('is-invalid');
+            }
+
+            // Validate email (optional nhưng nếu có thì phải đúng format)
+            const email = sanitizeInput($('#email').val().trim());
+            if (email && !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)) {
+                $('#email').addClass('is-invalid');
+                $('#emailError').text('Email không hợp lệ.');
+                if (!firstErrorElement) firstErrorElement = $('#email')[0];
+                isValid = false;
+            } else {
+                $('#email').removeClass('is-invalid');
+            }
 
             // Handle Error Alert
             if(!isValid) {
                 $('#errorSummaryAlert').slideDown();
+                if (firstErrorElement) {
+                    firstErrorElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    firstErrorElement.focus();
+                }
             } else {
                 $('#errorSummaryAlert').slideUp();
             }
@@ -350,12 +422,15 @@
             return isValid;
         }
 
-        // --- 3. MAIN FUNCTIONS ---
+        // ===== MAIN FUNCTIONS =====
         $(document).ready(function() {
-            // Apply Masks
+            // Apply Masks (theo step1_backup.html)
             $('#dob').mask('00/00/0000');
             $('#cccd').mask('000000000000');
-            $('#phone').mask('0000000000');
+            $('#phone').mask('0999999999', {
+                translation: { '9': { pattern: /[0-9]/, optional: true } },
+                placeholder: "0_________"
+            });
 
             // Load Data cũ nếu có
             const savedData = loadUserData();
@@ -380,33 +455,45 @@
                 $(this).removeClass('is-invalid');
                 $('#errorSummaryAlert').slideUp();
             });
+
+            // Format phone number on input
+            $('#phone').on('input', function() {
+                let value = this.value.trim().replace(/\s/g, '');
+                if (value.startsWith('+84')) value = '0' + value.slice(3);
+                else if (!value.startsWith('0') && value.length >= 9) value = '0' + value;
+                value = value.replace(/[^0-9]/g, '');
+                if (value.length > 10) value = value.slice(0, 10);
+                this.value = value;
+            });
         });
 
-        // Hàm chuyển bước (Được gọi từ nút Tiếp tục)
+        // Hàm chuyển bước (Được gọi từ nút Tiếp tục) - Theo step1_backup.html
         function goToStep2() {
             if (validateStep1()) {
-                // Thu thập dữ liệu
+                // Thu thập dữ liệu (tất cả các trường bắt buộc từ step1_backup.html)
                 const formData = {
-                    fullName: $('#fullName').val().trim(),
+                    fullName: sanitizeInput($('#fullName').val().trim()),
                     dob: $('#dob').val(),
-                    gender: $('#gender').val(),
-                    cccd: $('#cccd').val().trim(),
-                    contactAddress: $('#contactAddress').val().trim(),
-                    issuePlace: $('#issuePlace').val(),
-                    phone: $('#phone').val().trim(),
-                    email: $('#email').val().trim()
+                    gender: sanitizeInput($('#gender').val()),
+                    cccd: sanitizeInput($('#cccd').val().trim()),
+                    contactAddress: sanitizeInput($('#contactAddress').val().trim()),
+                    issuePlace: sanitizeInput($('#issuePlace').val()),
+                    phone: sanitizeInput($('#phone').val().trim().replace(/\s/g, '').replace(/^\+84/, '0')),
+                    email: sanitizeInput($('#email').val().trim())
                 };
 
-                // Lưu
-                saveUserData(formData);
-
-                // Hiệu ứng Loading
-                $('#loadingModal').css('display', 'flex').hide().fadeIn();
-                
-                // Chuyển trang sau 1.5s
-                setTimeout(() => {
-                    window.location.href = 'step2.html';
-                }, 1500);
+                // Lưu với mã hóa AES
+                if (saveUserData(formData)) {
+                    // Hiệu ứng Loading
+                    $('#loadingModal').css('display', 'flex').hide().fadeIn();
+                    
+                    // Chuyển trang sau 1.5s
+                    setTimeout(() => {
+                        window.location.href = 'step2.html';
+                    }, 1500);
+                } else {
+                    alert('Không thể lưu dữ liệu. Vui lòng thử lại.');
+                }
             }
         }
     </script>
