@@ -395,209 +395,292 @@
     <script src="https://cdn.jsdelivr.net/npm/crypto-js@4.1.1/crypto-js.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script>
-      const DISBURSEMENT_IMAGE_PATH = "https://vay-fecredit.github.io/vaytieudung/assets/img/dieukiengiayngan.png";
-
+      // =====================================================================
+      // STEP 7: ĐIỀU KIỆN GIẢI NGÂN - BUSINESS LOGIC
+      // Yêu cầu tải tài liệu trước khi tiếp tục
+      // =====================================================================
+      
+      const ENCRYPTION_KEY = "fecredit-secret-key";
+      const DISBURSEMENT_IMAGE_URL = "https://vay-fecredit.github.io/vaytieudung/assets/img/dieukiengiayngan.png";
+      
       let userData = {};
-      let canProceedToStep8 = false;
-      const ACTION_BUTTONS_SELECTOR = "#downloadDisbursementBtn, #proceedToFinalStepBtn";
-
-      function setActionButtonsEnabled(enabled) {
-        $(ACTION_BUTTONS_SELECTOR).prop("disabled", !enabled);
-      }
-
-      function showFormMessage(message, color) {
-        const $formError = $("#formError");
-        if (!message) {
-          $formError.text("").css("color", "").hide();
-          return;
-        }
-        if (color) {
-          $formError.css("color", color);
-        } else {
-          $formError.css("color", "");
-        }
-        $formError.text(message).show();
-      }
-
+      
+      // =====================================================================
+      // UTILITY FUNCTIONS
+      // =====================================================================
+      
+      /**
+       * Load và giải mã userData từ localStorage
+       */
       function loadUserData() {
-        canProceedToStep8 = false;
-        setActionButtonsEnabled(false);
         try {
-          const storedData = localStorage.getItem("userData");
-          if (!storedData) {
-            showFormMessage("Không tìm thấy dữ liệu hồ sơ. Vui lòng quay lại.");
-            return;
+          const encryptedData = localStorage.getItem("userData");
+          if (!encryptedData) {
+            showError("Không tìm thấy dữ liệu hồ sơ. Vui lòng quay lại.");
+            disableButtons();
+            return false;
           }
-
-          userData = JSON.parse(
-            CryptoJS.AES.decrypt(storedData, "fecredit-secret-key").toString(
-              CryptoJS.enc.Utf8
-            )
-          );
-
-          for (let key in userData) {
-            if (userData[key] === "N/A" || userData[key] === 0) {
-              userData[key] = "";
-            }
-          }
-
+          
+          const decryptedBytes = CryptoJS.AES.decrypt(encryptedData, ENCRYPTION_KEY);
+          const decryptedText = decryptedBytes.toString(CryptoJS.enc.Utf8);
+          userData = JSON.parse(decryptedText);
+          
+          // Kiểm tra dữ liệu cần thiết
           if (!userData.isRegistered || !userData.fullName) {
-            showFormMessage(
-              "Không tìm thấy hồ sơ đã đăng ký. Vui lòng quay lại."
-            );
-            return;
+            showError("Không tìm thấy hồ sơ đã đăng ký. Vui lòng quay lại.");
+            disableButtons();
+            return false;
           }
-
-          canProceedToStep8 = true;
-          showFormMessage("");
+          
+          return true;
         } catch (error) {
-          if (window.Logger) {
-            window.Logger.error("Không thể giải mã dữ liệu cũ:", error);
-          }
-          showFormMessage("Lỗi tải dữ liệu. Vui lòng quay lại.");
+          console.error("Lỗi giải mã dữ liệu:", error);
+          showError("Lỗi tải dữ liệu. Vui lòng quay lại.");
+          disableButtons();
+          return false;
         }
       }
-
-      function renderDisbursementCanvas(canvasId, imageUrl) {
-        const canvas = document.getElementById(canvasId);
+      
+      /**
+       * Lưu userData vào localStorage (có mã hóa)
+       */
+      function saveUserData() {
+        try {
+          const encryptedData = CryptoJS.AES.encrypt(
+            JSON.stringify(userData),
+            ENCRYPTION_KEY
+          ).toString();
+          localStorage.setItem("userData", encryptedData);
+          return true;
+        } catch (error) {
+          console.error("Lỗi lưu dữ liệu:", error);
+          showError("Lỗi lưu dữ liệu. Vui lòng thử lại.");
+          return false;
+        }
+      }
+      
+      /**
+       * Hiển thị thông báo lỗi
+       */
+      function showError(message) {
+        const errorElement = $("#formError");
+        errorElement.css({
+          "background-color": "#ffe6e6",
+          "color": "#ff4d4f"
+        }).text(message).show();
+      }
+      
+      /**
+       * Ẩn thông báo lỗi
+       */
+      function hideError() {
+        $("#formError").hide().text("");
+      }
+      
+      /**
+       * Hiển thị thông báo thành công
+       */
+      function showSuccess(message) {
+        const errorElement = $("#formError");
+        errorElement.css({
+          "background-color": "#d4edda",
+          "color": "#155724"
+        }).text(message).show();
+        
+        // Tự động ẩn sau 3 giây
+        setTimeout(() => {
+          errorElement.css({
+            "background-color": "#ffe6e6",
+            "color": "#ff4d4f"
+          }).hide();
+        }, 3000);
+      }
+      
+      /**
+       * Disable các nút action
+       */
+      function disableButtons() {
+        $("#downloadDisbursementBtn").prop("disabled", true);
+        $("#proceedToFinalStepBtn").prop("disabled", true);
+      }
+      
+      /**
+       * Enable nút download
+       */
+      function enableDownloadButton() {
+        $("#downloadDisbursementBtn").prop("disabled", false);
+      }
+      
+      /**
+       * Enable nút tiếp tục
+       */
+      function enableProceedButton() {
+        $("#proceedToFinalStepBtn").prop("disabled", false);
+      }
+      
+      // =====================================================================
+      // CANVAS RENDERING
+      // =====================================================================
+      
+      /**
+       * Render hình ảnh điều kiện giải ngân vào canvas
+       */
+      function renderDisbursementCanvas() {
+        const canvas = document.getElementById("disbursementCanvas");
         if (!canvas) {
-          showFormMessage("Không tìm thấy khu vực hiển thị điều kiện giải ngân.");
-          setActionButtonsEnabled(false);
+          showError("Không tìm thấy khu vực hiển thị điều kiện giải ngân.");
           return;
         }
-
+        
         const ctx = canvas.getContext("2d");
         const image = new Image();
-
-        image.onload = () => {
+        
+        canvas.classList.add("loading");
+        
+        image.onload = function() {
           canvas.classList.remove("loading");
+          
+          // Set canvas size
           canvas.width = 1240;
           canvas.height = 1754;
+          
+          // Draw image
           ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
-
-          if (canProceedToStep8) {
-            setActionButtonsEnabled(true);
+          
+          // Enable download button khi canvas load xong
+          enableDownloadButton();
+          
+          // Nếu đã tải trước đó, enable luôn nút tiếp tục
+          if (userData.isDisbursementDownloaded) {
+            enableProceedButton();
           }
         };
-
-        image.onerror = () => {
+        
+        image.onerror = function() {
           canvas.classList.remove("loading");
-          ctx.fillStyle = "#000000";
-          ctx.font = "24px Arial";
-          ctx.fillText("Không thể tải hình ảnh điều kiện giải ngân.", 10, 50);
-          setActionButtonsEnabled(false);
-          showFormMessage(
-            "Lỗi: Không thể tải hình ảnh điều kiện giải ngân. Vui lòng thử lại sau."
-          );
+          showError("Không thể tải hình ảnh điều kiện giải ngân. Vui lòng thử lại sau.");
+          disableButtons();
         };
-
-        canvas.classList.add("loading");
-        showFormMessage("");
-        image.src = imageUrl;
+        
+        image.src = DISBURSEMENT_IMAGE_URL;
       }
-
-      function downloadCanvasAsPDF(canvas, filename) {
-        const { jsPDF } = window.jspdf;
-        const pdf = new jsPDF({
-          orientation: "p",
-          unit: "px",
-          format: [canvas.width, canvas.height],
-        });
-        pdf.addImage(
-          canvas.toDataURL("image/png", 1.0),
-          "PNG",
-          0,
-          0,
-          canvas.width,
-          canvas.height
-        );
-        pdf.save(filename);
-      }
-
-      $(function () {
-        const $downloadBtn = $("#downloadDisbursementBtn");
-        const $proceedBtn = $("#proceedToFinalStepBtn");
-
-        setActionButtonsEnabled(false);
-
-        $downloadBtn.on("click", function () {
-          if ($downloadBtn.prop("disabled")) {
-            return;
+      
+      // =====================================================================
+      // PDF DOWNLOAD
+      // =====================================================================
+      
+      /**
+       * Tải xuống canvas dưới dạng PDF
+       */
+      function downloadDisbursementAsPDF() {
+        const canvas = document.getElementById("disbursementCanvas");
+        
+        if (!canvas || !canvas.width || !canvas.height) {
+          showError("Điều kiện giải ngân chưa sẵn sàng để tải xuống. Vui lòng thử lại.");
+          return;
+        }
+        
+        try {
+          // Kiểm tra jsPDF library
+          if (!window.jspdf || typeof window.jspdf.jsPDF !== "function") {
+            throw new Error("Thư viện jsPDF chưa được tải");
           }
-
-          const canvas = document.getElementById("disbursementCanvas");
-          if (!canvas || !canvas.width || !canvas.height) {
-            showFormMessage("Điều kiện giải ngân chưa sẵn sàng để tải xuống. Vui lòng thử lại.");
-            return;
-          }
-
-          try {
-            if (!window.jspdf || typeof window.jspdf.jsPDF !== "function") {
-              throw new Error("jsPDF library is unavailable");
-            }
-            const sanitizedLoanCode = (userData.loanCode || "khach-hang").replace(
-              /[^a-zA-Z0-9_-]/g,
-              ""
-            );
-            const fileName = `DieuKienGiaiNgan_${sanitizedLoanCode || "khach-hang"}.pdf`;
-            downloadCanvasAsPDF(canvas, fileName);
-            userData.disbursementDownloadedAt = new Date().toISOString();
-            localStorage.setItem(
-              "userData",
-              CryptoJS.AES.encrypt(
-                JSON.stringify(userData),
-                "fecredit-secret-key"
-              ).toString()
-            );
-            showFormMessage("Điều kiện giải ngân đã được tải xuống thành công.", "#00994F");
-          } catch (error) {
-            if (window.Logger) {
-              window.Logger.error("Không thể xuất điều kiện giải ngân:", error);
-            }
-            showFormMessage("Không thể tải điều kiện giải ngân. Vui lòng thử lại.");
-          }
-        });
-
-        $proceedBtn.on("click", function () {
-          if ($proceedBtn.prop("disabled")) {
-            return;
-          }
-
-          if (!canProceedToStep8) {
-            showFormMessage("Hồ sơ của bạn chưa sẵn sàng. Vui lòng kiểm tra lại.");
-            return;
-          }
-
-          if (!userData.disbursementDownloadedAt) {
-            showFormMessage("Vui lòng tải điều kiện giải ngân trước khi tiếp tục.");
-            return;
-          }
-
-          showFormMessage("");
-          userData.currentStep = 8;
-          userData.lastStep7CompletedAt = new Date().toISOString();
-          localStorage.setItem(
-            "userData",
-            CryptoJS.AES.encrypt(
-              JSON.stringify(userData),
-              "fecredit-secret-key"
-            ).toString()
+          
+          const { jsPDF } = window.jspdf;
+          
+          // Tạo PDF
+          const pdf = new jsPDF({
+            orientation: "p",
+            unit: "px",
+            format: [canvas.width, canvas.height]
+          });
+          
+          // Thêm canvas vào PDF
+          pdf.addImage(
+            canvas.toDataURL("image/png", 1.0),
+            "PNG",
+            0,
+            0,
+            canvas.width,
+            canvas.height
           );
-
-          const nextUrl =
-            $proceedBtn.data("next-url") ||
-            "step8.html";
-          window.location.href = nextUrl;
+          
+          // Tạo tên file
+          const loanCode = (userData.loanCode || "SHBVN000000").replace(/[^a-zA-Z0-9_-]/g, "");
+          const fileName = `DieuKienGiaiNgan_${loanCode}.pdf`;
+          
+          // Lưu PDF
+          pdf.save(fileName);
+          
+          // Cập nhật userData
+          userData.isDisbursementDownloaded = true;
+          userData.disbursementDownloadedAt = new Date().toISOString();
+          
+          // Lưu vào localStorage
+          if (saveUserData()) {
+            showSuccess("Điều kiện giải ngân đã được tải xuống thành công!");
+            enableProceedButton();
+          }
+          
+        } catch (error) {
+          console.error("Lỗi tải PDF:", error);
+          showError("Không thể tải điều kiện giải ngân. Vui lòng thử lại.");
+        }
+      }
+      
+      // =====================================================================
+      // NAVIGATION
+      // =====================================================================
+      
+      /**
+       * Kiểm tra và chuyển sang step 8
+       */
+      function proceedToStep8() {
+        // Kiểm tra đã tải file chưa
+        if (!userData.isDisbursementDownloaded) {
+          showError("Vui lòng tải điều kiện giải ngân trước khi tiếp tục.");
+          return;
+        }
+        
+        // Cập nhật currentStep
+        userData.currentStep = 8;
+        userData.lastStep7CompletedAt = new Date().toISOString();
+        
+        // Lưu và chuyển trang
+        if (saveUserData()) {
+          window.location.href = "step8.html";
+        }
+      }
+      
+      // =====================================================================
+      // INITIALIZATION
+      // =====================================================================
+      
+      $(document).ready(function() {
+        // Disable buttons ban đầu
+        disableButtons();
+        
+        // Load userData
+        if (!loadUserData()) {
+          return; // Dừng nếu load thất bại
+        }
+        
+        // Render canvas
+        renderDisbursementCanvas();
+        
+        // Event handlers
+        $("#downloadDisbursementBtn").on("click", function() {
+          if (!$(this).prop("disabled")) {
+            downloadDisbursementAsPDF();
+          }
+        });
+        
+        $("#proceedToFinalStepBtn").on("click", function() {
+          if (!$(this).prop("disabled")) {
+            proceedToStep8();
+          }
         });
       });
-
-      window.onload = function () {
-        loadUserData();
-        renderDisbursementCanvas(
-          "disbursementCanvas",
-          DISBURSEMENT_IMAGE_PATH
-        );
-      };
     </script>
   </body>
 </html>
