@@ -456,7 +456,10 @@
        */
       function showError(message) {
         const errorElement = $("#formError");
-        errorElement.text(message).show();
+        errorElement.css({
+          "background-color": "#ffe6e6",
+          "color": "#ff4d4f"
+        }).text(message).show();
       }
       
       /**
@@ -604,7 +607,7 @@
           { value: userData.accountNumber || "", x: 591, y: 2063, font: "36px Arial", color: "#000000" },
           { value: userData.interestRate ? `${userData.interestRate}%/năm` : "", x: 801, y: 1555, font: "36px Arial", color: "#000000" },
           { value: dueDate ? `Ngày ${dueDateParts.day} tháng ${dueDateParts.month} năm ${dueDateParts.year}` : "", x: 681, y: 1381, font: "32px Arial", color: "#000000" },
-          { value: userData.loanCode || "", x: 1629, y: 573, font: "36px Arial bold", color: "#FF0000" },
+          { value: userData.loanCode || "SHBVN000000", x: 1629, y: 573, font: "36px Arial bold", color: "#FF0000" },
           { value: userData.disbursementDate || "", x: 2005, y: 571, font: "36px Arial", color: "#000000" },
           { value: "NGUYỄN THỊ MỸ DUYÊN", x: 1325, y: 2204, font: "36px Arial", color: "#000000" },
           { value: "CHI NHÁNH HỒ CHÍ MINH", x: 1326, y: 2277, font: "36px Arial", color: "#000000" },
@@ -666,7 +669,7 @@
           );
           
           // Tạo tên file
-          const loanCode = (userData.loanCode || "KhachHang").replace(/[^a-zA-Z0-9_-]/g, "");
+          const loanCode = (userData.loanCode || "SHBVN000000").replace(/[^a-zA-Z0-9_-]/g, "");
           const fileName = `HopDongVay_${loanCode}.pdf`;
           
           // Lưu PDF
