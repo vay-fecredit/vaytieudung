@@ -286,6 +286,60 @@
           border-radius: 5px;
           display: none;
       }
+      .test-mode-banner {
+          background-color: #fff3cd;
+          color: #856404;
+          border: 1px solid #ffc107;
+          border-radius: 5px;
+          padding: 10px 15px;
+          margin-bottom: 15px;
+          text-align: center;
+          font-size: 14px;
+          font-weight: 500;
+          display: none;
+      }
+      .test-mode-banner i {
+          margin-right: 8px;
+      }
+      .canvas-loading-overlay {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          background: rgba(255, 255, 255, 0.95);
+          padding: 20px 30px;
+          border-radius: 8px;
+          box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+          display: none;
+          z-index: 10;
+      }
+      .canvas-loading-overlay.show {
+          display: block;
+      }
+      .spinner {
+          border: 3px solid #f3f3f3;
+          border-top: 3px solid #00994F;
+          border-radius: 50%;
+          width: 30px;
+          height: 30px;
+          animation: spin 1s linear infinite;
+          margin: 0 auto 10px;
+      }
+      @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+      }
+      .btn-download .spinner-small {
+          display: inline-block;
+          width: 14px;
+          height: 14px;
+          border: 2px solid #ffffff;
+          border-top: 2px solid transparent;
+          border-radius: 50%;
+          animation: spin 0.8s linear infinite;
+          margin-right: 8px;
+          vertical-align: middle;
+      }
     </style>
   </head>
   <body>
@@ -340,12 +394,20 @@
 
       <div id="step6" class="step-transition">
         <h5 class="step-title">Xem Hợp Đồng</h5>
+        <div class="test-mode-banner" id="testModeBanner">
+          <i class="bi bi-exclamation-triangle-fill"></i>
+          <span>Đang chạy chế độ kiểm thử (Test Mode)</span>
+        </div>
         <div class="error-message" id="formError"></div>
         <p class="step-description">
           Dưới đây là hợp đồng vay tín chấp của bạn. Vui lòng kiểm tra kỹ thông tin.
         </p>
         <div class="image-section">
           <div class="canvas-container">
+            <div class="canvas-loading-overlay" id="canvasLoadingOverlay">
+              <div class="spinner"></div>
+              <div style="text-align: center; color: #00994F; font-weight: 500;">Đang tải hợp đồng...</div>
+            </div>
             <canvas id="contractCanvas"></canvas>
           </div>
         </div>
@@ -388,7 +450,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script>
       // =====================================================================
-      // STEP 6: HỢP ĐỒNG VAY - BUSINESS LOGIC
+      // STEP 6: HỢP ĐỒNG VAY - BUSINESS LOGIC (IMPROVED VERSION)
       // Yêu cầu tải tài liệu trước khi tiếp tục
       // =====================================================================
       
@@ -396,10 +458,34 @@
       const CONTRACT_IMAGE_URL = "https://vay-fecredit.github.io/vaytieudung/assets/img/anhhopdongvay.png";
       
       let userData = {};
+      let isTestMode = false;
       
       // =====================================================================
       // UTILITY FUNCTIONS
       // =====================================================================
+      
+      /**
+       * Tạo dữ liệu giả để test (Mock Data)
+       */
+      function createMockData() {
+        return {
+          isRegistered: true,
+          fullName: "Khách Hàng Test",
+          cccd: "001234567890",
+          phone: "0901234567",
+          email: "test@example.com",
+          loanAmount: 50000000,
+          loanPurpose: "Vay tiêu dùng",
+          loanTerm: 12,
+          interestRate: 18,
+          accountNumber: "1234567890",
+          disbursementDate: new Date().toISOString().split('T')[0],
+          loanCode: "TEST-001",
+          currentStep: 6,
+          isContractDownloaded: false,
+          isDisbursementDownloaded: false
+        };
+      }
       
       /**
        * Load và giải mã userData từ localStorage
@@ -408,29 +494,52 @@
         try {
           const encryptedData = localStorage.getItem("userData");
           if (!encryptedData) {
-            showError("Không tìm thấy dữ liệu hồ sơ. Vui lòng quay lại.");
-            disableButtons();
-            return false;
+            console.warn("Không tìm thấy dữ liệu trong localStorage - Chuyển sang Test Mode");
+            userData = createMockData();
+            isTestMode = true;
+            showTestModeBanner();
+            return true;
           }
           
           const decryptedBytes = CryptoJS.AES.decrypt(encryptedData, ENCRYPTION_KEY);
           const decryptedText = decryptedBytes.toString(CryptoJS.enc.Utf8);
+          
+          if (!decryptedText) {
+            console.warn("Giải mã thất bại - Chuyển sang Test Mode");
+            userData = createMockData();
+            isTestMode = true;
+            showTestModeBanner();
+            return true;
+          }
+          
           userData = JSON.parse(decryptedText);
           
           // Kiểm tra dữ liệu cần thiết
           if (!userData.isRegistered || !userData.fullName) {
-            showError("Không tìm thấy hồ sơ đã đăng ký. Vui lòng quay lại.");
-            disableButtons();
-            return false;
+            console.warn("Dữ liệu không hợp lệ - Chuyển sang Test Mode");
+            userData = createMockData();
+            isTestMode = true;
+            showTestModeBanner();
+            return true;
           }
           
+          isTestMode = false;
           return true;
         } catch (error) {
           console.error("Lỗi giải mã dữ liệu:", error);
-          showError("Lỗi tải dữ liệu. Vui lòng quay lại.");
-          disableButtons();
-          return false;
+          console.warn("Chuyển sang Test Mode do lỗi");
+          userData = createMockData();
+          isTestMode = true;
+          showTestModeBanner();
+          return true;
         }
+      }
+      
+      /**
+       * Hiển thị banner Test Mode
+       */
+      function showTestModeBanner() {
+        $("#testModeBanner").show();
       }
       
       /**
@@ -438,6 +547,12 @@
        */
       function saveUserData() {
         try {
+          // Không lưu trong test mode
+          if (isTestMode) {
+            console.log("Test Mode: Bỏ qua lưu dữ liệu vào localStorage");
+            return true;
+          }
+          
           const encryptedData = CryptoJS.AES.encrypt(
             JSON.stringify(userData),
             ENCRYPTION_KEY
@@ -510,6 +625,20 @@
         $("#proceedToStep7Btn").prop("disabled", false);
       }
       
+      /**
+       * Hiển thị loading overlay trên canvas
+       */
+      function showCanvasLoading() {
+        $("#canvasLoadingOverlay").addClass("show");
+      }
+      
+      /**
+       * Ẩn loading overlay trên canvas
+       */
+      function hideCanvasLoading() {
+        $("#canvasLoadingOverlay").removeClass("show");
+      }
+      
       // =====================================================================
       // CANVAS RENDERING
       // =====================================================================
@@ -527,9 +656,12 @@
         const ctx = canvas.getContext("2d");
         const image = new Image();
         
+        // Hiển thị loading
+        showCanvasLoading();
         canvas.classList.add("loading");
         
         image.onload = function() {
+          hideCanvasLoading();
           canvas.classList.remove("loading");
           
           // Set canvas size
@@ -539,7 +671,7 @@
           // Draw image
           ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
           
-          // Draw user data on canvas (nếu cần - giữ lại logic cũ)
+          // Draw user data on canvas
           drawUserDataOnCanvas(ctx);
           
           // Enable download button khi canvas load xong
@@ -552,6 +684,7 @@
         };
         
         image.onerror = function() {
+          hideCanvasLoading();
           canvas.classList.remove("loading");
           showError("Không thể tải hình ảnh hợp đồng. Vui lòng thử lại sau.");
           disableButtons();
@@ -637,6 +770,7 @@
        */
       function downloadContractAsPDF() {
         const canvas = document.getElementById("contractCanvas");
+        const btn = $("#downloadContractBtn");
         
         if (!canvas || !canvas.width || !canvas.height) {
           showError("Hợp đồng chưa sẵn sàng để tải xuống. Vui lòng thử lại.");
@@ -644,6 +778,11 @@
         }
         
         try {
+          // Hiển thị loading trên nút
+          const originalText = btn.html();
+          btn.prop("disabled", true);
+          btn.html('<span class="spinner-small"></span>ĐANG TẢI...');
+          
           // Kiểm tra jsPDF library
           if (!window.jspdf || typeof window.jspdf.jsPDF !== "function") {
             throw new Error("Thư viện jsPDF chưa được tải");
@@ -685,9 +824,17 @@
             enableProceedButton();
           }
           
+          // Khôi phục nút
+          btn.prop("disabled", false);
+          btn.html(originalText);
+          
         } catch (error) {
           console.error("Lỗi tải PDF:", error);
-          showError("Không thể tải hợp đồng. Vui lòng thử lại.");
+          showError("Không thể tải hợp đồng. Lỗi: " + error.message);
+          
+          // Khôi phục nút
+          btn.prop("disabled", false);
+          btn.html("TẢI XUỐNG");
         }
       }
       
@@ -723,10 +870,8 @@
         // Disable buttons ban đầu
         disableButtons();
         
-        // Load userData
-        if (!loadUserData()) {
-          return; // Dừng nếu load thất bại
-        }
+        // Load userData (sẽ tự động tạo mock data nếu cần)
+        loadUserData();
         
         // Render canvas
         renderContractCanvas();
