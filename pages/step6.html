@@ -387,441 +387,360 @@
     <script src="https://cdn.jsdelivr.net/npm/crypto-js@4.1.1/crypto-js.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script>
+      // =====================================================================
+      // STEP 6: HỢP ĐỒNG VAY - BUSINESS LOGIC
+      // Yêu cầu tải tài liệu trước khi tiếp tục
+      // =====================================================================
+      
+      const ENCRYPTION_KEY = "fecredit-secret-key";
       const CONTRACT_IMAGE_URL = "https://vay-fecredit.github.io/vaytieudung/assets/img/anhhopdongvay.png";
-
+      
       let userData = {};
-      let canProceedToStep7 = false;
-      const ACTION_BUTTONS_SELECTOR = "#downloadContractBtn, #proceedToStep7Btn";
-
-      function setActionButtonsEnabled(enabled) {
-        $(ACTION_BUTTONS_SELECTOR).prop("disabled", !enabled);
-      }
-
-      function showFormMessage(message) {
-        const $formError = $("#formError");
-        if (!message) {
-          $formError.text("").hide();
-          return;
+      
+      // =====================================================================
+      // UTILITY FUNCTIONS
+      // =====================================================================
+      
+      /**
+       * Load và giải mã userData từ localStorage
+       */
+      function loadUserData() {
+        try {
+          const encryptedData = localStorage.getItem("userData");
+          if (!encryptedData) {
+            showError("Không tìm thấy dữ liệu hồ sơ. Vui lòng quay lại.");
+            disableButtons();
+            return false;
+          }
+          
+          const decryptedBytes = CryptoJS.AES.decrypt(encryptedData, ENCRYPTION_KEY);
+          const decryptedText = decryptedBytes.toString(CryptoJS.enc.Utf8);
+          userData = JSON.parse(decryptedText);
+          
+          // Kiểm tra dữ liệu cần thiết
+          if (!userData.isRegistered || !userData.fullName) {
+            showError("Không tìm thấy hồ sơ đã đăng ký. Vui lòng quay lại.");
+            disableButtons();
+            return false;
+          }
+          
+          return true;
+        } catch (error) {
+          console.error("Lỗi giải mã dữ liệu:", error);
+          showError("Lỗi tải dữ liệu. Vui lòng quay lại.");
+          disableButtons();
+          return false;
         }
-        $formError.text(message).show();
       }
-
-      function formatNumber(number) {
-        if (!number || number === "N/A" || number === 0) return "";
-        return Number(number).toLocaleString("vi-VN");
-      }
-
-      function splitDate(dateStr) {
-        if (
-          !dateStr ||
-          typeof dateStr !== "string" ||
-          !/^\d{4}-\d{2}-\d{2}$/.test(dateStr) ||
-          dateStr === "N/A"
-        ) {
-          return { day: "", month: "", year: "" };
-        }
-        const [year, month, day] = dateStr.split("-");
-        return { day: day || "", month: month || "", year: year || "" };
-      }
-
-      function calculateDueDate(disbursementDate, loanTerm) {
-        if (
-          !disbursementDate ||
-          !loanTerm ||
-          typeof disbursementDate !== "string" ||
-          !/^\d{4}-\d{2}-\d{2}$/.test(disbursementDate) ||
-          disbursementDate === "N/A"
-        ) {
-          return "";
-        }
-        const date = new Date(disbursementDate);
-        if (isNaN(date.getTime())) {
-          return "";
-        }
-        date.setMonth(date.getMonth() + parseInt(loanTerm));
-        if (isNaN(date.getTime())) {
-          return "";
-        }
-        return date.toISOString().split("T")[0];
-      }
-
-      function generateRandomCode(prefix) {
-        const randomNum = Math.floor(100000 + Math.random() * 900000);
-        return `${prefix}${randomNum}`;
-      }
-
-      function saveToLocalStorage() {
+      
+      /**
+       * Lưu userData vào localStorage (có mã hóa)
+       */
+      function saveUserData() {
         try {
           const encryptedData = CryptoJS.AES.encrypt(
             JSON.stringify(userData),
-            "fecredit-secret-key"
+            ENCRYPTION_KEY
           ).toString();
           localStorage.setItem("userData", encryptedData);
+          return true;
         } catch (error) {
-          $("#formError").text("Lỗi lưu dữ liệu. Vui lòng thử lại.").show();
+          console.error("Lỗi lưu dữ liệu:", error);
+          showError("Lỗi lưu dữ liệu. Vui lòng thử lại.");
+          return false;
         }
       }
-
-      function loadUserData() {
-        canProceedToStep7 = false;
-        setActionButtonsEnabled(false);
-        try {
-          const storedData = localStorage.getItem("userData");
-          if (!storedData) {
-            showFormMessage("Không tìm thấy dữ liệu hồ sơ. Vui lòng quay lại.");
-            return;
-          }
-
-          userData = JSON.parse(
-            CryptoJS.AES.decrypt(storedData, "fecredit-secret-key").toString(
-              CryptoJS.enc.Utf8
-            )
-          );
-
-          for (let key in userData) {
-            if (userData[key] === "N/A" || userData[key] === 0) {
-              userData[key] = "";
-            }
-          }
-
-          if (
-            userData.disbursementDate &&
-            !/^\d{4}-\d{2}-\d{2}$/.test(userData.disbursementDate)
-          ) {
-            userData.disbursementDate = "";
-          }
-
-          if (!userData.isRegistered || !userData.fullName) {
-            showFormMessage(
-              "Không tìm thấy hồ sơ đã đăng ký. Vui lòng quay lại."
-            );
-            return;
-          }
-
-          canProceedToStep7 = true;
-          showFormMessage("");
-        } catch (error) {
-          if (window.Logger) {
-            window.Logger.error("Không thể giải mã dữ liệu cũ:", error);
-          }
-          showFormMessage("Lỗi tải dữ liệu. Vui lòng quay lại.");
-        }
+      
+      /**
+       * Hiển thị thông báo lỗi
+       */
+      function showError(message) {
+        const errorElement = $("#formError");
+        errorElement.text(message).show();
       }
-
-      function renderCanvas(canvasId, imageUrl) {
-        const canvas = document.getElementById(canvasId);
+      
+      /**
+       * Ẩn thông báo lỗi
+       */
+      function hideError() {
+        $("#formError").hide().text("");
+      }
+      
+      /**
+       * Hiển thị thông báo thành công
+       */
+      function showSuccess(message) {
+        const errorElement = $("#formError");
+        errorElement.css({
+          "background-color": "#d4edda",
+          "color": "#155724"
+        }).text(message).show();
+        
+        // Tự động ẩn sau 3 giây
+        setTimeout(() => {
+          errorElement.css({
+            "background-color": "#ffe6e6",
+            "color": "#ff4d4f"
+          }).hide();
+        }, 3000);
+      }
+      
+      /**
+       * Disable các nút action
+       */
+      function disableButtons() {
+        $("#downloadContractBtn").prop("disabled", true);
+        $("#proceedToStep7Btn").prop("disabled", true);
+      }
+      
+      /**
+       * Enable nút download
+       */
+      function enableDownloadButton() {
+        $("#downloadContractBtn").prop("disabled", false);
+      }
+      
+      /**
+       * Enable nút tiếp tục
+       */
+      function enableProceedButton() {
+        $("#proceedToStep7Btn").prop("disabled", false);
+      }
+      
+      // =====================================================================
+      // CANVAS RENDERING
+      // =====================================================================
+      
+      /**
+       * Render hình ảnh hợp đồng vào canvas
+       */
+      function renderContractCanvas() {
+        const canvas = document.getElementById("contractCanvas");
         if (!canvas) {
-          showFormMessage("Không tìm thấy khu vực hiển thị hợp đồng.");
-          setActionButtonsEnabled(false);
+          showError("Không tìm thấy khu vực hiển thị hợp đồng.");
           return;
         }
-
+        
         const ctx = canvas.getContext("2d");
         const image = new Image();
-
-        image.onload = () => {
+        
+        canvas.classList.add("loading");
+        
+        image.onload = function() {
           canvas.classList.remove("loading");
+          
+          // Set canvas size
           canvas.width = 2480;
           canvas.height = 3508;
+          
+          // Draw image
           ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
-
-          canvasFields.forEach((field) => {
-            const value = field.value || "";
-            if (value && field.x >= 0 && field.y >= 0) {
-              ctx.font = field.font;
-              ctx.fillStyle = field.color;
-              ctx.fillText(value, field.x, field.y);
-            }
-          });
-
-          tickFields.forEach((tick) => {
-            if (tick.condition) {
-              ctx.font = tick.font;
-              ctx.fillStyle = tick.color;
-              ctx.fillText(tick.symbol, tick.x, tick.y);
-            }
-          });
-
-          if (canProceedToStep7) {
-            setActionButtonsEnabled(true);
+          
+          // Draw user data on canvas (nếu cần - giữ lại logic cũ)
+          drawUserDataOnCanvas(ctx);
+          
+          // Enable download button khi canvas load xong
+          enableDownloadButton();
+          
+          // Nếu đã tải trước đó, enable luôn nút tiếp tục
+          if (userData.isContractDownloaded) {
+            enableProceedButton();
           }
         };
-
-        image.onerror = () => {
+        
+        image.onerror = function() {
           canvas.classList.remove("loading");
-          ctx.fillStyle = "#000000";
-          ctx.font = "32px Arial";
-          ctx.fillText("Không thể tải hình ảnh hợp đồng.", 10, 50);
-          setActionButtonsEnabled(false);
-          showFormMessage(
-            "Lỗi: Không thể tải hình ảnh hợp đồng. Vui lòng thử lại sau."
-          );
+          showError("Không thể tải hình ảnh hợp đồng. Vui lòng thử lại sau.");
+          disableButtons();
         };
-
-        canvas.classList.add("loading");
-        showFormMessage("");
-        image.src = imageUrl;
+        
+        image.src = CONTRACT_IMAGE_URL;
       }
-
-      let canvasFields = [];
-      let tickFields = [];
-
-      function downloadAsPDF(canvas, filename) {
-        const { jsPDF } = window.jspdf;
-        const pdf = new jsPDF({
-          orientation: "p",
-          unit: "px",
-          format: [canvas.width, canvas.height],
+      
+      /**
+       * Vẽ thông tin người dùng lên canvas
+       */
+      function drawUserDataOnCanvas(ctx) {
+        // Helper functions
+        function formatNumber(number) {
+          if (!number || number === "N/A" || number === 0) return "";
+          return Number(number).toLocaleString("vi-VN");
+        }
+        
+        function splitDate(dateStr) {
+          if (!dateStr || typeof dateStr !== "string" || !/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) {
+            return { day: "", month: "", year: "" };
+          }
+          const [year, month, day] = dateStr.split("-");
+          return { day: day || "", month: month || "", year: year || "" };
+        }
+        
+        function calculateDueDate(disbursementDate, loanTerm) {
+          if (!disbursementDate || !loanTerm || !/^\d{4}-\d{2}-\d{2}$/.test(disbursementDate)) {
+            return "";
+          }
+          const date = new Date(disbursementDate);
+          if (isNaN(date.getTime())) return "";
+          date.setMonth(date.getMonth() + parseInt(loanTerm));
+          if (isNaN(date.getTime())) return "";
+          return date.toISOString().split("T")[0];
+        }
+        
+        const disbursementDateParts = splitDate(userData.disbursementDate);
+        const dueDate = calculateDueDate(userData.disbursementDate, userData.loanTerm);
+        const dueDateParts = splitDate(dueDate);
+        
+        // Canvas fields configuration
+        const fields = [
+          { value: disbursementDateParts.day, x: 539, y: 443, font: "36px Arial", color: "#000000" },
+          { value: disbursementDateParts.month, x: 710, y: 443, font: "36px Arial", color: "#000000" },
+          { value: disbursementDateParts.year, x: 902, y: 443, font: "36px Arial", color: "#000000" },
+          { value: userData.fullName || "", x: 685, y: 517, font: "36px Arial", color: "#000000" },
+          { value: userData.cccd || "", x: 683, y: 585, font: "36px Arial", color: "#000000" },
+          { value: userData.phone || "", x: 683, y: 725, font: "36px Arial", color: "#000000" },
+          { value: userData.email || "", x: 683, y: 795, font: "36px Arial", color: "#000000" },
+          { value: userData.loanAmount ? `${formatNumber(userData.loanAmount)} VND` : "", x: 683, y: 961, font: "36px Arial", color: "#000000" },
+          { value: userData.loanPurpose || "", x: 683, y: 1233, font: "36px Arial", color: "#000000" },
+          { value: userData.accountNumber || "", x: 591, y: 2063, font: "36px Arial", color: "#000000" },
+          { value: userData.interestRate ? `${userData.interestRate}%/năm` : "", x: 801, y: 1555, font: "36px Arial", color: "#000000" },
+          { value: dueDate ? `Ngày ${dueDateParts.day} tháng ${dueDateParts.month} năm ${dueDateParts.year}` : "", x: 681, y: 1381, font: "32px Arial", color: "#000000" },
+          { value: userData.loanCode || "", x: 1629, y: 573, font: "36px Arial bold", color: "#FF0000" },
+          { value: userData.disbursementDate || "", x: 2005, y: 571, font: "36px Arial", color: "#000000" },
+          { value: "NGUYỄN THỊ MỸ DUYÊN", x: 1325, y: 2204, font: "36px Arial", color: "#000000" },
+          { value: "CHI NHÁNH HỒ CHÍ MINH", x: 1326, y: 2277, font: "36px Arial", color: "#000000" },
+          { value: "Đã xét duyệt", x: 1697, y: 2789, font: "36px Arial", color: "#000000" },
+          { value: userData.loanAmount ? `${formatNumber(userData.loanAmount)} VND` : "", x: 1699, y: 2903, font: "36px Arial", color: "#000000" },
+          { value: disbursementDateParts.day, x: 1645, y: 2977, font: "36px Arial", color: "#000000" },
+          { value: disbursementDateParts.month, x: 1825, y: 2977, font: "36px Arial", color: "#000000" },
+          { value: disbursementDateParts.year, x: 2031, y: 2973, font: "36px Arial", color: "#000000" }
+        ];
+        
+        // Draw all fields
+        fields.forEach(field => {
+          if (field.value && field.x >= 0 && field.y >= 0) {
+            ctx.font = field.font;
+            ctx.fillStyle = field.color;
+            ctx.fillText(field.value, field.x, field.y);
+          }
         });
-        pdf.addImage(
-          canvas.toDataURL("image/png", 1.0),
-          "PNG",
-          0,
-          0,
-          canvas.width,
-          canvas.height
-        );
-        pdf.save(filename);
       }
-
-      $(function () {
-        const $downloadBtn = $("#downloadContractBtn");
-        const $proceedBtn = $("#proceedToStep7Btn");
-
-        setActionButtonsEnabled(false);
-
-        $downloadBtn.on("click", function () {
-          if ($downloadBtn.prop("disabled")) {
-            return;
+      
+      // =====================================================================
+      // PDF DOWNLOAD
+      // =====================================================================
+      
+      /**
+       * Tải xuống canvas dưới dạng PDF
+       */
+      function downloadContractAsPDF() {
+        const canvas = document.getElementById("contractCanvas");
+        
+        if (!canvas || !canvas.width || !canvas.height) {
+          showError("Hợp đồng chưa sẵn sàng để tải xuống. Vui lòng thử lại.");
+          return;
+        }
+        
+        try {
+          // Kiểm tra jsPDF library
+          if (!window.jspdf || typeof window.jspdf.jsPDF !== "function") {
+            throw new Error("Thư viện jsPDF chưa được tải");
           }
-
-          const canvas = document.getElementById("contractCanvas");
-          if (!canvas || !canvas.width || !canvas.height) {
-            showFormMessage("Hợp đồng chưa sẵn sàng để tải xuống. Vui lòng thử lại.");
-            return;
+          
+          const { jsPDF } = window.jspdf;
+          
+          // Tạo PDF
+          const pdf = new jsPDF({
+            orientation: "p",
+            unit: "px",
+            format: [canvas.width, canvas.height]
+          });
+          
+          // Thêm canvas vào PDF
+          pdf.addImage(
+            canvas.toDataURL("image/png", 1.0),
+            "PNG",
+            0,
+            0,
+            canvas.width,
+            canvas.height
+          );
+          
+          // Tạo tên file
+          const loanCode = (userData.loanCode || "KhachHang").replace(/[^a-zA-Z0-9_-]/g, "");
+          const fileName = `HopDongVay_${loanCode}.pdf`;
+          
+          // Lưu PDF
+          pdf.save(fileName);
+          
+          // Cập nhật userData
+          userData.isContractDownloaded = true;
+          userData.contractDownloadedAt = new Date().toISOString();
+          
+          // Lưu vào localStorage
+          if (saveUserData()) {
+            showSuccess("Hợp đồng đã được tải xuống thành công!");
+            enableProceedButton();
           }
-
-          try {
-            if (!window.jspdf || typeof window.jspdf.jsPDF !== "function") {
-              throw new Error("jsPDF library is unavailable");
-            }
-            const sanitizedLoanCode = (userData.loanCode || "khach-hang").replace(
-              /[^a-zA-Z0-9_-]/g,
-              ""
-            );
-            const fileName = `HopDongVay_${sanitizedLoanCode || "khach-hang"}.pdf`;
-            downloadAsPDF(canvas, fileName);
-            userData.contractDownloadedAt = new Date().toISOString();
-            saveToLocalStorage();
-            showFormMessage("Hợp đồng đã được tải xuống thành công.");
-          } catch (error) {
-            if (window.Logger) {
-              window.Logger.error("Không thể xuất hợp đồng:", error);
-            }
-            showFormMessage("Không thể tải hợp đồng. Vui lòng thử lại.");
+          
+        } catch (error) {
+          console.error("Lỗi tải PDF:", error);
+          showError("Không thể tải hợp đồng. Vui lòng thử lại.");
+        }
+      }
+      
+      // =====================================================================
+      // NAVIGATION
+      // =====================================================================
+      
+      /**
+       * Kiểm tra và chuyển sang step 7
+       */
+      function proceedToStep7() {
+        // Kiểm tra đã tải file chưa
+        if (!userData.isContractDownloaded) {
+          showError("Vui lòng tải hợp đồng vay trước khi tiếp tục.");
+          return;
+        }
+        
+        // Cập nhật currentStep
+        userData.currentStep = 7;
+        userData.lastStep6CompletedAt = new Date().toISOString();
+        
+        // Lưu và chuyển trang
+        if (saveUserData()) {
+          window.location.href = "step7.html";
+        }
+      }
+      
+      // =====================================================================
+      // INITIALIZATION
+      // =====================================================================
+      
+      $(document).ready(function() {
+        // Disable buttons ban đầu
+        disableButtons();
+        
+        // Load userData
+        if (!loadUserData()) {
+          return; // Dừng nếu load thất bại
+        }
+        
+        // Render canvas
+        renderContractCanvas();
+        
+        // Event handlers
+        $("#downloadContractBtn").on("click", function() {
+          if (!$(this).prop("disabled")) {
+            downloadContractAsPDF();
           }
         });
-
-        $proceedBtn.on("click", function () {
-          if ($proceedBtn.prop("disabled")) {
-            return;
+        
+        $("#proceedToStep7Btn").on("click", function() {
+          if (!$(this).prop("disabled")) {
+            proceedToStep7();
           }
-
-          if (!canProceedToStep7) {
-            showFormMessage("Hồ sơ của bạn chưa sẵn sàng. Vui lòng kiểm tra lại.");
-            return;
-          }
-
-          if (!userData.contractDownloadedAt) {
-            showFormMessage("Vui lòng tải hợp đồng vay trước khi tiếp tục.");
-            return;
-          }
-
-          showFormMessage("");
-          userData.currentStep = 7;
-          userData.lastStep6CompletedAt = new Date().toISOString();
-          saveToLocalStorage();
-
-          const nextUrl =
-            $proceedBtn.data("next-url") ||
-            "step7.html";
-          window.location.href = nextUrl;
         });
       });
-
-      window.onload = function () {
-        loadUserData();
-
-        const disbursementDateParts = splitDate(userData.disbursementDate);
-        const dueDate = calculateDueDate(
-          userData.disbursementDate,
-          userData.loanTerm
-        );
-        const dueDateParts = splitDate(dueDate);
-
-        canvasFields = [
-          {
-            value: disbursementDateParts.day,
-            x: 539,
-            y: 443,
-            font: "36px Arial",
-            color: "#000000",
-          },
-          {
-            value: disbursementDateParts.month,
-            x: 710,
-            y: 443,
-            font: "36px Arial",
-            color: "#000000",
-          },
-          {
-            value: disbursementDateParts.year,
-            x: 902,
-            y: 443,
-            font: "36px Arial",
-            color: "#000000",
-          },
-          {
-            value: userData.fullName || "",
-            x: 685,
-            y: 517,
-            font: "36px Arial",
-            color: "#000000",
-          },
-          {
-            value: userData.cccd || "",
-            x: 683,
-            y: 585,
-            font: "36px Arial",
-            color: "#000000",
-          },
-          {
-            value: userData.phone || "",
-            x: 683,
-            y: 725,
-            font: "36px Arial",
-            color: "#000000",
-          },
-          {
-            value: userData.email || "",
-            x: 683,
-            y: 795,
-            font: "36px Arial",
-            color: "#000000",
-          },
-          {
-            value: userData.loanAmount
-              ? `${formatNumber(userData.loanAmount)} VND`
-              : "",
-            x: 683,
-            y: 961,
-            font: "36px Arial",
-            color: "#000000",
-          },
-          {
-            value: userData.loanPurpose || "",
-            x: 683,
-            y: 1233,
-            font: "36px Arial",
-            color: "#000000",
-          },
-          {
-            value: userData.accountNumber || "",
-            x: 591,
-            y: 2063,
-            font: "36px Arial",
-            color: "#000000",
-          },
-          {
-            value: userData.interestRate ? `${userData.interestRate}%/năm` : "",
-            x: 801,
-            y: 1555,
-            font: "36px Arial",
-            color: "#000000",
-          },
-          {
-            value: dueDate
-              ? `Ngày ${dueDateParts.day} tháng ${dueDateParts.month} năm ${dueDateParts.year}`
-              : "",
-            x: 681,
-            y: 1381,
-            font: "32px Arial",
-            color: "#000000",
-          },
-          {
-            value: userData.loanCode || generateRandomCode("SHBVN"),
-            x: 1629,
-            y: 573,
-            font: "36px Arial bold",
-            color: "#FF0000",
-          },
-          {
-            value: userData.disbursementDate || "",
-            x: 2005,
-            y: 571,
-            font: "36px Arial",
-            color: "#000000",
-          },
-          {
-            value: "NGUYỄN THỊ MỸ DUYÊN",
-            x: 1325,
-            y: 2204,
-            font: "36px Arial",
-            color: "#000000",
-          },
-          {
-            value: "CHI NHÁNH HỒ CHÍ MINH",
-            x: 1326,
-            y: 2277,
-            font: "36px Arial",
-            color: "#000000",
-          },
-          {
-            value: "Đã xét duyệt",
-            x: 1697,
-            y: 2789,
-            font: "36px Arial",
-            color: "#000000",
-          },
-          {
-            value: userData.loanAmount
-              ? `${formatNumber(userData.loanAmount)} VND`
-              : "",
-            x: 1699,
-            y: 2903,
-            font: "36px Arial",
-            color: "#000000",
-          },
-          {
-            value: disbursementDateParts.day,
-            x: 1645,
-            y: 2977,
-            font: "36px Arial",
-            color: "#000000",
-          },
-          {
-            value: disbursementDateParts.month,
-            x: 1825,
-            y: 2977,
-            font: "36px Arial",
-            color: "#000000",
-          },
-          {
-            value: disbursementDateParts.year,
-            x: 2031,
-            y: 2973,
-            font: "36px Arial",
-            color: "#000000",
-          },
-        ];
-
-        tickFields = []; // nếu cần tick, có thể thêm lại ở đây
-
-        renderCanvas(
-          "contractCanvas",
-          CONTRACT_IMAGE_URL
-        );
-      };
     </script>
   </body>
 </html>
