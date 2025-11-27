@@ -785,6 +785,513 @@
           font-size: 12px;
         }
       }
+
+      /* ============================================
+         MOBILE RESPONSIVE OPTIMIZATION
+         Optimized for devices <= 768px
+         ============================================ */
+      @media only screen and (max-width: 768px) {
+        /* Base typography - minimum 14-16px font size */
+        html {
+          font-size: 16px !important;
+        }
+
+        body {
+          font-size: 16px !important;
+          line-height: 1.6 !important;
+          padding: 0 !important;
+          margin: 0 !important;
+        }
+
+        /* Container - proper margins */
+        .container {
+          width: 100% !important;
+          max-width: 100% !important;
+          padding-left: 16px !important;
+          padding-right: 16px !important;
+          box-sizing: border-box !important;
+        }
+
+        /* Header mobile optimization */
+        #site-header {
+          padding: 12px 0 !important;
+        }
+
+        #site-header .container {
+          padding: 0 16px !important;
+        }
+
+        #logo img {
+          height: 36px !important;
+          max-width: 160px !important;
+        }
+
+        /* FE Credit Header optimization */
+        .fecredit-header {
+          padding: 12px 0 !important;
+        }
+
+        .fecredit-header .container {
+          padding: 0 16px !important;
+        }
+
+        .fecredit-header img {
+          height: 36px !important;
+          max-width: 160px !important;
+        }
+
+        /* Subheader hide on mobile for cleaner UI */
+        #site-subheader {
+          display: none !important;
+        }
+
+        /* Banner carousel optimization */
+        .banner-carousel {
+          min-height: 180px !important;
+          margin-bottom: 12px !important;
+        }
+
+        .banner-slide img {
+          max-height: 200px !important;
+          object-fit: cover !important;
+        }
+
+        .banner-text {
+          padding: 10px 14px !important;
+          max-width: 85% !important;
+          border-radius: 6px !important;
+          left: 4% !important;
+        }
+
+        .banner-text h1 {
+          font-size: 16px !important;
+          line-height: 1.3 !important;
+          margin-bottom: 4px !important;
+        }
+
+        .banner-text p {
+          font-size: 12px !important;
+          line-height: 1.4 !important;
+        }
+
+        /* Banner navigation buttons */
+        .prev,
+        .next {
+          padding: 10px !important;
+          font-size: 14px !important;
+          border-radius: 6px !important;
+        }
+
+        .prev {
+          left: 8px !important;
+        }
+
+        .next {
+          right: 8px !important;
+        }
+
+        .dots {
+          bottom: 8px !important;
+        }
+
+        .dot {
+          width: 10px !important;
+          height: 10px !important;
+          margin: 0 5px !important;
+        }
+
+        /* Steps indicator */
+        .steps {
+          flex-direction: column !important;
+          gap: 8px !important;
+          padding: 0 16px !important;
+          margin: 16px 0 !important;
+        }
+
+        .step {
+          padding: 14px 16px !important;
+          font-size: 14px !important;
+          border-radius: 8px !important;
+          max-width: 100% !important;
+        }
+
+        /* Form container - main card */
+        .form-container {
+          margin: 16px !important;
+          padding: 20px 16px !important;
+          border-radius: 12px !important;
+          width: calc(100% - 32px) !important;
+          max-width: calc(100% - 32px) !important;
+          box-sizing: border-box !important;
+        }
+
+        .form-container h2 {
+          font-size: 20px !important;
+          margin-bottom: 20px !important;
+          line-height: 1.4 !important;
+        }
+
+        /* Summary section */
+        .summary {
+          margin-bottom: 16px !important;
+          padding: 16px !important;
+          border-radius: 8px !important;
+        }
+
+        .summary h3 {
+          font-size: 16px !important;
+          margin-bottom: 12px !important;
+        }
+
+        .summary p {
+          font-size: 14px !important;
+          margin: 8px 0 !important;
+          line-height: 1.5 !important;
+        }
+
+        /* Bank/Card type selection */
+        .bank-selection {
+          margin-bottom: 16px !important;
+        }
+
+        .bank-selection h3 {
+          font-size: 18px !important;
+          margin-bottom: 16px !important;
+        }
+
+        .bank-grid {
+          grid-template-columns: repeat(2, 1fr) !important;
+          gap: 12px !important;
+          padding: 0 !important;
+        }
+
+        .bank-option {
+          padding: 16px 12px !important;
+          border-radius: 10px !important;
+          min-height: 90px !important;
+        }
+
+        .bank-option img {
+          max-width: 60px !important;
+          height: auto !important;
+          margin-bottom: 8px !important;
+        }
+
+        .bank-option p {
+          font-size: 13px !important;
+          line-height: 1.3 !important;
+          font-weight: 500 !important;
+        }
+
+        /* Guide section */
+        .guide-section {
+          padding: 16px !important;
+          margin-bottom: 16px !important;
+          border-radius: 8px !important;
+        }
+
+        .guide-section h3 {
+          font-size: 16px !important;
+          margin-bottom: 12px !important;
+        }
+
+        .guide-section p {
+          font-size: 14px !important;
+          line-height: 1.5 !important;
+        }
+
+        .guide-section .bank-logo {
+          max-width: 60px !important;
+        }
+
+        /* Help image */
+        .help-image {
+          margin-bottom: 16px !important;
+        }
+
+        .help-image img {
+          max-width: 100% !important;
+          width: 100% !important;
+          border-radius: 8px !important;
+        }
+
+        /* Check info text */
+        .check-info {
+          font-size: 15px !important;
+          margin: 16px 0 !important;
+          line-height: 1.5 !important;
+          padding: 12px !important;
+          background: #FFF9E6 !important;
+          border-radius: 8px !important;
+        }
+
+        /* Form groups - inputs 100% width */
+        .form-group {
+          margin-bottom: 16px !important;
+        }
+
+        .form-group p {
+          font-size: 14px !important;
+          line-height: 1.5 !important;
+        }
+
+        .form-group label {
+          font-size: 15px !important;
+          font-weight: 600 !important;
+          margin-bottom: 8px !important;
+          display: flex !important;
+          flex-wrap: wrap !important;
+          gap: 4px !important;
+          justify-content: flex-start !important;
+        }
+
+        .form-group input {
+          width: 100% !important;
+          padding: 14px 16px !important;
+          font-size: 16px !important;
+          border-radius: 8px !important;
+          border: 1px solid #ccc !important;
+          box-sizing: border-box !important;
+          -webkit-appearance: none !important;
+          appearance: none !important;
+        }
+
+        .form-group input:focus {
+          border-color: #00994F !important;
+          box-shadow: 0 0 0 3px rgba(0, 153, 79, 0.15) !important;
+          outline: none !important;
+        }
+
+        .form-group .error {
+          font-size: 13px !important;
+          margin-top: 6px !important;
+          line-height: 1.4 !important;
+          text-align: left !important;
+        }
+
+        .form-group .help-text {
+          font-size: 13px !important;
+          margin-top: 6px !important;
+          line-height: 1.4 !important;
+          text-align: left !important;
+        }
+
+        /* Help icon */
+        .help-icon {
+          width: 22px !important;
+          height: 22px !important;
+          line-height: 22px !important;
+          font-size: 13px !important;
+          margin-left: 6px !important;
+        }
+
+        /* Buttons - large and easy to tap */
+        .buttons {
+          flex-direction: column !important;
+          gap: 12px !important;
+          margin-top: 20px !important;
+          padding: 0 !important;
+        }
+
+        button {
+          width: 100% !important;
+          min-height: 52px !important;
+        }
+
+        button.primary {
+          width: 100% !important;
+          padding: 16px 24px !important;
+          font-size: 16px !important;
+          font-weight: 600 !important;
+          border-radius: 10px !important;
+          min-height: 52px !important;
+          touch-action: manipulation !important;
+        }
+
+        button.primary:active {
+          transform: scale(0.98) !important;
+        }
+
+        /* Issue guide button */
+        .issue-guide-btn {
+          width: 100% !important;
+          padding: 14px 20px !important;
+          font-size: 15px !important;
+          min-height: 52px !important;
+          margin-top: 16px !important;
+          border-radius: 8px !important;
+        }
+
+        /* Issue guide section */
+        .issue-guide-section {
+          padding: 16px !important;
+          margin-top: 16px !important;
+          border-radius: 8px !important;
+        }
+
+        .issue-guide-section h3 {
+          font-size: 16px !important;
+          margin-bottom: 12px !important;
+        }
+
+        .issue-guide-section ul {
+          padding-left: 20px !important;
+          font-size: 14px !important;
+        }
+
+        .issue-guide-section ul li {
+          margin-bottom: 10px !important;
+          line-height: 1.5 !important;
+        }
+
+        .issue-guide-section img {
+          max-width: 100% !important;
+          width: 100% !important;
+          margin-top: 12px !important;
+        }
+
+        /* Error dialog */
+        .error-dialog {
+          width: 90% !important;
+          max-width: 340px !important;
+          padding: 24px 20px !important;
+          border-radius: 12px !important;
+          min-height: auto !important;
+        }
+
+        .error-dialog p {
+          font-size: 15px !important;
+          margin-bottom: 20px !important;
+          line-height: 1.5 !important;
+        }
+
+        .error-dialog button {
+          width: 100% !important;
+          padding: 14px 20px !important;
+          font-size: 16px !important;
+          min-height: 48px !important;
+        }
+
+        /* Footer optimization */
+        #site-footer {
+          padding: 24px 16px !important;
+          margin-top: 32px !important;
+        }
+
+        #site-footer .container {
+          padding: 0 !important;
+        }
+
+        .footer-heading {
+          font-size: 20px !important;
+          line-height: 1.4 !important;
+        }
+
+        .footer-contact {
+          padding: 16px !important;
+          border-radius: 12px !important;
+        }
+
+        .contact-title {
+          font-size: 13px !important;
+        }
+
+        .phone-link h5 {
+          font-size: 16px !important;
+        }
+
+        .social-list {
+          gap: 8px !important;
+        }
+
+        .social-item img {
+          width: 36px !important;
+          height: 36px !important;
+        }
+
+        .addressFooter {
+          font-size: 13px !important;
+          line-height: 1.5 !important;
+        }
+
+        /* Navigation menu mobile */
+        nav ul {
+          flex-direction: column !important;
+          padding: 16px !important;
+          gap: 8px !important;
+        }
+
+        nav ul li {
+          margin: 0 !important;
+          width: 100% !important;
+        }
+
+        nav ul li a {
+          font-size: 15px !important;
+          padding: 14px 16px !important;
+          display: block !important;
+          text-align: center !important;
+          border-radius: 8px !important;
+        }
+
+        /* Hamburger menu */
+        .hamburger {
+          padding: 10px !important;
+          border-radius: 8px !important;
+          top: 10px !important;
+          right: 16px !important;
+        }
+
+        .hamburger span {
+          width: 24px !important;
+          height: 3px !important;
+        }
+      }
+
+      /* Extra small devices (phones in portrait) */
+      @media only screen and (max-width: 480px) {
+        .container {
+          padding-left: 12px !important;
+          padding-right: 12px !important;
+        }
+
+        .form-container {
+          margin: 12px !important;
+          padding: 16px 12px !important;
+          width: calc(100% - 24px) !important;
+          max-width: calc(100% - 24px) !important;
+        }
+
+        .bank-grid {
+          gap: 8px !important;
+        }
+
+        .bank-option {
+          padding: 14px 10px !important;
+          min-height: 80px !important;
+        }
+
+        .bank-option img {
+          max-width: 50px !important;
+        }
+
+        .bank-option p {
+          font-size: 12px !important;
+        }
+
+        .banner-text h1 {
+          font-size: 14px !important;
+        }
+
+        .banner-text p {
+          font-size: 11px !important;
+        }
+
+        button.primary {
+          padding: 14px 20px !important;
+          font-size: 15px !important;
+        }
+      }
     </style>
   </head>
   <body>
@@ -1306,6 +1813,42 @@
       let selectedBankHelpImage = null;
       let failedAttempts = 0;
       let formData = {};
+      let activeIntervals = [];
+      let activeEventListeners = [];
+
+      /**
+       * Utility function to safely escape HTML
+       */
+      function escapeHtml(text) {
+        if (typeof text !== 'string') return '';
+        const map = {
+          '&': '&amp;',
+          '<': '&lt;',
+          '>': '&gt;',
+          '"': '&quot;',
+          "'": '&#039;'
+        };
+        return text.replace(/[&<>"']/g, m => map[m]);
+      }
+
+      /**
+       * Safely set text content (prevents XSS)
+       */
+      function safeSetTextContent(element, text) {
+        if (!element) return;
+        element.textContent = text || '';
+      }
+
+      /**
+       * Show loading state on button
+       */
+      function setButtonLoading(button, isLoading) {
+        if (!button) return;
+        button.disabled = isLoading;
+        if (isLoading) {
+          button.innerHTML = '<span class="loading-spinner"></span>Đang xử lý...';
+        }
+      }
 
       function toggleSummary() {
         const summary = document.getElementById("summary");
