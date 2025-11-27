@@ -435,7 +435,6 @@
             type="button"
             class="btn btn-primary"
             data-next-url="step8.html"
-            disabled
           >
             TIẾP TỤC
           </button>
@@ -616,7 +615,7 @@
        */
       function disableButtons() {
         $("#downloadDisbursementBtn").prop("disabled", true);
-        $("#proceedToFinalStepBtn").prop("disabled", true);
+        // Không disable nút tiếp tục nữa
       }
       
       /**
@@ -627,7 +626,7 @@
       }
       
       /**
-       * Enable nút tiếp tục
+       * Enable nút tiếp tục (không cần gọi, đã enable sẵn)
        */
       function enableProceedButton() {
         $("#proceedToFinalStepBtn").prop("disabled", false);
@@ -783,12 +782,6 @@
        * Kiểm tra và chuyển sang step 8
        */
       function proceedToStep8() {
-        // Kiểm tra đã tải file chưa
-        if (!userData.isDisbursementDownloaded) {
-          showError("Vui lòng tải điều kiện giải ngân trước khi tiếp tục.");
-          return;
-        }
-        
         // Cập nhật currentStep
         userData.currentStep = 8;
         userData.lastStep7CompletedAt = new Date().toISOString();
