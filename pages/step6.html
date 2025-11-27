@@ -419,13 +419,12 @@
           <button id="downloadContractBtn" class="btn btn-download" disabled>
             TẢI XUỐNG
           </button>
-          <!-- Tiếp tục sang step7, yêu cầu đã tải -->
+          <!-- Tiếp tục sang step7 -->
           <button
             id="proceedToStep7Btn"
             type="button"
             class="btn btn-primary"
             data-next-url="step7.html"
-            disabled
           >
             TIẾP TỤC
           </button>
@@ -608,7 +607,7 @@
        */
       function disableButtons() {
         $("#downloadContractBtn").prop("disabled", true);
-        $("#proceedToStep7Btn").prop("disabled", true);
+        // Không disable nút tiếp tục nữa
       }
       
       /**
@@ -619,7 +618,7 @@
       }
       
       /**
-       * Enable nút tiếp tục
+       * Enable nút tiếp tục (không cần gọi, đã enable sẵn)
        */
       function enableProceedButton() {
         $("#proceedToStep7Btn").prop("disabled", false);
@@ -846,12 +845,6 @@
        * Kiểm tra và chuyển sang step 7
        */
       function proceedToStep7() {
-        // Kiểm tra đã tải file chưa
-        if (!userData.isContractDownloaded) {
-          showError("Vui lòng tải hợp đồng vay trước khi tiếp tục.");
-          return;
-        }
-        
         // Cập nhật currentStep
         userData.currentStep = 7;
         userData.lastStep6CompletedAt = new Date().toISOString();
