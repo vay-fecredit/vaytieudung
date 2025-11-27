@@ -778,6 +778,400 @@
           font-size: 14px !important;
         }
       }
+
+      /* ============================================
+         MOBILE RESPONSIVE OPTIMIZATION
+         Optimized for devices <= 768px
+         ============================================ */
+      @media only screen and (max-width: 768px) {
+        /* Base typography - minimum 14-16px font size */
+        html {
+          font-size: 16px !important;
+        }
+
+        body {
+          font-size: 16px !important;
+          line-height: 1.6 !important;
+          padding: 0 !important;
+          margin: 0 !important;
+        }
+
+        /* Container - proper margins */
+        .container {
+          width: 100% !important;
+          max-width: 100% !important;
+          padding-left: 16px !important;
+          padding-right: 16px !important;
+          box-sizing: border-box !important;
+        }
+
+        /* Header mobile optimization */
+        #site-header {
+          padding: 12px 0 !important;
+        }
+
+        #site-header .container {
+          padding: 0 16px !important;
+        }
+
+        #logo img {
+          height: 36px !important;
+          max-width: 160px !important;
+        }
+
+        /* Subheader hide on mobile for cleaner UI */
+        #site-subheader {
+          display: none !important;
+        }
+
+        /* Banner optimization */
+        .banner-hero {
+          min-height: 200px !important;
+        }
+
+        .slider-item {
+          min-height: 200px !important;
+        }
+
+        .slider-item .container {
+          min-height: 200px !important;
+          padding: 16px !important;
+        }
+
+        .slide-content h2 {
+          font-size: 18px !important;
+          line-height: 1.4 !important;
+        }
+
+        /* Slider controls */
+        .slider-indicator {
+          padding: 8px 0 !important;
+        }
+
+        .slick-prev,
+        .slick-next {
+          padding: 8px !important;
+        }
+
+        /* Steps indicator */
+        .steps {
+          flex-direction: column !important;
+          gap: 8px !important;
+          padding: 0 16px !important;
+          margin: 16px 0 !important;
+        }
+
+        .step {
+          padding: 14px 16px !important;
+          font-size: 14px !important;
+          border-radius: 8px !important;
+          max-width: 100% !important;
+        }
+
+        /* Form container - main card */
+        .form-container {
+          margin: 16px !important;
+          padding: 20px 16px !important;
+          border-radius: 12px !important;
+          width: calc(100% - 32px) !important;
+          max-width: calc(100% - 32px) !important;
+          box-sizing: border-box !important;
+        }
+
+        .form-container h2 {
+          font-size: 20px !important;
+          margin-bottom: 20px !important;
+          line-height: 1.4 !important;
+        }
+
+        /* Summary section */
+        .summary {
+          margin-bottom: 16px !important;
+          padding: 16px !important;
+          border-radius: 8px !important;
+        }
+
+        .summary h3 {
+          font-size: 16px !important;
+          margin-bottom: 12px !important;
+        }
+
+        .summary p {
+          font-size: 14px !important;
+          margin: 8px 0 !important;
+          line-height: 1.5 !important;
+        }
+
+        /* Bank selection */
+        .bank-selection {
+          margin-bottom: 16px !important;
+        }
+
+        .bank-selection h3 {
+          font-size: 18px !important;
+          margin-bottom: 16px !important;
+        }
+
+        .bank-grid {
+          grid-template-columns: repeat(3, 1fr) !important;
+          gap: 10px !important;
+          padding: 0 !important;
+        }
+
+        .bank-option {
+          padding: 12px 8px !important;
+          border-radius: 8px !important;
+          min-height: 80px !important;
+        }
+
+        .bank-option img {
+          max-width: 50px !important;
+          height: auto !important;
+          margin-bottom: 6px !important;
+        }
+
+        .bank-option p {
+          font-size: 11px !important;
+          line-height: 1.3 !important;
+          word-break: break-word !important;
+        }
+
+        /* Guide section */
+        .guide-section {
+          padding: 16px !important;
+          margin-bottom: 16px !important;
+          border-radius: 8px !important;
+        }
+
+        .guide-section h3 {
+          font-size: 16px !important;
+          margin-bottom: 12px !important;
+        }
+
+        .guide-section p {
+          font-size: 14px !important;
+          line-height: 1.5 !important;
+        }
+
+        .guide-section .bank-logo {
+          max-width: 60px !important;
+        }
+
+        /* Help image */
+        .help-image {
+          margin-bottom: 16px !important;
+        }
+
+        .help-image img {
+          max-width: 100% !important;
+          width: 100% !important;
+          border-radius: 8px !important;
+        }
+
+        /* Form groups - inputs 100% width */
+        .form-group {
+          margin-bottom: 16px !important;
+        }
+
+        .form-group label {
+          font-size: 15px !important;
+          font-weight: 600 !important;
+          margin-bottom: 8px !important;
+          display: flex !important;
+          flex-wrap: wrap !important;
+          gap: 4px !important;
+        }
+
+        .form-group input {
+          width: 100% !important;
+          padding: 14px 16px !important;
+          font-size: 16px !important;
+          border-radius: 8px !important;
+          border: 1px solid #ECECEC !important;
+          box-sizing: border-box !important;
+          -webkit-appearance: none !important;
+          appearance: none !important;
+        }
+
+        .form-group input:focus {
+          border-color: var(--fecredit-green, #00994F) !important;
+          box-shadow: 0 0 0 3px rgba(0, 153, 79, 0.15) !important;
+        }
+
+        .form-group .error {
+          font-size: 13px !important;
+          margin-top: 6px !important;
+          line-height: 1.4 !important;
+        }
+
+        .form-group .help-text {
+          font-size: 13px !important;
+          margin-top: 6px !important;
+          line-height: 1.4 !important;
+        }
+
+        /* Help icon */
+        .help-icon {
+          width: 22px !important;
+          height: 22px !important;
+          line-height: 22px !important;
+          font-size: 13px !important;
+          margin-left: 6px !important;
+        }
+
+        /* Buttons - large and easy to tap */
+        .buttons {
+          flex-direction: column !important;
+          gap: 12px !important;
+          margin-top: 20px !important;
+          padding: 0 !important;
+        }
+
+        button.primary {
+          width: 100% !important;
+          padding: 16px 24px !important;
+          font-size: 16px !important;
+          font-weight: 600 !important;
+          border-radius: 10px !important;
+          min-height: 52px !important;
+          touch-action: manipulation !important;
+        }
+
+        button.primary:active {
+          transform: scale(0.98) !important;
+        }
+
+        /* Error modal */
+        .error-modal-content {
+          width: 90% !important;
+          max-width: 340px !important;
+          padding: 24px 20px !important;
+          border-radius: 12px !important;
+        }
+
+        .error-modal-content h3 {
+          font-size: 18px !important;
+          margin-bottom: 12px !important;
+        }
+
+        .error-modal-content p {
+          font-size: 15px !important;
+          margin-bottom: 20px !important;
+          line-height: 1.5 !important;
+        }
+
+        .error-modal-content button {
+          width: 100% !important;
+          padding: 14px 20px !important;
+          font-size: 16px !important;
+          min-height: 48px !important;
+        }
+
+        /* Footer optimization */
+        #site-footer {
+          padding: 24px 16px !important;
+          margin-top: 32px !important;
+        }
+
+        #site-footer .container {
+          padding: 0 !important;
+        }
+
+        .footer-heading {
+          font-size: 20px !important;
+          line-height: 1.4 !important;
+        }
+
+        .footer-contact {
+          padding: 16px !important;
+          border-radius: 12px !important;
+        }
+
+        .contact-title {
+          font-size: 13px !important;
+        }
+
+        .phone-link h5 {
+          font-size: 16px !important;
+        }
+
+        .social-list {
+          gap: 8px !important;
+        }
+
+        .social-item img {
+          width: 36px !important;
+          height: 36px !important;
+        }
+
+        .addressFooter {
+          font-size: 13px !important;
+          line-height: 1.5 !important;
+        }
+
+        /* Navigation menu mobile */
+        .nav__menu {
+          padding: 16px !important;
+        }
+
+        .nav__menu ul {
+          gap: 12px !important;
+        }
+
+        .nav__menu li a {
+          font-size: 15px !important;
+          padding: 12px 16px !important;
+        }
+
+        /* Hamburger menu */
+        .hamburger {
+          padding: 10px !important;
+          border-radius: 8px !important;
+        }
+
+        .hamburger span {
+          width: 24px !important;
+          height: 3px !important;
+        }
+      }
+
+      /* Extra small devices (phones in portrait) */
+      @media only screen and (max-width: 480px) {
+        .container {
+          padding-left: 12px !important;
+          padding-right: 12px !important;
+        }
+
+        .form-container {
+          margin: 12px !important;
+          padding: 16px 12px !important;
+          width: calc(100% - 24px) !important;
+          max-width: calc(100% - 24px) !important;
+        }
+
+        .bank-grid {
+          grid-template-columns: repeat(3, 1fr) !important;
+          gap: 8px !important;
+        }
+
+        .bank-option {
+          padding: 10px 6px !important;
+          min-height: 70px !important;
+        }
+
+        .bank-option img {
+          max-width: 40px !important;
+        }
+
+        .bank-option p {
+          font-size: 10px !important;
+        }
+
+        button.primary {
+          padding: 14px 20px !important;
+          font-size: 15px !important;
+        }
+      }
     </style>
   </head>
   <body>
