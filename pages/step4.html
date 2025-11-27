@@ -599,7 +599,7 @@
         </p>
 
         <!-- Progress Steps Indicator -->
-        <div class="progress-steps" role="progressbar" aria-valuenow="1" aria-valuemin="1" aria-valuemax="4">
+        <div class="progress-steps" role="progressbar" aria-valuenow="1" aria-valuemin="1" aria-valuemax="4" aria-valuetext="Bước 1 trong 4: Đồng bộ dữ liệu">
           <div id="step1" class="progress-step is-active" aria-label="Bước 1: Đồng bộ dữ liệu"></div>
           <div id="step2" class="progress-step" aria-label="Bước 2: Tra cứu CIC"></div>
           <div id="step3" class="progress-step" aria-label="Bước 3: Phân tích hạn mức"></div>
@@ -738,10 +738,11 @@
             }
           });
 
-          // Update progress bar aria value
+          // Update progress bar aria values
           var progressBar = document.querySelector('.progress-steps');
           if (progressBar) {
             progressBar.setAttribute('aria-valuenow', stageIndex + 1);
+            progressBar.setAttribute('aria-valuetext', 'Bước ' + (stageIndex + 1) + ' trong 4: ' + stage.message);
           }
 
           // Announce to screen readers
