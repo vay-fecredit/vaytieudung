@@ -80,42 +80,35 @@
     <!-- ============================================
          NEOBANK STYLE CSS - MOBILE FIRST
          Design: Modern Digital Bank Aesthetic
-         Colors: #00994F (primary), #015C2E (dark)
+         Uses FECredit Design System from step1-style-guide.css
          ============================================ -->
     <style>
       /* ============================================
-         CSS VARIABLES - BRAND COLORS
+         CSS VARIABLES - EXTENDED DESIGN TOKENS
+         Base variables from step1-style-guide.css
+         These extend the design system for step4 specific needs
          ============================================ */
       :root {
-        /* Primary Brand Colors */
-        --fe-primary: #00994f;
-        --fe-primary-dark: #015c2e;
-        --fe-primary-light: #b9f6ca;
-        --fe-primary-glow: rgba(0, 153, 79, 0.25);
+        /* Extended Colors (complementing --fecredit-* from design system) */
+        --fecredit-primary-glow: rgba(0, 153, 79, 0.25);
+        --fecredit-success: #10b981;
+        --fecredit-success-bg: #d1fae5;
+        --fecredit-soft-green: #e8f5e9;
+        --fecredit-bg-page: #f8fafc;
+        --fecredit-bg-card: #ffffff;
+        --fecredit-text-main: #111827;
+        --fecredit-text-muted: #6b7280;
+        --fecredit-text-light: #9ca3af;
         
-        /* Semantic Colors */
-        --fe-success: #10b981;
-        --fe-success-bg: #d1fae5;
-        
-        /* Neutral Colors */
-        --fe-soft-green: #e8f5e9;
-        --fe-bg-page: #f8fafc;
-        --fe-bg-card: #ffffff;
-        --fe-text-main: #111827;
-        --fe-text-muted: #6b7280;
-        --fe-text-light: #9ca3af;
-        
-        /* Design Tokens */
-        --fe-radius-lg: 24px;
-        --fe-radius-md: 16px;
-        --fe-radius-pill: 999px;
-        --fe-shadow-soft: 0 10px 40px rgba(0, 0, 0, 0.08);
-        --fe-shadow-card: 0 20px 60px rgba(0, 0, 0, 0.12);
+        /* Extended Design Tokens */
+        --fecredit-radius-pill: 9999px;
+        --fecredit-shadow-soft: 0 10px 40px rgba(0, 0, 0, 0.08);
+        --fecredit-shadow-card: 0 20px 60px rgba(0, 0, 0, 0.12);
         
         /* Animation Timings */
-        --fe-anim-fast: 0.2s;
-        --fe-anim-normal: 0.4s;
-        --fe-anim-slow: 0.8s;
+        --fecredit-anim-fast: 0.2s;
+        --fecredit-anim-normal: 0.4s;
+        --fecredit-anim-slow: 0.8s;
       }
 
       /* ============================================
@@ -136,12 +129,12 @@
         overflow-x: hidden;
         font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont,
           "Segoe UI", Roboto, sans-serif;
-        font-size: 16px;
+        font-size: var(--fecredit-font-size-base);
         line-height: 1.5;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
-        background-color: var(--fe-bg-page);
-        color: var(--fe-text-main);
+        background-color: var(--fecredit-bg-page);
+        color: var(--fecredit-text-main);
       }
 
       body {
@@ -156,8 +149,8 @@
          ============================================ */
       .fe-topbar {
         width: 100%;
-        background-color: var(--fe-bg-card);
-        box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06);
+        background-color: var(--fecredit-bg-card);
+        box-shadow: var(--fecredit-shadow-sm);
         position: sticky;
         top: 0;
         z-index: 100;
@@ -166,11 +159,11 @@
       .fe-topbar-inner {
         max-width: 960px;
         margin: 0 auto;
-        padding: 12px 16px;
+        padding: var(--fecredit-space-3) var(--fecredit-space-4);
         display: flex;
         align-items: center;
         justify-content: space-between;
-        gap: 12px;
+        gap: var(--fecredit-space-3);
       }
 
       .fe-topbar-logo {
@@ -186,7 +179,7 @@
       .fe-topbar-actions {
         display: flex;
         align-items: center;
-        gap: 8px;
+        gap: var(--fecredit-space-2);
       }
 
       .fe-topbar-icon-btn {
@@ -194,19 +187,19 @@
         height: 40px;
         border: none;
         background: transparent;
-        border-radius: var(--fe-radius-pill);
+        border-radius: var(--fecredit-radius-pill);
         display: flex;
         align-items: center;
         justify-content: center;
-        color: var(--fe-text-muted);
+        color: var(--fecredit-text-muted);
         cursor: pointer;
-        transition: background-color var(--fe-anim-fast) ease;
+        transition: background-color var(--fecredit-anim-fast) ease;
       }
 
       .fe-topbar-icon-btn:hover,
       .fe-topbar-icon-btn:focus {
-        background-color: var(--fe-soft-green);
-        color: var(--fe-primary);
+        background-color: var(--fecredit-soft-green);
+        color: var(--fecredit-primary);
       }
 
       .fe-topbar-icon-btn i {
@@ -222,7 +215,7 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        padding: 24px 16px;
+        padding: var(--fecredit-space-6) var(--fecredit-space-4);
         min-height: calc(100vh - 120px);
         min-height: calc(100dvh - 120px);
       }
@@ -230,10 +223,10 @@
       .approval-card {
         width: 100%;
         max-width: 420px;
-        background: var(--fe-bg-card);
-        border-radius: var(--fe-radius-lg);
-        box-shadow: var(--fe-shadow-card);
-        padding: 32px 24px;
+        background: var(--fecredit-bg-card);
+        border-radius: var(--fecredit-radius-xl);
+        box-shadow: var(--fecredit-shadow-card);
+        padding: var(--fecredit-space-8) var(--fecredit-space-6);
         text-align: center;
         position: relative;
         overflow: hidden;
@@ -247,12 +240,12 @@
         left: 0;
         right: 0;
         height: 4px;
-        background: linear-gradient(90deg, var(--fe-primary), var(--fe-primary-light));
+        background: linear-gradient(90deg, var(--fecredit-primary), var(--fecredit-primary-light));
       }
 
       @media (min-width: 576px) {
         .approval-card {
-          padding: 40px 32px;
+          padding: 40px var(--fecredit-space-8);
         }
       }
 
@@ -263,7 +256,7 @@
         position: relative;
         width: 160px;
         height: 160px;
-        margin: 0 auto 24px;
+        margin: 0 auto var(--fecredit-space-6);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -274,8 +267,8 @@
         position: absolute;
         width: 100%;
         height: 100%;
-        border: 2px solid var(--fe-primary);
-        border-radius: 50%;
+        border: 2px solid var(--fecredit-primary);
+        border-radius: var(--fecredit-radius-full);
         opacity: 0;
         animation: radar-pulse 2.5s ease-out infinite;
       }
@@ -306,20 +299,20 @@
         position: relative;
         width: 100px;
         height: 100px;
-        background: linear-gradient(135deg, var(--fe-primary) 0%, var(--fe-primary-dark) 100%);
-        border-radius: 50%;
+        background: linear-gradient(135deg, var(--fecredit-primary) 0%, var(--fecredit-primary-dark) 100%);
+        border-radius: var(--fecredit-radius-full);
         display: flex;
         align-items: center;
         justify-content: center;
         box-shadow: 
-          0 8px 30px var(--fe-primary-glow),
+          0 8px 30px var(--fecredit-primary-glow),
           0 0 0 8px rgba(0, 153, 79, 0.1);
         z-index: 2;
       }
 
       .radar-center i {
         font-size: 2.5rem;
-        color: #ffffff;
+        color: var(--fecredit-white);
       }
 
       /* Success State - When complete */
@@ -329,7 +322,7 @@
       }
 
       .radar-container.is-complete .radar-center {
-        background: linear-gradient(135deg, var(--fe-success) 0%, #059669 100%);
+        background: linear-gradient(135deg, var(--fecredit-success) 0%, #059669 100%);
         animation: success-bounce 0.5s ease;
       }
 
@@ -346,20 +339,20 @@
          STATUS TEXT - PROCESSING STEPS
          ============================================ */
       .status-title {
-        font-size: 1.25rem;
-        font-weight: 700;
-        color: var(--fe-text-main);
-        margin-bottom: 8px;
+        font-size: var(--fecredit-font-size-xl);
+        font-weight: var(--fecredit-font-weight-bold);
+        color: var(--fecredit-text-main);
+        margin-bottom: var(--fecredit-space-2);
       }
 
       .status-message {
-        font-size: 0.95rem;
-        color: var(--fe-text-muted);
-        min-height: 48px;
+        font-size: var(--fecredit-font-size-sm);
+        color: var(--fecredit-text-muted);
+        min-height: var(--fecredit-touch-target);
         display: flex;
         align-items: center;
         justify-content: center;
-        transition: opacity var(--fe-anim-fast) ease;
+        transition: opacity var(--fecredit-anim-fast) ease;
       }
 
       .status-message.fade-out {
@@ -369,15 +362,15 @@
       /* Typing Dots Animation */
       .typing-dots {
         display: inline-flex;
-        gap: 4px;
-        margin-left: 6px;
+        gap: var(--fecredit-space-1);
+        margin-left: var(--fecredit-space-2);
       }
 
       .typing-dots span {
         width: 6px;
         height: 6px;
-        background-color: var(--fe-primary);
-        border-radius: 50%;
+        background-color: var(--fecredit-primary);
+        border-radius: var(--fecredit-radius-full);
         animation: typing-bounce 1.2s infinite ease-in-out;
       }
 
@@ -402,12 +395,12 @@
 
       /* Success Message State */
       .status-message.is-success {
-        color: var(--fe-success);
-        font-weight: 600;
+        color: var(--fecredit-success);
+        font-weight: var(--fecredit-font-weight-semibold);
       }
 
       .status-message.is-success i {
-        margin-right: 6px;
+        margin-right: var(--fecredit-space-2);
         font-size: 1.1rem;
       }
 
@@ -417,49 +410,49 @@
       .progress-steps {
         display: flex;
         justify-content: center;
-        gap: 8px;
-        margin-top: 24px;
-        padding-top: 20px;
-        border-top: 1px solid rgba(0, 0, 0, 0.06);
+        gap: var(--fecredit-space-2);
+        margin-top: var(--fecredit-space-6);
+        padding-top: var(--fecredit-space-5);
+        border-top: 1px solid var(--fecredit-border-light);
       }
 
       .progress-step {
         width: 10px;
         height: 10px;
-        border-radius: 50%;
-        background-color: #e5e7eb;
-        transition: all var(--fe-anim-normal) ease;
+        border-radius: var(--fecredit-radius-full);
+        background-color: var(--fecredit-border-light);
+        transition: all var(--fecredit-anim-normal) ease;
       }
 
       .progress-step.is-active {
-        background-color: var(--fe-primary);
+        background-color: var(--fecredit-primary);
         transform: scale(1.2);
       }
 
       .progress-step.is-complete {
-        background-color: var(--fe-success);
+        background-color: var(--fecredit-success);
       }
 
       /* ============================================
          SECURITY NOTE
          ============================================ */
       .security-note {
-        margin-top: 20px;
-        padding: 12px 16px;
+        margin-top: var(--fecredit-space-5);
+        padding: var(--fecredit-space-3) var(--fecredit-space-4);
         background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%);
-        border-radius: var(--fe-radius-md);
+        border-radius: var(--fecredit-radius-lg);
         border: 1px solid rgba(0, 153, 79, 0.15);
         display: flex;
         align-items: center;
-        gap: 10px;
-        font-size: 0.85rem;
-        color: var(--fe-primary-dark);
+        gap: var(--fecredit-space-3);
+        font-size: var(--fecredit-font-size-xs);
+        color: var(--fecredit-primary-dark);
         text-align: left;
       }
 
       .security-note i {
-        font-size: 1.2rem;
-        color: var(--fe-primary);
+        font-size: var(--fecredit-font-size-lg);
+        color: var(--fecredit-primary);
         flex-shrink: 0;
       }
 
@@ -468,15 +461,15 @@
          ============================================ */
       .fe-footer {
         width: 100%;
-        padding: 16px;
+        padding: var(--fecredit-space-4);
         text-align: center;
-        font-size: 0.8rem;
-        color: var(--fe-text-light);
-        background-color: var(--fe-bg-page);
+        font-size: var(--fecredit-font-size-xs);
+        color: var(--fecredit-text-light);
+        background-color: var(--fecredit-bg-page);
       }
 
       .fe-footer a {
-        color: var(--fe-primary);
+        color: var(--fecredit-primary);
         text-decoration: none;
       }
 
@@ -501,7 +494,7 @@
 
       /* Focus visible for keyboard navigation */
       :focus-visible {
-        outline: 2px solid var(--fe-primary);
+        outline: 2px solid var(--fecredit-primary);
         outline-offset: 2px;
       }
 
