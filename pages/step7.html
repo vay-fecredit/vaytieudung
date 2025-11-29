@@ -201,67 +201,67 @@
       }
 
       /* Các vị trí text overlay cụ thể (tính theo % để responsive) */
-      /* Dựa trên ảnh gốc 2894 x 4096 và tham chiếu từ step7_fixed.html (1240 x 1754) */
+      /* Tham chiếu từ step7_fixed.html với canvas 1240 x 1754 px */
       
       /* Loan Code - Vị trí góc trên bên trái */
       .text-overlay.loan-code-1 {
-        top: 3.4%;   /* ~60/1754 */
-        left: 17%;   /* ~211/1240 */
+        top: 3.42%;   /* 60/1754 = 3.42% */
+        left: 17.02%; /* 211/1240 = 17.02% */
         font-size: clamp(10px, 2.2vw, 27px);
       }
       
       .text-overlay.loan-code-2 {
-        top: 5.5%;   /* ~97/1754 */
-        left: 17%;   /* ~211/1240 */
+        top: 5.53%;   /* 97/1754 = 5.53% */
+        left: 17.02%; /* 211/1240 = 17.02% */
         font-size: clamp(10px, 2.2vw, 27px);
       }
 
       /* Account Number - Số tài khoản */
       .text-overlay.account-number {
-        top: 18.4%;  /* ~322/1754 */
-        left: 34.1%; /* ~423/1240 */
+        top: 18.36%;  /* 322/1754 = 18.36% */
+        left: 34.11%; /* 423/1240 = 34.11% */
         font-size: clamp(8px, 1.9vw, 23px);
       }
 
       /* Full Name - Tên đầy đủ (xuất hiện 2 lần) */
       .text-overlay.full-name-1 {
-        top: 20.2%;  /* ~354/1754 */
-        left: 34.6%; /* ~429/1240 */
+        top: 20.18%;  /* 354/1754 = 20.18% */
+        left: 34.60%; /* 429/1240 = 34.60% */
         font-size: clamp(8px, 1.9vw, 23px);
       }
 
       /* Bank Name - Tên ngân hàng */
       .text-overlay.bank-name {
-        top: 22.2%;  /* ~390/1754 */
-        left: 34.1%; /* ~423/1240 */
+        top: 22.24%;  /* 390/1754 = 22.24% */
+        left: 34.11%; /* 423/1240 = 34.11% */
         font-size: clamp(8px, 1.9vw, 23px);
       }
 
       /* Full Name 2 - Tên đầy đủ lần 2 */
       .text-overlay.full-name-2 {
-        top: 25.3%;  /* ~444/1754 */
-        left: 34.6%; /* ~429/1240 */
+        top: 25.31%;  /* 444/1754 = 25.31% */
+        left: 34.60%; /* 429/1240 = 34.60% */
         font-size: clamp(8px, 1.9vw, 23px);
       }
 
       /* CCCD - Số căn cước công dân */
       .text-overlay.cccd {
-        top: 27.8%;  /* ~487/1754 */
-        left: 34.1%; /* ~423/1240 */
+        top: 27.77%;  /* 487/1754 = 27.77% */
+        left: 34.11%; /* 423/1240 = 34.11% */
         font-size: clamp(8px, 1.9vw, 23px);
       }
 
       /* ID Issue Date - Ngày cấp */
       .text-overlay.id-issue-date {
-        top: 27.8%;  /* ~487/1754 */
-        left: 57%;   /* ~707/1240 */
+        top: 27.77%;  /* 487/1754 = 27.77% */
+        left: 57.02%; /* 707/1240 = 57.02% */
         font-size: clamp(8px, 1.9vw, 23px);
       }
 
       /* ID Issue Place - Nơi cấp */
       .text-overlay.id-issue-place {
-        top: 27.8%;  /* ~487/1754 */
-        left: 76.8%; /* ~952/1240 */
+        top: 27.77%;  /* 487/1754 = 27.77% */
+        left: 76.77%; /* 952/1240 = 76.77% */
         font-size: clamp(8px, 1.9vw, 23px);
       }
 
@@ -623,6 +623,9 @@
           loanTerm: 12,
           interestRate: 18,
           accountNumber: "1234567890",
+          bankName: "Ngân Hàng TMCP Sài Gòn Hà Nội",
+          idIssueDate: "2020-01-15",
+          idIssuePlace: "Cục CS QLHC về TTXH",
           disbursementDate: new Date().toISOString().split('T')[0],
           loanCode: "TEST-001",
           currentStep: 7,
@@ -857,25 +860,27 @@
         showCanvasLoading();
         imgElement.classList.add("loading");
         
-        // Tạo image object để load
-        const image = new Image();
-        image.crossOrigin = "anonymous";
-        
-        // Biến để track việc thử fallback
+        // Biến để track việc thử fallback và lưu trữ image object cho canvas
         let triedFallback = false;
+        let loadedImage = null;
         
         const handleImageLoad = function() {
           hideCanvasLoading();
           imgElement.classList.remove("loading");
           
-          // Set src cho img element để hiển thị (sử dụng URL đã load thành công)
-          imgElement.src = image.src;
+          // Tạo image object từ imgElement để dùng cho canvas
+          loadedImage = new Image();
+          loadedImage.crossOrigin = "anonymous";
+          // Thiết lập onload handler TRƯỚC KHI set src để tránh race condition
+          loadedImage.onload = function() {
+            // Render canvas ẩn cho việc tải PDF
+            renderCanvasForPDF(loadedImage);
+          };
+          // Set src SAU KHI đã thiết lập handler
+          loadedImage.src = imgElement.src;
           
           // Cập nhật text overlays với dữ liệu user
           updateTextOverlays();
-          
-          // Render canvas ẩn cho việc tải PDF
-          renderCanvasForPDF(image);
           
           // Enable download button khi load xong
           enableDownloadButton();
@@ -891,7 +896,7 @@
           if (!triedFallback) {
             triedFallback = true;
             console.log("Primary image URL failed, trying fallback...");
-            image.src = DISBURSEMENT_IMAGE_FALLBACK;
+            imgElement.src = DISBURSEMENT_IMAGE_FALLBACK;
           } else {
             // Nếu cả primary và fallback đều fail
             hideCanvasLoading();
@@ -901,11 +906,12 @@
           }
         };
         
-        image.onload = handleImageLoad;
-        image.onerror = handleImageError;
+        // Thiết lập event handlers cho imgElement
+        imgElement.onload = handleImageLoad;
+        imgElement.onerror = handleImageError;
         
-        // Bắt đầu load từ URL primary
-        image.src = DISBURSEMENT_IMAGE_URL;
+        // Bắt đầu load ảnh trực tiếp vào imgElement
+        imgElement.src = DISBURSEMENT_IMAGE_URL;
       }
       
       /**
