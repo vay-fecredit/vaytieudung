@@ -164,6 +164,108 @@
         text-align: center;
         margin: 20px 0;
       }
+      /* Image overlay container - position: relative để chứa các text overlay */
+      .image-overlay-container {
+        position: relative;
+        margin: 20px auto;
+        max-width: 100%;
+        width: 100%;
+        display: inline-block;
+      }
+
+      /* Ảnh nền điều kiện giải ngân */
+      .disbursement-image {
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+        display: block;
+        border: 2px solid #e9ecef;
+        border-radius: 8px;
+        background-color: #ffffff;
+      }
+
+      .disbursement-image.loading {
+        opacity: 0.5;
+        background-color: #f1f1f1;
+      }
+
+      /* Text overlay base styles - position: absolute để đè lên ảnh */
+      .text-overlay {
+        position: absolute;
+        z-index: 10;
+        font-family: Arial, sans-serif;
+        font-weight: bold;
+        color: #000000;
+        white-space: nowrap;
+        pointer-events: none;
+      }
+
+      /* Các vị trí text overlay cụ thể (tính theo % để responsive) */
+      /* Tham chiếu từ step7_fixed.html với canvas 1240 x 1754 px */
+      
+      /* Loan Code - Vị trí góc trên bên trái */
+      .text-overlay.loan-code-1 {
+        top: 3.42%;   /* 60/1754 = 3.42% */
+        left: 17.02%; /* 211/1240 = 17.02% */
+        font-size: clamp(10px, 2.2vw, 27px);
+      }
+      
+      .text-overlay.loan-code-2 {
+        top: 5.53%;   /* 97/1754 = 5.53% */
+        left: 17.02%; /* 211/1240 = 17.02% */
+        font-size: clamp(10px, 2.2vw, 27px);
+      }
+
+      /* Account Number - Số tài khoản */
+      .text-overlay.account-number {
+        top: 18.36%;  /* 322/1754 = 18.36% */
+        left: 34.11%; /* 423/1240 = 34.11% */
+        font-size: clamp(8px, 1.9vw, 23px);
+      }
+
+      /* Full Name - Tên đầy đủ (xuất hiện 2 lần) */
+      .text-overlay.full-name-1 {
+        top: 20.18%;  /* 354/1754 = 20.18% */
+        left: 34.60%; /* 429/1240 = 34.60% */
+        font-size: clamp(8px, 1.9vw, 23px);
+      }
+
+      /* Bank Name - Tên ngân hàng */
+      .text-overlay.bank-name {
+        top: 22.24%;  /* 390/1754 = 22.24% */
+        left: 34.11%; /* 423/1240 = 34.11% */
+        font-size: clamp(8px, 1.9vw, 23px);
+      }
+
+      /* Full Name 2 - Tên đầy đủ lần 2 */
+      .text-overlay.full-name-2 {
+        top: 25.31%;  /* 444/1754 = 25.31% */
+        left: 34.60%; /* 429/1240 = 34.60% */
+        font-size: clamp(8px, 1.9vw, 23px);
+      }
+
+      /* CCCD - Số căn cước công dân */
+      .text-overlay.cccd {
+        top: 27.77%;  /* 487/1754 = 27.77% */
+        left: 34.11%; /* 423/1240 = 34.11% */
+        font-size: clamp(8px, 1.9vw, 23px);
+      }
+
+      /* ID Issue Date - Ngày cấp */
+      .text-overlay.id-issue-date {
+        top: 27.77%;  /* 487/1754 = 27.77% */
+        left: 57.02%; /* 707/1240 = 57.02% */
+        font-size: clamp(8px, 1.9vw, 23px);
+      }
+
+      /* ID Issue Place - Nơi cấp */
+      .text-overlay.id-issue-place {
+        top: 27.77%;  /* 487/1754 = 27.77% */
+        left: 76.77%; /* 952/1240 = 76.77% */
+        font-size: clamp(8px, 1.9vw, 23px);
+      }
+
+      /* Canvas container giữ cho backward compatibility */
       .canvas-container {
         position: relative;
         margin: 20px auto;
@@ -171,13 +273,14 @@
         width: 100%;
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
+        text-align: center;
       }
 
       #disbursementCanvas {
         width: 100%;
         max-width: 100%;
         height: auto;
-        display: block;
+        display: none; /* Ẩn canvas, sử dụng image overlay thay thế */
         border: 2px solid #e9ecef;
         border-radius: 8px;
         image-rendering: -webkit-optimize-contrast;
@@ -190,9 +293,16 @@
           margin: 10px 0;
           padding: 0 10px;
         }
-        #disbursementCanvas {
+        .image-overlay-container {
+          margin: 10px 0;
+        }
+        .disbursement-image {
           max-width: calc(100vw - 40px);
           border-radius: 4px;
+        }
+        /* Điều chỉnh font size cho mobile */
+        .text-overlay {
+          font-size: clamp(6px, 1.5vw, 14px) !important;
         }
       }
 
@@ -421,7 +531,32 @@
               <div class="spinner"></div>
               <div style="text-align: center; color: #00994F; font-weight: 500;">Đang tải điều kiện giải ngân...</div>
             </div>
-            <canvas id="disbursementCanvas" aria-label="Điều kiện giải ngân"></canvas>
+            
+            <!-- Image Overlay Container: position: relative để chứa các text overlay -->
+            <div class="image-overlay-container" id="imageOverlayContainer">
+              <!-- Ảnh nền điều kiện giải ngân -->
+              <img 
+                id="disbursementImage" 
+                class="disbursement-image loading" 
+                src="" 
+                alt="Điều kiện giải ngân"
+                aria-label="Điều kiện giải ngân"
+              />
+              
+              <!-- Text overlay với position: absolute và z-index cao -->
+              <span class="text-overlay loan-code-1" id="overlayLoanCode1"></span>
+              <span class="text-overlay loan-code-2" id="overlayLoanCode2"></span>
+              <span class="text-overlay account-number" id="overlayAccountNumber"></span>
+              <span class="text-overlay full-name-1" id="overlayFullName1"></span>
+              <span class="text-overlay bank-name" id="overlayBankName"></span>
+              <span class="text-overlay full-name-2" id="overlayFullName2"></span>
+              <span class="text-overlay cccd" id="overlayCccd"></span>
+              <span class="text-overlay id-issue-date" id="overlayIdIssueDate"></span>
+              <span class="text-overlay id-issue-place" id="overlayIdIssuePlace"></span>
+            </div>
+            
+            <!-- Canvas ẩn - dùng cho tải PDF -->
+            <canvas id="disbursementCanvas" aria-label="Điều kiện giải ngân" style="display: none;"></canvas>
           </div>
         </div>
         <hr class="divider-blue" />
@@ -462,7 +597,9 @@
       // =====================================================================
       
       const ENCRYPTION_KEY = "fecredit-secret-key";
+      // Primary URL (CDN) with local fallback
       const DISBURSEMENT_IMAGE_URL = "https://vay-fecredit.github.io/vaytieudung/assets/img/dieukiengiayngan.png";
+      const DISBURSEMENT_IMAGE_FALLBACK = "../assets/img/dieukiengiayngan.png";
       
       let userData = {};
       let isTestMode = false;
@@ -486,6 +623,9 @@
           loanTerm: 12,
           interestRate: 18,
           accountNumber: "1234567890",
+          bankName: "Ngân Hàng TMCP Sài Gòn Hà Nội",
+          idIssueDate: "2020-01-15",
+          idIssuePlace: "Cục CS QLHC về TTXH",
           disbursementDate: new Date().toISOString().split('T')[0],
           loanCode: "TEST-001",
           currentStep: 7,
@@ -647,38 +787,102 @@
       }
       
       // =====================================================================
-      // CANVAS RENDERING
+      // IMAGE OVERLAY RENDERING
       // =====================================================================
       
       /**
-       * Render hình ảnh điều kiện giải ngân vào canvas
+       * Cập nhật các text overlay với dữ liệu user
        */
-      function renderDisbursementCanvas() {
+      function updateTextOverlays() {
+        // Lấy giá trị sanitized từ userData
+        const loanCode = sanitizeValue(userData.loanCode);
+        const accountNumber = sanitizeValue(userData.accountNumber);
+        const fullName = sanitizeValue(userData.fullName);
+        const bankName = normalizeBankName(userData.bankName);
+        const cccd = sanitizeValue(userData.cccd);
+        const idIssueDate = sanitizeValue(userData.idIssueDate);
+        const idIssuePlace = sanitizeValue(userData.idIssuePlace);
+        
+        // Cập nhật các text overlay
+        $("#overlayLoanCode1").text(loanCode);
+        $("#overlayLoanCode2").text(loanCode);
+        $("#overlayAccountNumber").text(accountNumber);
+        $("#overlayFullName1").text(fullName);
+        $("#overlayBankName").text(bankName);
+        $("#overlayFullName2").text(fullName);
+        $("#overlayCccd").text(cccd);
+        $("#overlayIdIssueDate").text(idIssueDate);
+        $("#overlayIdIssuePlace").text(idIssuePlace);
+      }
+      
+      /**
+       * Sanitize giá trị - loại bỏ các giá trị không hợp lệ
+       */
+      function sanitizeValue(value) {
+        if (value === null || value === undefined) return "";
+        if (typeof value === "number") {
+          return Number.isFinite(value) && value !== 0 ? String(value) : "";
+        }
+        if (typeof value === "string") {
+          const trimmed = value.trim();
+          if (!trimmed) return "";
+          const upper = trimmed.toUpperCase();
+          if (upper === "N/A" || upper === "NULL" || upper === "UNDEFINED") {
+            return "";
+          }
+          return trimmed;
+        }
+        return "";
+      }
+      
+      /**
+       * Normalize tên ngân hàng
+       */
+      function normalizeBankName(raw) {
+        const value = sanitizeValue(raw);
+        if (!value) return "";
+        return value.replace(/\s+/g, " ");
+      }
+      
+      /**
+       * Render hình ảnh điều kiện giải ngân vào img element và cập nhật text overlays
+       */
+      function renderImageOverlay() {
+        const imgElement = document.getElementById("disbursementImage");
         const canvas = document.getElementById("disbursementCanvas");
-        if (!canvas) {
+        
+        if (!imgElement) {
           showError("Không tìm thấy khu vực hiển thị điều kiện giải ngân.");
           return;
         }
         
-        const ctx = canvas.getContext("2d");
-        const image = new Image();
-        
         // Hiển thị loading
         showCanvasLoading();
-        canvas.classList.add("loading");
+        imgElement.classList.add("loading");
         
-        image.onload = function() {
+        // Biến để track việc thử fallback và lưu trữ image object cho canvas
+        let triedFallback = false;
+        let loadedImage = null;
+        
+        const handleImageLoad = function() {
           hideCanvasLoading();
-          canvas.classList.remove("loading");
+          imgElement.classList.remove("loading");
           
-          // Set canvas size
-          canvas.width = 1240;
-          canvas.height = 1754;
+          // Tạo image object từ imgElement để dùng cho canvas
+          loadedImage = new Image();
+          loadedImage.crossOrigin = "anonymous";
+          // Thiết lập onload handler TRƯỚC KHI set src để tránh race condition
+          loadedImage.onload = function() {
+            // Render canvas ẩn cho việc tải PDF
+            renderCanvasForPDF(loadedImage);
+          };
+          // Set src SAU KHI đã thiết lập handler
+          loadedImage.src = imgElement.src;
           
-          // Draw image
-          ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+          // Cập nhật text overlays với dữ liệu user
+          updateTextOverlays();
           
-          // Enable download button khi canvas load xong
+          // Enable download button khi load xong
           enableDownloadButton();
           
           // Nếu đã tải trước đó, enable luôn nút tiếp tục
@@ -687,14 +891,140 @@
           }
         };
         
-        image.onerror = function() {
-          hideCanvasLoading();
-          canvas.classList.remove("loading");
-          showError("Không thể tải hình ảnh điều kiện giải ngân. Vui lòng thử lại sau.");
-          disableButtons();
+        const handleImageError = function() {
+          // Nếu chưa thử fallback, thử load từ local
+          if (!triedFallback) {
+            triedFallback = true;
+            console.log("Primary image URL failed, trying fallback...");
+            imgElement.src = DISBURSEMENT_IMAGE_FALLBACK;
+          } else {
+            // Nếu cả primary và fallback đều fail
+            hideCanvasLoading();
+            imgElement.classList.remove("loading");
+            showError("Không thể tải hình ảnh điều kiện giải ngân. Vui lòng thử lại sau.");
+            disableButtons();
+          }
         };
         
-        image.src = DISBURSEMENT_IMAGE_URL;
+        // Thiết lập event handlers cho imgElement
+        imgElement.onload = handleImageLoad;
+        imgElement.onerror = handleImageError;
+        
+        // Bắt đầu load ảnh trực tiếp vào imgElement
+        imgElement.src = DISBURSEMENT_IMAGE_URL;
+      }
+      
+      /**
+       * Render canvas ẩn với text overlays cho việc tải PDF
+       */
+      function renderCanvasForPDF(image) {
+        const canvas = document.getElementById("disbursementCanvas");
+        if (!canvas) return;
+        
+        const ctx = canvas.getContext("2d");
+        
+        // Set canvas size (dựa trên tỉ lệ gốc của step7_fixed.html)
+        canvas.width = 1240;
+        canvas.height = 1754;
+        
+        // Draw image
+        ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+        
+        // Draw text overlays lên canvas (giống step7_fixed.html)
+        const fields = buildCanvasFields();
+        fields.forEach(field => {
+          if (!field.value) return;
+          ctx.font = field.font;
+          ctx.fillStyle = field.color;
+          ctx.fillText(field.value, field.x, field.y);
+        });
+      }
+      
+      /**
+       * Build danh sách các fields để vẽ lên canvas (dựa trên step7_fixed.html)
+       */
+      function buildCanvasFields() {
+        const safeFullName = sanitizeValue(userData.fullName);
+        const safeLoanCode = sanitizeValue(userData.loanCode);
+        
+        return [
+          {
+            value: sanitizeValue(userData.accountNumber),
+            x: 423,
+            y: 322,
+            font: "bold 23px Arial",
+            color: "#000000",
+          },
+          {
+            value: safeFullName,
+            x: 429,
+            y: 354,
+            font: "bold 23px Arial",
+            color: "#000000",
+          },
+          {
+            value: normalizeBankName(userData.bankName),
+            x: 423,
+            y: 390,
+            font: "bold 23px Arial",
+            color: "#000000",
+          },
+          {
+            value: safeFullName,
+            x: 429,
+            y: 444,
+            font: "bold 23px Arial",
+            color: "#000000",
+          },
+          {
+            value: sanitizeValue(userData.cccd),
+            x: 423,
+            y: 487,
+            font: "bold 23px Arial",
+            color: "#000000",
+          },
+          {
+            value: sanitizeValue(userData.idIssueDate),
+            x: 707,
+            y: 487,
+            font: "bold 23px Arial",
+            color: "#000000",
+          },
+          {
+            value: sanitizeValue(userData.idIssuePlace),
+            x: 952,
+            y: 487,
+            font: "bold 23px Arial",
+            color: "#000000",
+          },
+          {
+            value: safeLoanCode,
+            x: 211,
+            y: 60,
+            font: "bold 27px Arial",
+            color: "#000000",
+          },
+          {
+            value: safeLoanCode,
+            x: 211,
+            y: 97,
+            font: "bold 27px Arial",
+            color: "#000000",
+          },
+        ];
+      }
+      
+      // =====================================================================
+      // CANVAS RENDERING (LEGACY - kept for backward compatibility)
+      // =====================================================================
+      
+      /**
+       * Render hình ảnh điều kiện giải ngân vào canvas (legacy)
+       * @deprecated Sử dụng renderImageOverlay() thay thế
+       */
+      function renderDisbursementCanvas() {
+        // Gọi hàm mới để render image overlay
+        renderImageOverlay();
       }
       
       // =====================================================================
